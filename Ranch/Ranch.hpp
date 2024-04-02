@@ -1,0 +1,4 @@
+class Ranch{
+    public:
+    private:
+};
