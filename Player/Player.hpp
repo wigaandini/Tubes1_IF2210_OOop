@@ -11,7 +11,8 @@ class Player{
         int gulden;
         Inventory inventory;
     public:
-        Player(int playerId, string username, float weight, int gulden);
+        Player();
+        Player(string username, float weight, int gulden);
         ~Player();
         void eat(string);
         virtual void buy(string, int) = 0;
