@@ -7,101 +7,81 @@
 using namespace std;
 
 template<class T>
-class Grid {
+class Grid{
     private:
         vector<map<string, T>> buffer;
         int row;
         int col;
+        T defaultValue;
     public:
-        Grid() {
-            row = 0;
-            col = 0;
-        }
-
-        Grid(int row, int col) {
-            this->row = row;
-            this->col = col;
+        Grid(int row, int col, const T& defaultValue):row(row), col(col), defaultValue(defaultValue){
             buffer.resize(row);
-            for (int i = 0; i < row; i++) {
-                buffer[i].clear();
+            for(int i = 0; i < row; i++){
+                for(int j =0; j < col; j++){
+                    string key = generateKey(j);
+                    buffer[i][key] = defaultValue;
+                }
             }
         }
 
-        Grid(const Grid& G) {
-            row = G.row;
-            col = G.col;
-            buffer = G.buffer;
+        ~Grid(){}
+        
+        string generateKey(int index) {
+            string key;
+            while (index >= 0) {
+                char letter = 'A' + (index % 26);
+                key = letter + key;
+                index = index / 26 - 1;
+            }
+            return key;
         }
 
-        ~Grid() {
-            buffer.clear();
-        }
+        void parseInput(const std::string& input, std::string& alphabets, std::string& numbers) {
+            alphabets.clear();
+            numbers.clear();
 
-        void put(string slot, T item) {
-            int r = slot[1] - '1';
-            int c = slot[0] - 'A';
-            buffer[r][slot] = item;
-        }
-
-        T take(string slot) {
-            int r = slot[1] - '1';
-            int c = slot[0] - 'A';
-            return buffer[r][slot];
-        }
-
-friend ostream& operator<<(ostream& out, const Grid& G) {
-    out << "     ";
-    for (int i = 0; i < G.col; i++) {
-        out << "    " << (char)('A' + i) << "   ";
-    }
-    out << endl;
-    out << "     +";
-    for (int i = 0; i < G.col; i++) {
-        out << "-----+";
-    }
-    out << endl;
-    for (int i = 0; i < G.row; i++) {
-        out << "  " << i + 1;
-        if (i + 1 < 10) {
-            out << " ";
-        }
-        out << " |";
-        for (int j = 0; j < G.col; j++) {
-            string slot = string(1, 'A' + j) + to_string(i + 1);
-            T item = G.see(slot);
-            if (G.buffer[i].count(slot) > 0) {
-                out.width(5);
-                out << item << " |";
-            } else {
-                out << "     |";
+            for (char c : input) {
+                if (std::isalpha(c)) {
+                    alphabets.push_back(c);
+                } else if (std::isdigit(c)) {
+                    numbers.push_back(c);
+                }
             }
         }
-        out << endl;
-        out << "     +";
-        for (int j = 0; j < G.col; j++) {
-            out << "-----+";
-        }
-        out << endl;
-    }
-    return out;
-}
 
-
-        void remove(string slot) {
-            int r = slot[1] - '1';
-            int c = slot[0] - 'A';
-            buffer[r].erase(slot);
+        void put(string slot, T item){
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            buffer.at(indexRow-1).at(indexCol) = item;
+        }
+        T take(string slot){
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            T item = buffer.at(indexRow-1).at(indexCol);
+            buffer.at(indexRow-1).at(indexCol) = defaultValue;
+            return item;
+        }
+        friend ostream& operator<<(ostream& out, const Grid& G){
+            return out;
         }
 
-        T see(string slot) const {
-            int r = slot[1] - '1';
-            int c = slot[0] - 'A';
-            auto it = buffer[r].find(slot);
-            if (it != buffer[r].end()) {
-                return it->second;
-            }
-            return T();
+        void remove(string slot){
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            buffer.at(indexRow-1).at(indexCol) = defaultValue;
         }
+
+        T see(string slot){
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            T item = buffer.at(indexRow-1).at(indexCol);
+            return item;
+        }
+
 
 };
 
