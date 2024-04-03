@@ -12,32 +12,55 @@ class Grid{
         vector<map<string, T>> buffer;
         int row;
         int col;
+        T defaultValue;
     public:
-        Grid(int row, int col){
-            this->row = row; this->col = col;
+        Grid(int row, int col, const T& defaultValue):row(row), col(col), defaultValue(defaultValue){
             buffer.resize(row);
-        }
-        ~Grid(){}
-        void put(string slot, T item){
-            char indexCol = slot[0];
-            int indexRow = stoi(slot.substr(1));
-            if(int(indexCol - 'A') + 1 > col || indexRow > row){
-                throw "Index out of bound error";
+            for(int i = 0; i < row; i++){
+                for(int j =0; j < col; j++){
+                    string key = generateKey(j);
+                    buffer[i][key] = defaultValue;
+                }
             }
-            buffer[indexRow-1][indexCol] = item;
+        }
+
+        ~Grid(){}
+        
+        string generateKey(int index) {
+            string key;
+            while (index >= 0) {
+                char letter = 'A' + (index % 26);
+                key = letter + key;
+                index = index / 26 - 1;
+            }
+            return key;
+        }
+
+        void parseInput(const std::string& input, std::string& alphabets, std::string& numbers) {
+            alphabets.clear();
+            numbers.clear();
+
+            for (char c : input) {
+                if (std::isalpha(c)) {
+                    alphabets.push_back(c);
+                } else if (std::isdigit(c)) {
+                    numbers.push_back(c);
+                }
+            }
+        }
+
+        void put(string slot, T item){
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            buffer.at(indexRow-1).at(indexCol) = item;
         }
         T take(string slot){
-            char indexCol = slot[0];
-            int indexRow = stoi(slot.substr(1));
-            if(int(indexCol - 'A') + 1 > col || indexRow > row){
-                throw "Index out of bound error";
-            }
-            typename map<string, T>::iterator itr = buffer[indexRow-1].find(indexCol);
-            if(itr == buffer[indexRow-1].end()){
-                throw "Slot is empty";
-            }
-            T item = buffer[indexRow-1][indexCol];
-            buffer[indexRow-1].erase(indexCol);
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            T item = buffer.at(indexRow-1).at(indexCol);
+            buffer.at(indexRow-1).at(indexCol) = defaultValue;
             return item;
         }
         friend ostream& operator<<(ostream& out, const Grid& G){
@@ -45,25 +68,17 @@ class Grid{
         }
 
         void remove(string slot){
-            char indexCol = slot[0];
-            int indexRow = stoi(slot.substr(1));
-            if(int(indexCol - 'A') + 1 > col || indexRow > row){
-                throw "Index out of bound error";
-            }
-            buffer[indexRow-1].erase(indexCol);
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            buffer.at(indexRow-1).at(indexCol) = defaultValue;
         }
 
         T see(string slot){
-            char indexCol = slot[0];
-            int indexRow = stoi(slot.substr(1));
-            if(int(indexCol - 'A') + 1 > col || indexRow > row){
-                throw "Index out of bound error";
-            }
-            typename map<string, T>::iterator itr = buffer[indexRow-1].find(indexCol);
-            if(itr == buffer[indexRow-1].end()){
-                throw "Slot is empty";
-            }
-            T item = buffer[indexRow-1][indexCol];
+            string indexCol, numbers;
+            parseInput(slot, indexCol, numbers);
+            int indexRow = stoi(numbers);
+            T item = buffer.at(indexRow-1).at(indexCol);
             return item;
         }
 
