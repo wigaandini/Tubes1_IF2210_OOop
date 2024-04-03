@@ -1,5 +1,5 @@
-#ifndef __RECIPECONFIG_HPP
-#define __RECIPECONFIG_HPP
+#ifndef __RECIPECONFIG_HPP_
+#define __RECIPECONFIG_HPP_
 
 #include <iostream>
 #include <fstream>

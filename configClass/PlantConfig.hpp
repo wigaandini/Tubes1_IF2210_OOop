@@ -1,5 +1,5 @@
-#ifndef __PLANTCONFIG_HPP
-#define __PLANTCONFIG_HPP
+#ifndef __PLANTCONFIG_HPP_
+#define __PLANTCONFIG_HPP_
 
 #include <iostream>
 #include <fstream>

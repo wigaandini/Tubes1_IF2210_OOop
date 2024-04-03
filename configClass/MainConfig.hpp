@@ -1,5 +1,5 @@
-#ifndef _MAINCONFIG_HPP
-#define _MAINCONFIG_HPP
+#ifndef _MAINCONFIG_HPP_
+#define _MAINCONFIG_HPP_
 
 #include <string>
 using namespace std;
