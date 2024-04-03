@@ -39,18 +39,18 @@ public:
         return key;
     }
 
-void parseInput(const std::string& input, std::string& alphabets, std::string& numbers) const {
-    alphabets.clear();
-    numbers.clear();
+    void parseInput(const std::string& input, std::string& alphabets, std::string& numbers) const {
+        alphabets.clear();
+        numbers.clear();
 
-    for (char c : input) {
-        if (std::isalpha(c)) {
-            alphabets.push_back(c);
-        } else if (std::isdigit(c)) {
-            numbers.push_back(c);
+        for (char c : input) {
+            if (std::isalpha(c)) {
+                alphabets.push_back(c);
+            } else if (std::isdigit(c)) {
+                numbers.push_back(c);
+            }
         }
     }
-}
 
 
     void put(string slot, T item) {
@@ -70,40 +70,38 @@ void parseInput(const std::string& input, std::string& alphabets, std::string& n
     }
 
     friend ostream& operator<<(ostream& out, const Grid& G) {
-    int width = 5; // Width of each cell
+        int width = 5;
 
-    // Print column headers
-    out << "     ";
-    for (char c = 'A'; c < 'A' + G.getCol(); ++c) {
-        out << setw(width) << c << " ";
-    }
-    out << endl;
-
-    // Print top border
-    out << "     +";
-    for (int i = 0; i < G.getCol(); ++i) {
-        out << setw(width) << setfill('-') << "+";
-    }
-    out << endl;
-
-    // Print grid content
-    for (int i = 1; i <= G.getRow(); ++i) {
-        out << setw(3) << setfill('0') << i << " |"; // Row number
-        for (int j = 0; j < G.getCol(); ++j) {
-            string slot = string(1, 'A' + j) + to_string(i);
-            T item = G.see(slot);
-            out << setw(width) << setfill(' ') << item << " |"; // Cell content
+        out << "     ";
+        for (char c = 'A'; c < 'A' + G.getCol(); ++c) {
+            out << setw(width) << c << " ";
         }
         out << endl;
-        // Print row separator
+
+
         out << "     +";
-        for (int k = 0; k < G.getCol(); ++k) {
+        for (int i = 0; i < G.getCol(); ++i) {
             out << setw(width) << setfill('-') << "+";
         }
         out << endl;
+
+    
+        for (int i = 1; i <= G.getRow(); ++i) {
+            out << setw(3) << setfill('0') << i << " |"; // Row number
+            for (int j = 0; j < G.getCol(); ++j) {
+                string slot = string(1, 'A' + j) + to_string(i);
+                T item = G.see(slot);
+                out << setw(width) << setfill(' ') << item << " |"; // Cell content
+            }
+            out << endl;
+            out << "     +";
+            for (int k = 0; k < G.getCol(); ++k) {
+                out << setw(width) << setfill('-') << "+";
+            }
+            out << endl;
+        }
+        return out;
     }
-    return out;
-}
 
 
     void remove(string slot) {
