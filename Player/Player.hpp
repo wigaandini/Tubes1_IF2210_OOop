@@ -1,6 +1,8 @@
 #include "Inventory/Inventory.hpp"
 #include "Item/Item.hpp"
 #include <iostream>
+#ifndef _PLAYER_HPP_
+#define _PLAYER_HPP_
 using namespace std;
 
 class Player{
@@ -19,3 +21,4 @@ class Player{
         virtual void sell(string) = 0;
         static int countPlayer;
 };
+#endif

@@ -2,6 +2,8 @@
 #include "Resident/Resident.hpp"
 #include "Farm/Farm.hpp"
 
+#ifndef _FARMER_HPP_
+#define _FARMER_HPP_
 class Farmer: public Player, public Resident{
     private:
         Farm farm;
@@ -15,3 +17,5 @@ class Farmer: public Player, public Resident{
         void harvest(string*);
         int tax();
 };
+
+#endif

@@ -1,4 +1,4 @@
-#ifndef _PRODUCTCONFIG_HPP
+#ifndef _PRODUCTCONFIG_HPP_
 #define _PRODUCTCONFIG_HPP_
 
 #include <map>

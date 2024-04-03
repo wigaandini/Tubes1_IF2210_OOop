@@ -1,4 +1,4 @@
-#ifndef _ANIMALCONFIG_HPP
+#ifndef _ANIMALCONFIG_HPP_
 #define _ANIMALCONFIG_HPP_
 
 #include <string>

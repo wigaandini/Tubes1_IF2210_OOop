@@ -1,5 +1,6 @@
 #include "Player/Player.hpp"
-
+#ifndef _MAYOR_HPP_
+#define _MAYOR_HPP_
 class Mayor: public Player{
     public:
         Mayor();
@@ -12,3 +13,4 @@ class Mayor: public Player{
         void sell(string *listSlotItem);
         void buy(string slotItem, int quantity);
 };
+#endif
