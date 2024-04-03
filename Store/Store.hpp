@@ -1,5 +1,5 @@
-#ifndef __STORE_HPP
-#define __STORE_HPP
+#ifndef __STORE_HPP_
+#define __STORE_HPP_
 
 #include <iostream>
 #include <string>
@@ -14,6 +14,7 @@ class Store{
         static Store store;
 
     public :
+        Store();
         void addItem(Item item);
         static Store getInstance();
         Item takeItem(string name);
