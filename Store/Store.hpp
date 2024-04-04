@@ -15,6 +15,7 @@ class Store{
 
     public :
         Store();
+        Store(const Store&);
         void addItem(Item item);
         static Store getInstance();
         Item takeItem(string name);

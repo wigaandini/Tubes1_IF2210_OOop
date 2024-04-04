@@ -1,6 +1,7 @@
 #include "Player/Player.hpp"
 #include "Resident/Resident.hpp"
 #include "Ranch/Ranch.hpp"
+
 #ifndef _BREEDER_HPP_
 #define _BREEDER_HPP_
 class Breeder: public Player, public Resident{
