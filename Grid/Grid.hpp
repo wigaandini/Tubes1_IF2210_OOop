@@ -4,42 +4,28 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <iomanip>
 using namespace std;
 
 template<class T>
 class Grid{
     private:
-        vector<map<string, T>> buffer;
+        vector<vector<T>> buffer;
         int row;
         int col;
         T defaultValue;
     public:
-        Grid(int row, int col, const T& defaultValue):row(row), col(col), defaultValue(defaultValue){
-            buffer.resize(row);
-            for(int i = 0; i < row; i++){
-                for(int j =0; j < col; j++){
-                    string key = generateKey(j);
-                    buffer[i][key] = defaultValue;
-                }
-            }
+        Grid(int r, int c) : row(r), col(c) {
+            buffer.resize(row, vector<T>(col, T()));
         }
 
-        ~Grid(){}
+
+        ~Grid() {}
         
-        string generateKey(int index) {
-            string key;
-            while (index >= 0) {
-                char letter = 'A' + (index % 26);
-                key = letter + key;
-                index = index / 26 - 1;
-            }
-            return key;
-        }
 
-        void parseInput(const std::string& input, std::string& alphabets, std::string& numbers) {
+        void parseInput(const std::string& input, std::string& alphabets, std::string& numbers) { /* Ini masi butuh kah (?) */
             alphabets.clear();
             numbers.clear();
-
             for (char c : input) {
                 if (std::isalpha(c)) {
                     alphabets.push_back(c);
@@ -49,40 +35,79 @@ class Grid{
             }
         }
 
-        void put(string slot, T item){
-            string indexCol, numbers;
-            parseInput(slot, indexCol, numbers);
-            int indexRow = stoi(numbers);
-            buffer.at(indexRow-1).at(indexCol) = item;
-        }
-        T take(string slot){
-            string indexCol, numbers;
-            parseInput(slot, indexCol, numbers);
-            int indexRow = stoi(numbers);
-            T item = buffer.at(indexRow-1).at(indexCol);
-            buffer.at(indexRow-1).at(indexCol) = defaultValue;
-            return item;
-        }
-        friend ostream& operator<<(ostream& out, const Grid& G){
-            return out;
-        }
 
-        void remove(string slot){
-            string indexCol, numbers;
-            parseInput(slot, indexCol, numbers);
-            int indexRow = stoi(numbers);
-            buffer.at(indexRow-1).at(indexCol) = defaultValue;
-        }
-
-        T see(string slot){
-            string indexCol, numbers;
-            parseInput(slot, indexCol, numbers);
-            int indexRow = stoi(numbers);
-            T item = buffer.at(indexRow-1).at(indexCol);
-            return item;
+        void put(int x, char y, const T& val) {
+            int colIdx = y - 'A';
+            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                cerr << "Out of bounds\n"; /* Ntar ganti pake exception index */
+                return;
+            }
+            buffer[x-1][colIdx] = val;
         }
 
 
+        T take(int x, char y) {
+            int colIdx = y - 'A'; 
+            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                cerr << "Out of bounds\n";
+                return T();
+            }
+            T val = buffer[x-1][colIdx];
+            buffer[x-1][colIdx] = defaultValue;
+            return val;
+        }
+
+
+        void remove(int x, char y) {
+            int colIdx = y - 'A'; 
+            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                cerr << "Out of bounds\n";
+                return;
+            }
+            buffer[x-1][colIdx] = T();
+        }
+
+
+        T see(int x, char y) const {
+            int colIdx = y - 'A'; 
+            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                cerr << "Out of bounds\n";
+                return T();
+            }
+            return buffer[x-1][colIdx];
+        }
+
+
+        friend ostream& operator<<(ostream& os, const Grid<T>& g) {
+            os << "    ";
+            for (int j = 0; j < g.col; ++j) {
+                os << setw(5) << static_cast<char>('A' + j) << " ";
+            }
+            os << "\n";
+
+            os << "     ";
+            for (int j = 0; j < g.col; ++j) {
+                os << "+-----";
+            }
+            os << "+\n";
+
+            for (int i = 0; i < g.row; ++i) {
+                os << setw(2) << setfill('0') << (i + 1) << "   |";
+                for (int j = 0; j < g.col; ++j) {
+                    os << " " << setw(3) << g.buffer[i][j] << " |";
+                }
+                os << "\n";
+
+                os << "     ";
+                for (int j = 0; j < g.col; ++j) {
+                    os << "+-----";
+                }
+                os << "+\n";
+            }
+            return os;
+        }
 };
 
 #endif
+
+
