@@ -36,14 +36,14 @@ void Player::eat(){
     string slot;
     cin >> slot;
 
-    if(Game::getProductConfig().find(this->inventory->see(slot).getName()) != Game::getProductConfig().end()){
-        int x = Game::getProductConfig()[this->inventory->see(slot).getName()].addedWeight;
-        this->inventory->take(slot);
-        cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl << "Alhasil, berat badan kamu naik menjadi " << this->weight + x << endl;
+    if(this->inventory->see(slot).getItemId() == -1){
+        cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan." << endl;
     } else{
-        if(this->inventory->see(slot).getItemId() == -1){
-            cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan." << endl;
-        } else {
+        if(Game::getProductConfig().find(this->inventory->see(slot).getName()) != Game::getProductConfig().end()){
+            int x = Game::getProductConfig()[this->inventory->see(slot).getName()].addedWeight;
+            this->inventory->take(slot);
+            cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl << "Alhasil, berat badan kamu naik menjadi " << this->weight + x << endl;
+        } else{
            cout << "Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan." << endl;
         }
     }
