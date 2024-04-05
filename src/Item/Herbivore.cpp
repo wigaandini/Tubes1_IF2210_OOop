@@ -13,3 +13,7 @@ Herbivore& Herbivore::operator+(Product& product){
 
 }
 
+Herbivore::~Herbivore(){
+    
+}
+

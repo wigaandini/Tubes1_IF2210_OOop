@@ -10,7 +10,8 @@ private:
     map<string, int> material;
 public:
     Building();
-    Building(RecipeConfig recipe);
+    Building(string name);
+    ~Building();
     int getQuantityPerMaterial(string materialName) const;
     map<string, int> getBuildingMaterial() const;
 };

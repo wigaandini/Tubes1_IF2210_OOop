@@ -23,6 +23,10 @@ Item::Item(string name, string code, int price){
     countIdItem ++;
 }
 
+Item::~Item(){
+    
+}
+
 void Item::setItemId(int itemId){
     this->itemId = itemId;
 }

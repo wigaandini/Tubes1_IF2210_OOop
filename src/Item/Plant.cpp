@@ -26,6 +26,9 @@ Plant::Plant(int age, string name) : Item(name, Game::getPlantConfig()[name].cod
     this->age = age;
 }
 
+Plant::~Plant(){
+    
+}
 
 void Plant::setPlantType(PlantType type){
     this->type = type;
@@ -71,7 +74,13 @@ Plant Plant::operator++(int ){
 }
 
 vector<Product> Plant::collect(){
-    
+    vector<Product> tempP;
+    for(int i = 0; i < harvestResult[this->name].size(); i++){
+        tempP.push_back(Product(harvestResult[this->name][i]));
+        
+    }
+
+    return tempP;
 }
 
 bool Plant::checkReadyToHarvest(){

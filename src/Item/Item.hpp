@@ -7,6 +7,7 @@
 #include "../configClass/AnimalConfig.hpp"
 #include "../configClass/ProductConfig.hpp"
 #include "../configClass/RecipeConfig.hpp"
+
 using namespace std;
 
 class Item {
@@ -20,6 +21,7 @@ protected:
 public:
     Item();
     Item(string name, string code, int price);
+    ~Item();
     void setItemId(int itemId);
     void setName(string name);
     void setCode(string code);

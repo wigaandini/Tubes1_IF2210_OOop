@@ -2,7 +2,7 @@
 
 
 Carnivore::Carnivore(string name, int weight) :Animal(weight, name){
-    
+
 }
 
 Carnivore& Carnivore::operator+(Product& product){
@@ -12,4 +12,8 @@ Carnivore& Carnivore::operator+(Product& product){
         throw "";
     }
 
+}
+
+Carnivore::~Carnivore(){
+    
 }

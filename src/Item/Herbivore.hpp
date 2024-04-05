@@ -6,6 +6,7 @@ class Herbivore : public Animal{
     public :
         Herbivore(string name, int weight);
         Herbivore& operator+(Product& product);
+        ~Herbivore();
         
 };
 

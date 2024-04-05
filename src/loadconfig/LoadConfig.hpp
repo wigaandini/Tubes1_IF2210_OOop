@@ -6,15 +6,16 @@
 #include "../configClass/ProductConfig.hpp"
 #include "../configClass/MainConfig.hpp"
 #include "../configClass/RecipeConfig.hpp"
+#include "../Game/Game.hpp"
 #include <map>
 
 class LoadConfig{
     public:
-        void loadAnimalConfig(map<string,AnimalConfig>& configs,string filename);
-        void loadPlantConfig(map<string,PlantConfig>& configs,string filename);
-        void loadProductConfig(map<string,ProductConfig>& configs,string filename);
-        void loadMainConfig(MainConfig& config,string filename);
-        void loadRecipeConfig(map<string,RecipeConfig>& recipes,string filename);
+        void loadAnimalConfig(string filename);
+        void loadPlantConfig(string filename);
+        void loadProductConfig(string filename);
+        void loadMainConfig(string filename);
+        void loadRecipeConfig(string filename);
 };      
 
 #endif
