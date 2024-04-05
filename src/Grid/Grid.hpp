@@ -31,6 +31,14 @@ class Grid{
 
         ~Grid() {}
 
+        int getRow() const{
+            return this.row;
+        }
+
+        int getcol() const{
+            return this.col;
+        }
+
         bool isEmpty(){
             return emptySlot == row*col;
         }
