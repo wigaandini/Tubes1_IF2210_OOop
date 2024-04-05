@@ -27,6 +27,7 @@ public:
     int getWeight() const;
     int getWeightToHarvest() const;
     vector<Product>& collect();
+    bool checkReadyToHarvest();
     static map<string, vector<string>>& getHarvestResult();
 
 };

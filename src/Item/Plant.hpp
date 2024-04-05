@@ -31,6 +31,7 @@ public:
     Plant &operator++();
     Plant operator++(int);
     vector<Product> collect();
+    bool checkReadyToHarvest();
     static map<string, vector<string>>& getHarvestResult();
 
 };
