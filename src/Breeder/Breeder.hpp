@@ -5,18 +5,18 @@
 #include "../Resident/Resident.hpp"
 #include "../Ranch/Ranch.hpp"
 
-class Breeder: public Player, public Resident{
+class Breeder: public Player{
     private:
         Ranch ranch;
     public:
         Breeder();
         Breeder(int playerId, string username, float weight, int gulden);
         ~Breeder();
-        void cattle(string, string);
-        void feedAnimal(string, string);
-        void sell(string *listSlotItem);
-        void buy(string slotItem, int quantity);
-        void harvest(string*);
+        void cattle();
+        void feedAnimal();
+        void sell(Store&);
+        void buy(Store&);
+        void harvest();
         int tax();
 };
 #endif

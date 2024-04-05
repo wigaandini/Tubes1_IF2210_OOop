@@ -4,22 +4,26 @@
 #include <iostream>
 #include "../Inventory/Inventory.hpp"
 #include "../Item/Item.hpp"
+#include "../Store/Store.hpp"
 using namespace std;
 
-class Player{
-    private:
-        int playerId;
-        string username;
-        float weight;
-        int gulden;
-        Inventory inventory;
-    public:
-        Player();
-        Player(string username, float weight, int gulden);
-        ~Player();
-        void eat(string);
-        virtual void buy(string, int) = 0;
-        virtual void sell(string) = 0;
-        static int countPlayer;
+class Player
+{
+private:
+    static int countIdPlayer;
+    int playerId;
+    string username;
+    int weight;
+    int gulden;
+    Inventory inventory;
+
+public:
+    Player();
+    Player(string username, float weight, int gulden);
+    ~Player();
+    void eat();
+    virtual int tax() = 0;
+    virtual void buy(Store&) = 0;
+    virtual void sell(Store&) = 0;
 };
 #endif

@@ -2,17 +2,20 @@
 #define _MAYOR_HPP_
 
 #include "../Player/Player.hpp"
+#include <vector>
+#include <map>
+#include "../configClass/RecipeConfig.hpp"
 
 class Mayor: public Player{
     public:
         Mayor();
         Mayor(int playerId, string username, float weight, int gulden);
         ~Mayor();
-        void taxCollection(int);
-        void buildBuilding(string);
+        void taxCollection(vector<Player>&);
+        void buildBuilding(map<string, RecipeConfig>);
         bool checkGuldenEnough(int);
-        void addPlayer();
-        void sell(string *listSlotItem);
-        void buy(string slotItem, int quantity);
+        void addPlayer(vector<Player>&);
+        void sell(Store&);
+        void buy(Store&);
 };
 #endif
