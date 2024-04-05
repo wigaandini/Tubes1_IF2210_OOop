@@ -14,6 +14,10 @@ class Grid{
         int row;
         int col;
         T defaultValue;
+        void parseInput(string s, int& intt,char& charr) const{
+            charr = s[0];
+            intt = stoi(s.substr(1));
+        }
     public:
         Grid(int r, int c, T defaultValue) : row(r), col(c), defaultValue(defaultValue) {
             buffer.resize(row, vector<T>(col));
@@ -28,7 +32,9 @@ class Grid{
         ~Grid() {}
         
 
-        void put(int x, char y, const T& val) {
+        void put(string slot, const T& val) {
+            int x; char y;
+            parseInput(slot, x, y);
             int colIdx = y - 'A';
             if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
                 cerr << "Out of bounds\n"; /* Ntar ganti pake exception index */
@@ -38,7 +44,9 @@ class Grid{
         }
 
 
-        T take(int x, char y) {
+        T take(string slot) {
+            int x; char y;
+            parseInput(slot, x, y);
             int colIdx = y - 'A'; 
             if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
                 cerr << "Out of bounds\n";
@@ -50,7 +58,9 @@ class Grid{
         }
 
 
-        void remove(int x, char y) {
+        void remove(string slot) {
+            int x; char y;
+            parseInput(slot, x, y);
             int colIdx = y - 'A'; 
             if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
                 cerr << "Out of bounds\n";
@@ -60,7 +70,9 @@ class Grid{
         }
 
 
-        T see(int x, char y) const {
+        T see(string slot) const {
+            int x; char y;
+            parseInput(slot, x, y);
             int colIdx = y - 'A'; 
             if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
                 cerr << "Out of bounds\n";

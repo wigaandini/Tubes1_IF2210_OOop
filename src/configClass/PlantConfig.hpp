@@ -1,11 +1,7 @@
 #ifndef __PLANTCONFIG_HPP_
 #define __PLANTCONFIG_HPP_
 
-#include <iostream>
-#include <fstream>
 #include <string>
-#include <map>
-
 using namespace std;
 
 enum PlantType {
@@ -15,19 +11,12 @@ enum PlantType {
 
 class PlantConfig {
     public :
-        static map<string, PlantConfig> configs;
         int id;
         string name;
         PlantType type;
         string code;
         int durationToHarvest;
         int price;
-
-        PlantConfig();
-        PlantConfig(int id, string name, PlantType type, string code, int durationToHarvest, int price);
-        ~PlantConfig();
-        static void loadConfigFromFile(const string& filename);
-        static PlantConfig getConfigFromName(const string& name);
 };
 
 #endif
