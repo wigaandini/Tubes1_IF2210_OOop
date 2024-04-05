@@ -24,7 +24,7 @@ void Animal::setWeight(int weight){
 }
 
 void Animal::setWeightToHarvest(int weightToHarvest){
-    this->weighToHarvest = weighToHarvest;
+    this->weighToHarvest = weightToHarvest;
 }
 
 int Animal::getAnimalId() const{
@@ -39,8 +39,13 @@ int Animal::getWeightToHarvest() const{
     return this->weighToHarvest;
 }
 
-
-
 vector<Product>& Animal::collect(){
     return this->result;
+}
+
+bool Animal::checkReadyToHarvest(){
+    if (this->weight >= this->weighToHarvest){
+        return true;
+    }
+    return false;
 }

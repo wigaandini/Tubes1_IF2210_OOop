@@ -67,3 +67,10 @@ Plant Plant::operator++(int ){
 vector<Product> Plant::collect(){
     return this->result;
 }
+
+bool Plant::checkReadyToHarvest(){
+    if (this->age >= this->durationToHarvest){
+        return true;
+    }
+    return false;
+}

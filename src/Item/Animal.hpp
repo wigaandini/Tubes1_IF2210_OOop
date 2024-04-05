@@ -26,6 +26,7 @@ public:
     int getWeight() const;
     int getWeightToHarvest() const;
     vector<Product>& collect();
+    bool checkReadyToHarvest();
 };
 
 #endif

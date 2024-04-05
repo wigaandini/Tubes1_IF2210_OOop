@@ -29,6 +29,7 @@ public:
     Plant &operator++();
     Plant operator++(int);
     vector<Product> collect();
+    bool checkReadyToHarvest();
 };
 
 #endif
