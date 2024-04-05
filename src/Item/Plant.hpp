@@ -19,6 +19,7 @@ private:
 public:
     Plant();
     Plant(int age, string name);
+    ~Plant();
     Plant(string name);
     void setPlantType(PlantType type);
     void setPlantId(int plantId);

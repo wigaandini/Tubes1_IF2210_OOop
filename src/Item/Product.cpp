@@ -1,4 +1,5 @@
 #include "Product.hpp"
+#include "../Game/Game.hpp"
 
 // class Product
 Product::Product() : Item(){
@@ -7,11 +8,15 @@ Product::Product() : Item(){
     this->addedWeight = 0;
 }
 
-Product::Product(ProductConfig product) : Item(product.name, product.code, product.price){
-    this->type = product.type;
-    this->productId = product.id;
-    this->origin = product.origin;
-    this->addedWeight = product.addedWeight;
+Product::Product(string name) : Item(Game::getProductConfig()[name].name, Game::getProductConfig()[name].code, Game::getProductConfig()[name].price){
+    this->type = Game::getProductConfig()[name].type;
+    this->productId = Game::getProductConfig()[name].id;
+    this->origin = Game::getProductConfig()[name].origin;
+    this->addedWeight = Game::getProductConfig()[name].addedWeight;
+}
+
+Product::~Product(){
+    
 }
 
 void Product::setProductType(ProductType type){

@@ -11,12 +11,13 @@ private:
     int animalId;
     int weight;
     int weighToHarvest;
-    vector<Product> result;
+    // vector<Product> result;
     static map<string, vector<string>> harvestResult;
 
 public:
     Animal();
     Animal(int weight, string name);
+    ~Animal();
     void setAnimalType(AnimalType type);
     void setAnimalId(int animalId);
     void setWeight(int weight);

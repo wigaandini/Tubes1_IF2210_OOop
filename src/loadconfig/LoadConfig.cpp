@@ -5,7 +5,8 @@
 #include <string>
 using namespace std;
 
-void LoadConfig::loadAnimalConfig(map<string,AnimalConfig>& configs,string filename){
+void LoadConfig::loadAnimalConfig(string filename){
+    map<string,AnimalConfig> configs;
     ifstream file(filename);
     string line;
     while (getline(file, line))
@@ -28,9 +29,12 @@ void LoadConfig::loadAnimalConfig(map<string,AnimalConfig>& configs,string filen
             configs[name] = config;
         }
     }
+
+    Game::setAnimalConfig(configs);
 }
 
-void LoadConfig::loadPlantConfig(map<string,PlantConfig>& configs,string filename){
+void LoadConfig::loadPlantConfig(string filename){
+    map<string,PlantConfig> configs;
     ifstream file(filename);
     string line;
     while (getline(file, line))
@@ -51,9 +55,12 @@ void LoadConfig::loadPlantConfig(map<string,PlantConfig>& configs,string filenam
             configs[name] = config;
         }
     }
+
+    Game::setPlantConfig(configs);
 }
         
-void loadProductConfig(map<string,ProductConfig>& configs,string filename){
+void loadProductConfig(string filename){
+    map<string,ProductConfig> configs;
     ifstream file(filename);
     string line;
     while (getline(file, line))
@@ -69,13 +76,18 @@ void loadProductConfig(map<string,ProductConfig>& configs,string filename){
                 type = ProductType::PRODUCT_MATERIAL_PLANT;
             else if (typeStr == "PRODUCT_FRUIT_PLANT")
                 type = ProductType::PRODUCT_FRUIT_PLANT;
+            else if (typeStr == "PRODUCT_ANIMAL")
+                type = ProductType::PRODUCT_ANIMAL;
             ProductConfig config(id,name,type,code,origin,addedWeight,price);
             configs[name] = config;
         }
     }
+
+    Game::setProductConfig(configs);
 }
         
-void loadMainConfig(MainConfig& config,string filename){
+void loadMainConfig(string filename){
+    MainConfig config;
     ifstream file(filename);
     int guldenForWin,weightPlayerToWin;
     int inventorySize[2];
@@ -88,10 +100,12 @@ void loadMainConfig(MainConfig& config,string filename){
     file >> ranchSize[0] >> ranchSize[1];
 
     
-    config = MainConfig(guldenForWin, weightPlayerToWin, inventorySize, farmSize, ranchSize);  
+    config = MainConfig(guldenForWin, weightPlayerToWin, inventorySize, farmSize, ranchSize);
+    Game::setMainConfig(config);  
 }
         
-void loadRecipeConfig(map<string,RecipeConfig>& recipes,string filename){
+void loadRecipeConfig(string filename){
+    map<string,RecipeConfig> recipes;
     ifstream file(filename);
     string line;
     while (getline(file, line))
@@ -113,4 +127,6 @@ void loadRecipeConfig(map<string,RecipeConfig>& recipes,string filename){
         // Create a new RecipeConfig object and add it to the map.
         recipes[code] = RecipeConfig(id, name, code, price, materials);
     }
+
+    Game::setRecipe(recipes);
 }

@@ -8,6 +8,7 @@ class Carnivore : public Animal{
         Carnivore(string name, int weight);
         Carnivore(string name);
         Carnivore& operator+(Product& product);
+        ~Carnivore();
 };
 
 #endif

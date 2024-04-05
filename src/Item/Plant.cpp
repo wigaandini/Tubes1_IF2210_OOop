@@ -35,6 +35,16 @@ Plant::Plant(string name) : Item(name, Game::getPlantConfig()[name].code, Game::
     this->age = 0;
 }
 
+Plant::Plant(string name) : Item(name, Game::getPlantConfig()[name].code, Game::getPlantConfig()[name].price){
+    this->type = Game::getPlantConfig()[name].type;
+    this->plantId = Game::getPlantConfig()[name].id;
+    this->durationToHarvest = Game::getPlantConfig()[name].durationToHarvest;
+    this->age = 0;
+}
+
+Plant::~Plant(){
+    
+}
 
 void Plant::setPlantType(PlantType type){
     this->type = type;
@@ -80,7 +90,13 @@ Plant Plant::operator++(int ){
 }
 
 vector<Product> Plant::collect(){
-    
+    vector<Product> tempP;
+    for(int i = 0; i < harvestResult[this->name].size(); i++){
+        tempP.push_back(Product(harvestResult[this->name][i]));
+        
+    }
+
+    return tempP;
 }
 
 bool Plant::checkReadyToHarvest(){

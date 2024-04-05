@@ -1,12 +1,17 @@
 #include "Building.hpp"
+#include "../Game/Game.hpp"
 
 //class Building
 Building::Building():Item(){
 
 }
 
-Building::Building(RecipeConfig recipe) : Item(recipe.name, recipe.code, recipe.price){
-    this->material = recipe.materials;
+Building::Building(string name) : Item(Game::getRecipe()[name].name, Game::getRecipe()[name].code, Game::getRecipe()[name].price){
+    this->material = Game::getRecipe()[name].materials;
+}
+
+Building::~Building(){
+    
 }
 
 int Building::getQuantityPerMaterial(string materialName) const{

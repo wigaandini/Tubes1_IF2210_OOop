@@ -8,7 +8,7 @@ class Omnivore : public Animal{
         Omnivore(string name, int weight);
         Omnivore(string name);
         Omnivore& operator+(Product& product);
-        
+        ~Omnivore();
 };
 
 #endif
