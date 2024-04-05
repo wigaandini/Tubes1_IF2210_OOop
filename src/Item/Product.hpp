@@ -12,7 +12,7 @@ private:
 
 public:
     Product();
-    Product(string name);
+    Product(ProductConfig product);
     void setProductType(ProductType type);
     void setProductId(int productId);
     void setOrigin(float origin);

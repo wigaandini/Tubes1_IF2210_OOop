@@ -18,6 +18,9 @@ public:
     string code;
     int price;
     int weightToHarvest;
+
+    AnimalConfig(int id, string name, AnimalType type, int price, string code, int weightToHarvest);
+    ~AnimalConfig();
 };
 
 #endif

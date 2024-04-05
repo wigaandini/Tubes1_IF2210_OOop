@@ -17,6 +17,10 @@ class PlantConfig {
         string code;
         int durationToHarvest;
         int price;
+
+        PlantConfig(int id, string name, PlantType type, string code, int durationToHarvest, int price);
+        ~PlantConfig();
+        
 };
 
 #endif

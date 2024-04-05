@@ -6,11 +6,12 @@ Plant::Plant() : Item(){
     this->age = 0;
 }
 
-Plant::Plant(string name, int age) : Item(PlantConfig::configs[name].name, PlantConfig::configs[name].code, PlantConfig::configs[name].price){
-    this->type = PlantConfig::configs[name].type;
-    this->plantId = PlantConfig::configs[name].id;
-    this->durationToHarvest = PlantConfig::configs[name].durationToHarvest;
+Plant::Plant(int age, PlantConfig plant, vector<Product> result) : Item(name, plant.code, plant.price){
+    this->type = plant.type;
+    this->plantId = plant.id;
+    this->durationToHarvest = plant.durationToHarvest;
     this->age = age;
+    this->result = result;
 }
 
 void Plant::setPlantType(PlantType type){
@@ -54,4 +55,8 @@ Plant Plant::operator++(int ){
     Plant temp = *this;
     ++this->age;
     return temp;
+}
+
+vector<Product> Plant::collect(){
+    return this->result;
 }
