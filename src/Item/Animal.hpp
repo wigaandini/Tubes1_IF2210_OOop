@@ -1,16 +1,17 @@
 #ifndef __ANIMAL_HPP_
 #define __ANIMAL_HPP_
 
-#include "../Item/Item.hpp"
-#include "../Product/Product.hpp"
+#include "Item.hpp"
+#include "Product.hpp"
 #include <string>
+#include <vector>
 
 class Animal : public Item{
 private:
-    AnimalType type;
     int animalId;
     float weight;
     float weighToHarvest;
+    vector<Product> result;
 
 public:
     Animal();
@@ -24,6 +25,7 @@ public:
     float getWeight() const;
     float getWeightToHarvest() const;
     Animal &operator+(Product product);
+    void eat(Product product);
 };
 
 #endif

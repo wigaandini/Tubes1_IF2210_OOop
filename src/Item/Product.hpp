@@ -1,7 +1,7 @@
 #ifndef __PRODUCT_HPP_
 #define __PRODUCT_HPP_
 
-#include "../Item/Item.hpp"
+#include "Item.hpp"
 
 class Product : public Item{
 private:

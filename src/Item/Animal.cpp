@@ -13,10 +13,6 @@ Animal::Animal(string name, float weight) : Item(AnimalConfig::configs[name].nam
     this->weighToHarvest = AnimalConfig::configs[name].weightToHarvest;
 }
 
-void Animal::setAnimalType(AnimalType type){
-    this->type = type;
-}
-
 void Animal::setAnimalId(int animalId){
     this->animalId = animalId;
 }
@@ -27,10 +23,6 @@ void Animal::setWeight(float weight){
 
 void Animal::setWeightToHarvest(float weightToHarvest){
     this->weighToHarvest = weighToHarvest;
-}
-
-AnimalType Animal::getAnimalType() const{
-    return this->type;
 }
 
 int Animal::getAnimalId() const{
@@ -48,4 +40,8 @@ float Animal::getWeightToHarvest() const{
 Animal& Animal::operator+(Product product){
     this->weight += product.getAddedWeight();
     return *this;
+}
+
+void Animal::eat(Product product){
+    this->
 }

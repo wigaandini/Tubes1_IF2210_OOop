@@ -1,8 +1,10 @@
 #ifndef __PLANT_HPP_
 #define __PLANT_HPP_
 
-#include "../Item/Item.hpp"
+#include "Item.hpp"
+#include "Product.hpp"
 #include <string>
+#include <vector>
 
 class Plant : public Item{
 private:
@@ -10,6 +12,7 @@ private:
     int plantId;
     int durationToHarvest;
     int age;
+    vector<Product> result;
 
 public:
     Plant();
@@ -24,6 +27,7 @@ public:
     int getAge() const;
     Plant &operator++();
     Plant operator++(int);
+    vector<Product> collect();
 };
 
 #endif
