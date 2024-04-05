@@ -15,26 +15,18 @@ class Grid{
         int col;
         T defaultValue;
     public:
-        Grid(int r, int c) : row(r), col(c) {
-            buffer.resize(row, vector<T>(col, T()));
+        Grid(int r, int c, T defaultValue) : row(r), col(c), defaultValue(defaultValue) {
+            buffer.resize(row, vector<T>(col));
+            for(int i = 0; i < row; i++){
+                for(int j = 0; j < col; j++){
+                    buffer[i][j] = defaultValue;
+                }
+            }
         }
 
 
         ~Grid() {}
         
-
-        void parseInput(const std::string& input, std::string& alphabets, std::string& numbers) { /* Ini masi butuh kah (?) */
-            alphabets.clear();
-            numbers.clear();
-            for (char c : input) {
-                if (std::isalpha(c)) {
-                    alphabets.push_back(c);
-                } else if (std::isdigit(c)) {
-                    numbers.push_back(c);
-                }
-            }
-        }
-
 
         void put(int x, char y, const T& val) {
             int colIdx = y - 'A';
@@ -64,7 +56,7 @@ class Grid{
                 cerr << "Out of bounds\n";
                 return;
             }
-            buffer[x-1][colIdx] = T();
+            buffer[x-1][colIdx] = defaultValue;
         }
 
 
@@ -79,25 +71,31 @@ class Grid{
 
 
         friend ostream& operator<<(ostream& os, const Grid<T>& g) {
+            // Cetak header kolom
             os << "    ";
             for (int j = 0; j < g.col; ++j) {
                 os << setw(5) << static_cast<char>('A' + j) << " ";
             }
             os << "\n";
 
+            // Cetak garis pemisah
             os << "     ";
             for (int j = 0; j < g.col; ++j) {
                 os << "+-----";
             }
             os << "+\n";
 
+            // Cetak isi grid
             for (int i = 0; i < g.row; ++i) {
+                // Cetak nomor baris
                 os << setw(2) << setfill('0') << (i + 1) << "   |";
                 for (int j = 0; j < g.col; ++j) {
-                    os << " " << setw(3) << g.buffer[i][j] << " |";
+                    // Cetak isi sel
+                    os << " " << setw(3) << setfill(' ') << g.buffer[i][j] << " |";
                 }
                 os << "\n";
 
+                // Cetak garis pemisah setelah setiap baris
                 os << "     ";
                 for (int j = 0; j < g.col; ++j) {
                     os << "+-----";
@@ -106,6 +104,7 @@ class Grid{
             }
             return os;
         }
+
 };
 
 #endif
