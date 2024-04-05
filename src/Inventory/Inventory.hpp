@@ -1,8 +1,8 @@
 #include "../Grid/Grid.hpp"
-template<class T>
-class Inventory: public Grid<T>{
+#include "../Item/Item.hpp"
+class Inventory: public Grid<Item>{
     public:
-        Inventory(int r, int c, T defaultValue): Grid<T>(r, c, defaultValue){}
+        Inventory(int r, int c, Item defaultValue): Grid<Item>(r, c, defaultValue){}
         ~Inventory(){};
         void displayStorage(bool printInfo){
             string title = "[ Penyimpanan ]";

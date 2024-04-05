@@ -1,11 +1,11 @@
 #include "Item.hpp"
-#include "PlantConfig.hpp"
-#include "AnimalConfig.hpp"
-#include "ProductConfig.hpp"
-#include "RecipeConfig.hpp"
+#include "../configClass/PlantConfig.hpp"
+#include "../configClass/AnimalConfig.hpp"
+#include "../configClass/ProductConfig.hpp"
+#include "../configClass/RecipeConfig.hpp"
 
 // class Item
-int countIdItem = 1;
+int Item::countIdItem = 1;
 
 Item::Item(){
     this->itemId = -1;
@@ -57,4 +57,5 @@ int Item::getPrice() const{
 
 ostream& operator<<(ostream& os, const Item& item){
     os << item.code;
+    return os;
 }
