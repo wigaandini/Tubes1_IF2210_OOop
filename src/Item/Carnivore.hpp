@@ -5,7 +5,7 @@
 
 class Carnivore : public Animal{
     public : 
-        void eat(Product product);
+        Carnivore& operator+(Product& product);
 };
 
 #endif

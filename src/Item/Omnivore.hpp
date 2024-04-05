@@ -5,7 +5,8 @@
 
 class Omnivore : public Animal{
     public :
-        void eat(Product product);
+        Omnivore& operator+(Product& product);
+        
 };
 
 #endif

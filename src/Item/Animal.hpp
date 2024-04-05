@@ -9,8 +9,8 @@
 class Animal : public Item{
 private:
     int animalId;
-    float weight;
-    float weighToHarvest;
+    int weight;
+    int weighToHarvest;
     vector<Product> result;
 
 public:
@@ -18,14 +18,13 @@ public:
     Animal(string name, float weight);
     void setAnimalType(AnimalType type);
     void setAnimalId(int animalId);
-    void setWeight(float weight);
-    void setWeightToHarvest(float weightToHarvest);
+    void setWeight(int weight);
+    void setWeightToHarvest(int weightToHarvest);
     AnimalType getAnimalType() const;
     int getAnimalId() const;
-    float getWeight() const;
-    float getWeightToHarvest() const;
-    Animal &operator+(Product product);
-    void eat(Product product);
+    int getWeight() const;
+    int getWeightToHarvest() const;
+    vector<Product>& collect();
 };
 
 #endif

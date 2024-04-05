@@ -4,8 +4,8 @@
 #include "Animal.hpp"
 class Herbivore : public Animal{
     public :
-        Herbivore();
-        void eat(Product product);
+        Herbivore& operator+(Product& product);
+        
 };
 
 #endif

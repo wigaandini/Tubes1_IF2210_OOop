@@ -6,7 +6,8 @@ using namespace std;
 
 enum class ProductType{
     PRODUCT_MATERIAL_PLANT,
-    PRODUCT_FRUIT_PLANT
+    PRODUCT_FRUIT_PLANT,
+    PRODUCT_ANIMAL_PLANT
 };
 
 class ProductConfig{
