@@ -11,6 +11,10 @@ class MainConfig{
         int inventorySize[2];
         int farmSize[2];
         int ranchSize[2];
+
+        MainConfig();
+        MainConfig(int guldenForWin,int weightPlayerToWin,int inventorySize[2],int farmSize[2],int ranchSize[2]);
+        ~MainConfig();
 };
 
 #endif

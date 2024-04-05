@@ -6,8 +6,6 @@
 
 using namespace std;
 
-MainConfig MainConfig::config;
-
 MainConfig::MainConfig(){
 
 }
@@ -26,22 +24,3 @@ MainConfig::~MainConfig(){
 
 }
 
-void MainConfig::loadConfigFromFile(const string& filename){
-    ifstream file(filename);
-    int guldenForWin,weightPlayerToWin;
-    int inventorySize[2];
-    int farmSize[2];
-    int ranchSize[2];
-
-    file >> guldenForWin >> weightPlayerToWin;
-    file >> inventorySize[0] >> inventorySize[1];
-    file >> farmSize[0] >> farmSize[1];
-    file >> ranchSize[0] >> ranchSize[1];
-
-    
-    config = MainConfig(guldenForWin, weightPlayerToWin, inventorySize, farmSize, ranchSize);  
-}
-
-MainConfig MainConfig::getConfig() {
-    return config;
-}
