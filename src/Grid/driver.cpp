@@ -2,7 +2,7 @@
     using namespace std;
 
     int main() {
-        Grid<string> g(6, 8, "000");
+        Grid<string> g(6, 10, "000");
 
         g.put("A01", "HTL");
         g.put("A02", "XXX");
@@ -19,5 +19,6 @@
         
         cout << "Grid setelah diambil dan dihapus" << endl << g << endl;
 
+        
         return 0;
     }

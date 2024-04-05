@@ -9,17 +9,18 @@ using namespace std;
 
 template<class T>
 class Grid{
-    private:
+    protected:
         vector<vector<T>> buffer;
         int row;
         int col;
+        int emptySlot;
         T defaultValue;
         void parseInput(string s, int& intt,char& charr) const{
             charr = s[0];
             intt = stoi(s.substr(1));
         }
     public:
-        Grid(int r, int c, T defaultValue) : row(r), col(c), defaultValue(defaultValue) {
+        Grid(int r, int c, T defaultValue) : row(r), col(c), defaultValue(defaultValue), emptySlot(r*c) {
             buffer.resize(row, vector<T>(col));
             for(int i = 0; i < row; i++){
                 for(int j = 0; j < col; j++){
@@ -30,7 +31,14 @@ class Grid{
 
 
         ~Grid() {}
-        
+
+        bool isEmpty(){
+            return emptySlot == row*col;
+        }
+
+        int countEmpty() const{
+            return emptySlot;
+        }
 
         void put(string slot, const T& val) {
             int x; char y;
@@ -41,6 +49,7 @@ class Grid{
                 return;
             }
             buffer[x-1][colIdx] = val;
+            emptySlot--;
         }
 
 
@@ -54,6 +63,7 @@ class Grid{
             }
             T val = buffer[x-1][colIdx];
             buffer[x-1][colIdx] = defaultValue;
+            emptySlot++;
             return val;
         }
 
@@ -67,6 +77,7 @@ class Grid{
                 return;
             }
             buffer[x-1][colIdx] = defaultValue;
+            emptySlot++;
         }
 
 
@@ -82,7 +93,7 @@ class Grid{
         }
 
 
-        friend ostream& operator<<(ostream& os, const Grid<T>& g) {
+        friend ostream& operator<<(ostream& os, const Grid& g) {
             // Cetak header kolom
             os << "    ";
             for (int j = 0; j < g.col; ++j) {
@@ -102,7 +113,7 @@ class Grid{
                 // Cetak nomor baris
                 os << setw(2) << setfill('0') << (i + 1) << "   |";
                 for (int j = 0; j < g.col; ++j) {
-                    // Cetak isi sel
+                    // Cetak isi selpe
                     os << " " << setw(3) << setfill(' ') << g.buffer[i][j] << " |";
                 }
                 os << "\n";
@@ -118,6 +129,7 @@ class Grid{
         }
 
 };
+
 
 #endif
 
