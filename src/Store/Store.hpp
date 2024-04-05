@@ -6,21 +6,19 @@
 #include <vector>
 #include <map>
 
+
 #include "../Item/Item.hpp"
 using namespace std;
 
 class Store{
     private :
         map<string, vector<Item>> items;
-        static Store store;
 
     public :
         Store();
-        Store(const Store&);
-        void addItem(Item item);
-        static Store getInstance();
-        Item takeItem(string name);
-        friend ostream& operator<<(ostream& os, Store store);
+        Item& takeItem(const string& name, map<string, AnimalConfig>& animalConfig);
+        void addItem(Item& item);
+        friend ostream& operator<<(ostream& os, const Store& store);
 };
 
 #endif
