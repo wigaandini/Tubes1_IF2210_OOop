@@ -21,7 +21,7 @@ void Store::addItem(Item& item)
     }
 }
 
-Item &Store::takeItem(const string &name, map<string, AnimalConfig>& animalConfig)
+Item &Store::takeItem(const string &name)
 {
     vector<string> livingBeings = {"COW", "SHEEP", "HORSE", "RABBIT", "SNAKE", "CHICKEN", "DUCK", "TEAK_TREE", "SANDALWOOD_TREE", "ALOE_TREE", "IRONWOOD_TREE", "APPLE_TREE", "ORANGE_TREE", "BANANA_TREE", "GUAVA_TREE"};
 

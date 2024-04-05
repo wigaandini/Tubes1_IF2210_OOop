@@ -13,6 +13,8 @@ private:
     int durationToHarvest;
     int age;
     vector<Product> result;
+    static map<string, vector<string>> harvestResult;
+
 
 public:
     Plant();
@@ -29,6 +31,8 @@ public:
     Plant &operator++();
     Plant operator++(int);
     vector<Product> collect();
+    static map<string, vector<string>>& getHarvestResult();
+
 };
 
 #endif

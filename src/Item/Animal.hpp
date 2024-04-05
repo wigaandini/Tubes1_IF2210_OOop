@@ -12,6 +12,7 @@ private:
     int weight;
     int weighToHarvest;
     vector<Product> result;
+    static map<string, vector<string>> harvestResult;
 
 public:
     Animal();
@@ -26,6 +27,8 @@ public:
     int getWeight() const;
     int getWeightToHarvest() const;
     vector<Product>& collect();
+    static map<string, vector<string>>& getHarvestResult();
+
 };
 
 #endif

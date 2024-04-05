@@ -16,7 +16,7 @@ class Store{
 
     public :
         Store();
-        Item& takeItem(const string& name, map<string, AnimalConfig>& animalConfig);
+        Item& takeItem(const string& name);
         void addItem(Item& item);
         friend ostream& operator<<(ostream& os, const Store& store);
 };
