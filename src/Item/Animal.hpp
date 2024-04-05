@@ -16,8 +16,7 @@ private:
 
 public:
     Animal();
-    Animal(int weight, AnimalConfig& animalConfig ,vector<Product>& result);
-    Animal(AnimalConfig& animalConfig ,vector<Product>& result);
+    Animal(int weight, string name);
     void setAnimalType(AnimalType type);
     void setAnimalId(int animalId);
     void setWeight(int weight);

@@ -12,14 +12,13 @@ private:
     int plantId;
     int durationToHarvest;
     int age;
-    vector<Product> result;
+    // vector<Product> result;
     static map<string, vector<string>> harvestResult;
 
 
 public:
     Plant();
-    Plant(int age, PlantConfig& plant, vector<Product>& result);
-    Plant(PlantConfig& plant, vector<Product>& result);
+    Plant(int age, string name);
     void setPlantType(PlantType type);
     void setPlantId(int plantId);
     void setDurationToHarvest(int durationToHarvest);

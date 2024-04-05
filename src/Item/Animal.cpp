@@ -1,4 +1,5 @@
 #include "Animal.hpp"
+#include "../Game/Game.hpp"
 // class Animal
 Animal::Animal() : Item(){
     this->animalId = -1;
@@ -7,13 +8,11 @@ Animal::Animal() : Item(){
 }
 
 
-Animal::Animal(int weight, AnimalConfig& animalConfig, vector<Product>& result):Item(), weight(weight), animalId(animalConfig.id), weighToHarvest(animalConfig.weightToHarvest), result(result) {
+Animal::Animal(int weight, string name):Item(Game::getAnimalConfig()[name].name,Game::getAnimalConfig()[name].code,Game::getAnimalConfig()[name].price), weight(weight), animalId(Game::getAnimalConfig()[name].id), weighToHarvest(Game::getAnimalConfig()[name].weightToHarvest){
     
 }
 
-Animal::Animal(AnimalConfig& animalConfig, vector<Product>& result):Item(), weight(0), animalId(animalConfig.id), weighToHarvest(animalConfig.weightToHarvest), result(result) {
-    
-}
+
 
 void Animal::setAnimalId(int animalId){
     this->animalId = animalId;
