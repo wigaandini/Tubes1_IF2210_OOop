@@ -1,6 +1,8 @@
-#include "Player/Player.hpp"
 #ifndef _MAYOR_HPP_
 #define _MAYOR_HPP_
+
+#include "../Player/Player.hpp"
+
 class Mayor: public Player{
     public:
         Mayor();

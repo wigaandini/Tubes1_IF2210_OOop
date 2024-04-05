@@ -5,7 +5,8 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Item.hpp"
+
+#include "../Item/Item.hpp"
 using namespace std;
 
 class Store{

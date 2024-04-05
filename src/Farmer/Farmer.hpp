@@ -1,9 +1,10 @@
-#include "Player/Player.hpp"
-#include "Resident/Resident.hpp"
-#include "Farm/Farm.hpp"
-
 #ifndef _FARMER_HPP_
 #define _FARMER_HPP_
+
+#include "../Player/Player.hpp"
+#include "../Resident/Resident.hpp"
+#include "../Farm/Farm.hpp"
+
 class Farmer: public Player, public Resident{
     private:
         Farm farm;

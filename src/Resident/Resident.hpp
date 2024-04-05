@@ -1,6 +1,7 @@
-#include <iostream>
 #ifndef _RESIDENT_HPP_
 #define _RESIDENT_HPP_
+
+#include <iostream>
 using namespace std;
 
 

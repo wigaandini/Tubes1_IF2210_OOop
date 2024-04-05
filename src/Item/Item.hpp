@@ -4,9 +4,9 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "configClass/PlantConfig.hpp"
-#include "configClass/AnimalConfig.hpp"
-#include "configClass/ProductConfig.hpp"
+#include "../configClass/PlantConfig.hpp"
+#include "../configClass/AnimalConfig.hpp"
+#include "../configClass/ProductConfig.hpp"
 using namespace std;
 
 class Item

@@ -1,8 +1,9 @@
-#include "Inventory/Inventory.hpp"
-#include "Item/Item.hpp"
-#include <iostream>
 #ifndef _PLAYER_HPP_
 #define _PLAYER_HPP_
+
+#include <iostream>
+#include "../Inventory/Inventory.hpp"
+#include "../Item/Item.hpp"
 using namespace std;
 
 class Player{
