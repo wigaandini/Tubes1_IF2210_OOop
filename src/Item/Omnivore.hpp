@@ -5,6 +5,7 @@
 
 class Omnivore : public Animal{
     public :
+        Omnivore(string name, int weight);
         Omnivore& operator+(Product& product);
         
 };
