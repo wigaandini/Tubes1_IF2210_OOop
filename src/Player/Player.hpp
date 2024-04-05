@@ -15,11 +15,11 @@ private:
     string username;
     int weight;
     int gulden;
-    Inventory inventory;
+    Inventory* inventory;
 
 public:
     Player();
-    Player(string username, float weight, int gulden);
+    Player(string username, int weight, int gulden);
     ~Player();
     void eat();
     virtual int tax() = 0;

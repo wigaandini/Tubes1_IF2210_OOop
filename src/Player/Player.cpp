@@ -1,26 +1,50 @@
 #include "Player.hpp"
+#include <iostream>
+#include "../Game/Game.hpp"
+#include "../Inventory/Inventory.hpp"
 
 
-int Player::countPlayer = 0;
+int Player::countIdPlayer = 1;
 
 Player::Player(){
-    playerId = ++countPlayer;
-    username = "anonim";
-    weight = 40;
-    gulden = 50;
-    countPlayer++;
+    this->playerId = countIdPlayer++;
+    this->username = "anonim";
+    this->weight = 40;
+    this->gulden = 50;
+    Item i;
+    this->inventory = new Inventory(Game::getMainConfig().inventorySize[0], Game::getMainConfig().inventorySize[1], i);
 }
 
-Player::Player(string username, float weight, int gulden){
-    this->playerId = ++countPlayer;
+Player::Player(string username, int weight, int gulden){
+    this->playerId = countIdPlayer++;
     this->username = username;
     this->weight = weight;
     this->gulden = gulden;
-    countPlayer++;
+    Item i;
+    this->inventory = new Inventory(Game::getMainConfig().inventorySize[0], Game::getMainConfig().inventorySize[1], i); 
+    countIdPlayer++;
 }
 
 Player::~Player(){
-    countPlayer--;
+    delete this->inventory;
 }
 
-void eat(string slotFood){}
+void Player::eat(){
+    cout << "Pilih makanan dari penyimpanan" << endl;
+    this->inventory->displayStorage(false);
+    cout << endl << "Slot: ";
+    string slot;
+    cin >> slot;
+
+    if(Game::getProductConfig().find(this->inventory->see(slot).getName()) != Game::getProductConfig().end()){
+        int x = Game::getProductConfig()[this->inventory->see(slot).getName()].addedWeight;
+        this->inventory->take(slot);
+        cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl << "Alhasil, berat badan kamu naik menjadi " << this->weight + x << endl;
+    } else{
+        if(this->inventory->see(slot).getItemId() == -1){
+            cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan." << endl;
+        } else {
+           cout << "Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan." << endl;
+        }
+    }
+}

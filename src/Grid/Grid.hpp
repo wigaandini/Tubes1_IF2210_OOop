@@ -29,7 +29,6 @@ class Grid{
             }
         }
 
-
         ~Grid() {}
 
         bool isEmpty(){

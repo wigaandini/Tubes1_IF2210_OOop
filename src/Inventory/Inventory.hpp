@@ -1,5 +1,6 @@
 #include "../Grid/Grid.hpp"
 #include "../Item/Item.hpp"
+
 class Inventory: public Grid<Item>{
     public:
         Inventory(int r, int c, Item defaultValue): Grid<Item>(r, c, defaultValue){}
