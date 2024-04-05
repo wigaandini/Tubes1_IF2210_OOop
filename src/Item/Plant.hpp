@@ -16,7 +16,8 @@ private:
 
 public:
     Plant();
-    Plant(int age, PlantConfig plant, vector<Product> result);
+    Plant(int age, PlantConfig& plant, vector<Product>& result);
+    Plant(PlantConfig& plant, vector<Product>& result);
     void setPlantType(PlantType type);
     void setPlantId(int plantId);
     void setDurationToHarvest(int durationToHarvest);

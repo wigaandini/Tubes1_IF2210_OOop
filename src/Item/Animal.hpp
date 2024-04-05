@@ -15,7 +15,8 @@ private:
 
 public:
     Animal();
-    Animal(string name, float weight);
+    Animal(int weight, AnimalConfig& animalConfig ,vector<Product>& result);
+    Animal(AnimalConfig& animalConfig ,vector<Product>& result);
     void setAnimalType(AnimalType type);
     void setAnimalId(int animalId);
     void setWeight(int weight);

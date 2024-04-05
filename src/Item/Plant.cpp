@@ -6,7 +6,7 @@ Plant::Plant() : Item(){
     this->age = 0;
 }
 
-Plant::Plant(int age, PlantConfig plant, vector<Product> result) : Item(name, plant.code, plant.price){
+Plant::Plant(int age, PlantConfig& plant, vector<Product>& result) : Item(name, plant.code, plant.price){
     this->type = plant.type;
     this->plantId = plant.id;
     this->durationToHarvest = plant.durationToHarvest;
@@ -14,6 +14,13 @@ Plant::Plant(int age, PlantConfig plant, vector<Product> result) : Item(name, pl
     this->result = result;
 }
 
+Plant::Plant(PlantConfig& plant, vector<Product>& result) : Item(name, plant.code, plant.price){
+    this->type = plant.type;
+    this->plantId = plant.id;
+    this->durationToHarvest = plant.durationToHarvest;
+    this->age = 0;
+    this->result = result;
+}
 void Plant::setPlantType(PlantType type){
     this->type = type;
 }

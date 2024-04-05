@@ -28,6 +28,7 @@ public:
     string getName() const;
     string getCode() const;
     int getPrice() const;
+    friend ostream& operator<<(ostream&, const Item&);
 };
 
 #endif

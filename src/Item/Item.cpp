@@ -54,3 +54,7 @@ string Item::getCode() const{
 int Item::getPrice() const{
     return this->price;
 }
+
+ostream& operator<<(ostream& os, const Item& item){
+    os << item.code;
+}

@@ -5,13 +5,15 @@ Animal::Animal() : Item(){
     this->weight = 0;
     this->weighToHarvest = 0;
 }
-      
-// Animal::Animal(string name, float weight) : Item(AnimalConfig::configs[name].name, AnimalConfig::configs[name].code, AnimalConfig::configs[name].price){
-//     this->type = AnimalConfig::configs[name].type;
-//     this->animalId = AnimalConfig::configs[name].id;
-//     this->weight = weight;
-//     this->weighToHarvest = AnimalConfig::configs[name].weightToHarvest;
-// }
+
+
+Animal::Animal(int weight, AnimalConfig& animalConfig, vector<Product>& result):Item(), weight(weight), animalId(animalConfig.id), weighToHarvest(animalConfig.weightToHarvest), result(result) {
+    
+}
+
+Animal::Animal(AnimalConfig& animalConfig, vector<Product>& result):Item(), weight(0), animalId(animalConfig.id), weighToHarvest(animalConfig.weightToHarvest), result(result) {
+    
+}
 
 void Animal::setAnimalId(int animalId){
     this->animalId = animalId;
