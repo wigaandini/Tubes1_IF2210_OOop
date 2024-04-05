@@ -1,7 +1,7 @@
 #ifndef __PRODUCT_HPP_
 #define __PRODUCT_HPP_
 
-#include "../Item/Item.hpp"
+#include "Item.hpp"
 
 class Product : public Item{
 private:
@@ -12,7 +12,7 @@ private:
 
 public:
     Product();
-    Product(string name);
+    Product(ProductConfig product);
     void setProductType(ProductType type);
     void setProductId(int productId);
     void setOrigin(float origin);

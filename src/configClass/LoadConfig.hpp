@@ -1,0 +1,2 @@
+#ifndef __LOADCONFIG_HPP_
+#define __LOADCONFIG_HPP_

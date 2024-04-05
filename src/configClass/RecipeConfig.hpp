@@ -13,6 +13,10 @@ class RecipeConfig {
         string code;
         int price;
         map<string, int> materials;
+
+        RecipeConfig();
+        RecipeConfig(int id, string name, string code, int price, map<string, int> materials);
+        ~RecipeConfig();
 };      
 
 #endif

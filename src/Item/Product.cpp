@@ -7,11 +7,11 @@ Product::Product() : Item(){
     this->addedWeight = 0;
 }
 
-Product::Product(string name) : Item(ProductConfig::configs[name].name, ProductConfig::configs[name].code, ProductConfig::configs[name].price){
-    this->type = ProductConfig::configs[name].type;
-    this->productId = ProductConfig::configs[name].id;
-    this->origin = ProductConfig::configs[name].origin;
-    this->addedWeight = ProductConfig::configs[name].addedWeight;
+Product::Product(ProductConfig product) : Item(product.name, product.code, product.price){
+    this->type = product.type;
+    this->productId = product.id;
+    this->origin = product.origin;
+    this->addedWeight = product.addedWeight;
 }
 
 void Product::setProductType(ProductType type){

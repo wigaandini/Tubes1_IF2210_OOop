@@ -1,7 +1,7 @@
 #ifndef __BUILDING_HPP_
 #define __BUILDING_HPP_
 
-#include "../Item/Item.hpp"
+#include "Item.hpp"
 #include <map>
 #include <string>
 
@@ -10,7 +10,7 @@ private:
     map<string, int> material;
 public:
     Building();
-    Building(string name);
+    Building(RecipeConfig recipe);
     int getQuantityPerMaterial(string materialName) const;
     map<string, int> getBuildingMaterial() const;
 };

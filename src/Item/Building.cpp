@@ -5,8 +5,8 @@ Building::Building():Item(){
 
 }
 
-Building::Building(string name):Item(RecipeConfig::recipes[name].name,RecipeConfig::recipes[name].code,RecipeConfig::recipes[name].price){
-    this->material = RecipeConfig::recipes[name].materials;
+Building::Building(RecipeConfig recipe) : Item(recipe.name, recipe.code, recipe.price){
+    this->material = recipe.materials;
 }
 
 int Building::getQuantityPerMaterial(string materialName) const{
@@ -18,7 +18,6 @@ int Building::getQuantityPerMaterial(string materialName) const{
         return 0;
     }
 }
-
 
 map<string, int> Building::getBuildingMaterial() const{
     return this->material;
