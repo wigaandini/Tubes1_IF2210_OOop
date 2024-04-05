@@ -19,11 +19,20 @@ Plant::Plant() : Item(){
     this->age = 0;
 }
 
+
+
 Plant::Plant(int age, string name) : Item(name, Game::getPlantConfig()[name].code, Game::getPlantConfig()[name].price){
     this->type = Game::getPlantConfig()[name].type;
     this->plantId = Game::getPlantConfig()[name].id;
     this->durationToHarvest = Game::getPlantConfig()[name].durationToHarvest;
     this->age = age;
+}
+
+Plant::Plant(string name) : Item(name, Game::getPlantConfig()[name].code, Game::getPlantConfig()[name].price){
+    this->type = Game::getPlantConfig()[name].type;
+    this->plantId = Game::getPlantConfig()[name].id;
+    this->durationToHarvest = Game::getPlantConfig()[name].durationToHarvest;
+    this->age = 0;
 }
 
 

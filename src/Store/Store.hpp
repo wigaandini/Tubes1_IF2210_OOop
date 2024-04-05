@@ -19,6 +19,8 @@ class Store{
         Item& takeItem(const string& name);
         void addItem(Item& item);
         friend ostream& operator<<(ostream& os, const Store& store);
+        bool checkIsLivingBeings(const string& name);
+
 };
 
 #endif
