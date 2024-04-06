@@ -36,3 +36,25 @@ bool Inventory::checkInventoryEdible(){
     }
     return false;
 }
+
+bool Inventory::checkInventoryAnimal(){
+    for(int i = 0; i < this->row; i++){
+        for(int j = 0; j < this->col; j++){
+            if(Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::OMNIVORE){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Inventory::checkInventoryPlant(){
+    for(int i = 0; i < this->row; i++){
+        for(int j = 0; j < this->col; j++){
+            if(Game::getPlantConfig()[this->buffer[i][j].getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j].getName()].type == PlantType::FRUIT_PLANT){
+                return true;
+            }
+        }
+    }
+    return false;
+}

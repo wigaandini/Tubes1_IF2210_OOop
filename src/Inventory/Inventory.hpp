@@ -1,5 +1,5 @@
-#ifndef INVENTORY_HPP
-#define INVENTORY_HPP
+#ifndef __INVENTORY_HPP_
+#define __INVENTORY_HPP_
 
 #include "../Grid/Grid.hpp"
 #include "../Item/Item.hpp"
@@ -12,6 +12,8 @@ public:
     ~Inventory();
     void displayStorage(bool printInfo);
     bool checkInventoryEdible();
+    bool checkInventoryAnimal();
+    bool checkInventoryPlant();
 };
 
 #endif
