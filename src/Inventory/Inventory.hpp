@@ -16,6 +16,9 @@ public:
     bool checkInventoryPlant();
 
     void putRandom(const Item& );
+
+    bool Inventory::checkInventoryFruit();
+    bool Inventory::checkInventoryMeat();
 };
 
 #endif

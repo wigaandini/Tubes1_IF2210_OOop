@@ -68,3 +68,26 @@ void Inventory::putRandom(const Item& item){
         }
     }
 }
+
+bool Inventory::checkInventoryFruit(){
+    for(int i = 0; i < this->row; i++){
+        for(int j = 0; j < this->col; j++){
+            if(Game::getProductConfig()[this->buffer[i][j].getName()].type == ProductType::PRODUCT_FRUIT_PLANT ){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+bool Inventory::checkInventoryMeat(){
+    for(int i = 0; i < this->row; i++){
+        for(int j = 0; j < this->col; j++){
+            if(Game::getProductConfig()[this->buffer[i][j].getName()].type == ProductType::PRODUCT_ANIMAL){
+                return true;
+            }
+        }
+    }
+    return false;
+}

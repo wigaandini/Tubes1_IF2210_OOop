@@ -25,7 +25,7 @@ Animal::Animal(int weight, string name) : Item(Game::getAnimalConfig()[name].nam
 }
 
 Animal::~Animal(){
-    
+
 }
 
 void Animal::setAnimalId(int animalId)
@@ -80,4 +80,8 @@ bool Animal::checkReadyToHarvest()
 
 map<string, vector<string>>& Animal::getHarvestResult(){
     return harvestResult;
+}
+
+void Animal::eat(const Product& food){
+    this->setWeight(this->getWeight() + food.getAddedWeight());
 }

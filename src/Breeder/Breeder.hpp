@@ -7,7 +7,7 @@
 
 class Breeder: public Player{
     private:
-        Ranch ranch;
+        Ranch *ranch;
     public:
         Breeder();
         Breeder(int playerId, string username, float weight, int gulden);

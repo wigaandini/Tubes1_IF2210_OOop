@@ -30,6 +30,8 @@ public:
     bool checkReadyToHarvest();
     static map<string, vector<string>>& getHarvestResult();
 
+    virtual void eat(const Product& food);
+
 };
 
 #endif

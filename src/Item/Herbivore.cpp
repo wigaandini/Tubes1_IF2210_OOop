@@ -4,9 +4,9 @@ Herbivore::Herbivore(string name, int weight): Animal(weight,name){
 
 }
 
-Herbivore& Herbivore::operator+(Product& product){
+void Herbivore::eat(Product& product){
     if (product.getProductType() == ProductType::PRODUCT_FRUIT_PLANT){
-        this->setWeight(this->getWeight() + product.getAddedWeight());
+        Animal::eat(product);
     } else {
         throw "";
     }
@@ -14,6 +14,6 @@ Herbivore& Herbivore::operator+(Product& product){
 }
 
 Herbivore::~Herbivore(){
-    
+
 }
 
