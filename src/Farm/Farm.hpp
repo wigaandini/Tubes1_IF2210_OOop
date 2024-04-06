@@ -4,6 +4,7 @@
 #include "../Grid/Grid.hpp"
 #include "../Item/Plant.hpp"
 #include "../PColor/pcolor.h"
+#include <map>
 using namespace std;
 
 class Farm : public Grid<Plant> {
@@ -11,7 +12,8 @@ public:
     Farm(int r, int c, Plant defaultValue);
     ~Farm();
     void displayStorage(bool printInfo);
-    bool checkAnyReadyToHarvest();
+    bool checkPlantReadyToHarvest();
+    map<string, int> countPlant();
 };
 
 #endif 

@@ -14,6 +14,8 @@ public:
     bool checkInventoryEdible();
     bool checkInventoryAnimal();
     bool checkInventoryPlant();
+
+    void putRandom(const Item& );
 };
 
 #endif

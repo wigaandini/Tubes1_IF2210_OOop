@@ -70,7 +70,7 @@ void Ranch::displayStorage(bool printInfo) {
     }
 }
 
-bool Ranch::checkAnyReadyToHarvest(){
+bool Ranch::checkAnimalReadyToHarvest(){
     for (int i = 0; i < this->row; i++)
     {
        for (int j = 0; j < this->col; j++)
@@ -81,4 +81,20 @@ bool Ranch::checkAnyReadyToHarvest(){
        }
     }
     return false;
+}
+
+map<string, int> Ranch::countAnimal(){
+    map<string, int> animalCount;
+    for (int i = 0; i < this->row; i++) {
+        for (int j = 0; j < this->col; j++) {
+            if (this->buffer[i][j].checkReadyToHarvest()) {
+                string animalName = this->buffer[i][j].getName();
+                if (animalCount.find(animalName) == animalCount.end()) {
+                    animalCount[animalName] = 1;
+                } else {
+                    animalCount[animalName]++;
+                }
+            }
+        }
+    }
 }

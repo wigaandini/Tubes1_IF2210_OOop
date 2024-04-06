@@ -11,7 +11,8 @@ public:
     Ranch(int r, int c, Animal defaultValue);
     ~Ranch();
     void displayStorage(bool printInfo);
-    bool checkAnyReadyToHarvest();
+    bool checkAnimalReadyToHarvest();
+    map<string, int> countAnimal();
 };
 
 #endif

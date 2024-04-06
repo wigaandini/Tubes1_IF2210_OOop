@@ -58,3 +58,13 @@ bool Inventory::checkInventoryPlant(){
     }
     return false;
 }
+
+void Inventory::putRandom(const Item& item){
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col ; j++){
+            if(this->buffer[i][j].getItemId() == -1){
+                this->buffer[i][j] = item;
+            }
+        }
+    }
+}

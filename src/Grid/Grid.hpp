@@ -59,6 +59,7 @@ class Grid{
             emptySlot--;
         }
 
+        
 
         T take(string slot) {
             int x; char y;
