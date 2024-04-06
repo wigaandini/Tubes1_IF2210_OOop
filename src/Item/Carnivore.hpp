@@ -7,8 +7,9 @@ class Carnivore : public Animal{
     public : 
         Carnivore(string name, int weight);
         Carnivore(string name);
-        Carnivore& operator+(Product& product);
+        void eat(Product& product);
         ~Carnivore();
+
 };
 
 #endif

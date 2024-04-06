@@ -8,7 +8,7 @@ using namespace std;
 
 class Player
 {
-private:
+protected:
     static int countIdPlayer;
     int playerId;
     string username;

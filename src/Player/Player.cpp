@@ -28,31 +28,31 @@ Player::~Player(){
     delete this->inventory;
 }
 
-void Player::eat(){
-    cout << "Pilih makanan dari penyimpanan" << endl;
-    this->inventory->displayStorage(false);
-    cout << endl << "Slot: ";
-    string slot;
-    cin >> slot;
 
-    if(this->inventory->see(slot).getItemId() == -1){
-        cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan." << endl;
-    } else{
-        if(Game::getProductConfig().find(this->inventory->see(slot).getName()) != Game::getProductConfig().end()){
-            
-            int x = Game::getProductConfig()[this->inventory->see(slot).getName()].addedWeight;
-        
-            this->inventory->take(slot);
-            cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl << "Alhasil, berat badan kamu naik menjadi " << this->weight + x << endl;
-        } else{
-           cout << "Apa yang kamu lakukan?!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan." << endl;
+void Player::eat(){
+    if(this->inventory->isEmpty()){
+        cout << "Inventory anda kosong" << endl;
+    } else if (!this->inventory->checkInventoryEdible()){
+        cout << "Inventory anda tidak ada yang dapat dimakan" << endl;
+    }else {
+        cout << "Pilih makanan dari penyimpanan" << endl;
+        this->inventory->displayStorage(false);
+        bool success = false;
+        while(!success){
+            cout << endl << "Slot: ";
+            string slot;
+            cin >> slot;
+            if(this->inventory->see(slot).getItemId() == -1){
+                cout << endl << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan." << endl;
+            } else{
+                if(Game::getProductConfig().find(this->inventory->see(slot).getName()) != Game::getProductConfig().end() && Game::getProductConfig()[this->inventory->see(slot).getName()].type != ProductType::PRODUCT_MATERIAL_PLANT){
+                    int x = Game::getProductConfig()[this->inventory->take(slot).getName()].addedWeight;
+                    cout << endl << "Dengan lahapnya, kamu memakanan hidangan itu" << endl << "Alhasil, berat badan kamu naik menjadi " << this->weight + x << endl;
+                    success = true;
+                } else {
+                    cout << endl << "Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan." << endl;
+                }
+            }
         }
     }
-}
-
-void Player::buy() {
-    cout << "halo";
-}
-void Player::sell() {
-
 }

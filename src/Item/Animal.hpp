@@ -16,7 +16,7 @@ private:
 public:
     Animal();
     Animal(int weight, string name);
-    ~Animal();
+    virtual ~Animal();
     void setAnimalType(AnimalType type);
     void setAnimalId(int animalId);
     void setWeight(int weight);
@@ -28,6 +28,8 @@ public:
     vector<Product> collect();
     bool checkReadyToHarvest();
     static map<string, vector<string>>& getHarvestResult();
+
+    virtual void eat(const Product& food);
 
 };
 

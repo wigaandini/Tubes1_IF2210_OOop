@@ -9,20 +9,20 @@ Omnivore::Omnivore(string name):Animal(0,name){
 
 }
 
-Omnivore &Omnivore::operator+(Product &product)
+
+void Omnivore::eat(Product &product)
 {
-    if (product.getProductType() != ProductType::PRODUCT_MATERIAL_PLANT)
+    if (product.getProductType() != ProductType::PRODUCT_ANIMAL && product.getProductType() != ProductType::PRODUCT_FRUIT_PLANT  )
     {
         throw "";
     }
     else
     {
-        this->setWeight(this->getWeight() + product.getAddedWeight());
+        Animal::eat(product);
     }
 
-    return *this;
 }
 
 Omnivore::~Omnivore(){
-    
+
 }

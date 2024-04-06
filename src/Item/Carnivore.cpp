@@ -9,9 +9,9 @@ Carnivore::Carnivore(string name) :Animal(0, name){
     
 }
 
-Carnivore& Carnivore::operator+(Product& product){
+void Carnivore::eat(Product& product){
     if (product.getProductType() == ProductType::PRODUCT_ANIMAL){
-        this->setWeight(this->getWeight() + product.getAddedWeight());
+        Animal::eat(product);
     } else {
         throw "";
     }
@@ -20,5 +20,5 @@ Carnivore& Carnivore::operator+(Product& product){
 }
 
 Carnivore::~Carnivore(){
-    
+
 }

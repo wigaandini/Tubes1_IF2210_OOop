@@ -21,7 +21,7 @@ protected:
 public:
     Item();
     Item(string name, string code, int price);
-    ~Item();
+    virtual ~Item();
     void setItemId(int itemId);
     void setName(string name);
     void setCode(string code);
