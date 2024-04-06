@@ -6,10 +6,10 @@
 
 class Farmer: public Player {
     private:
-        Farm farm;
+        Farm *farm;
     public:
         Farmer();
-        Farmer(int playerId, string username, float weight, int gulden);
+        Farmer(string username, int weight, int gulden);
         ~Farmer();
         void plant();
         void sell(Store&);
