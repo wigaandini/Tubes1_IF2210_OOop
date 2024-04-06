@@ -17,7 +17,7 @@ private:
 public:
     Animal();
     Animal(int weight, string name);
-    ~Animal();
+    virtual ~Animal();
     void setAnimalType(AnimalType type);
     void setAnimalId(int animalId);
     void setWeight(int weight);
