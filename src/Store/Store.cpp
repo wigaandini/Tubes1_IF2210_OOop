@@ -5,15 +5,14 @@
 #include "../Item/Carnivore.hpp"
 #include "../Item/Omnivore.hpp"
 
+
 Store::Store()
 {
 }
 
-void Store::addItem(Item& item)
+void Store::addItem(Item &item)
 {
-    vector<string> livingBeings = {"COW", "SHEEP", "HORSE", "RABBIT", "SNAKE", "CHICKEN", "DUCK", "TEAK_TREE", "SANDALWOOD_TREE", "ALOE_TREE", "IRONWOOD_TREE", "APPLE_TREE", "ORANGE_TREE", "BANANA_TREE", "GUAVA_TREE"};
-
-    auto it = find(livingBeings.begin(), livingBeings.end(), item.getName());
+   
 
     if (!this->checkIsLivingBeings(item.getName()))
     {
@@ -21,40 +20,62 @@ void Store::addItem(Item& item)
     }
 }
 
-Item &Store::takeItem(const string &name)
+vector<Item> Store::takeItem(const string &name, const int &num)
 {
 
-    if (!this->checkIsLivingBeings(name))
+    if ((int) this->items[name].size() < num)
     {
-        if (this->items[name].size() == 0){
-            throw "";
-        }
-        Item item = this->items[name].front();
-        this->items[name].erase(this->items[name].begin());
+        throw ""; // stock tidak cukup
+    }
 
-        return item;
-    } else {
-        if (name == "COW" || name == "SHEEP" || name == "HORSE" || name == "RABBIT"){
-            Herbivore animal(name);
-            return animal;
-        } else if (name == "SNAKE"){
-            Carnivore animal(name);
-            return animal;
-        } else {
-            Omnivore animal(name);
-            return animal;
+    vector<Item> items;
+
+    for (int i = 0; i < num; i++)
+    {
+
+        if (!this->checkIsLivingBeings(name))
+        {
+
+            Item item = this->items[name].front();
+            this->items[name].erase(this->items[name].begin());
+            items.push_back(item);
+        }
+        else
+        {
+
+            if (name == "COW" || name == "SHEEP" || name == "HORSE" || name == "RABBIT")
+            {
+                Herbivore animal(name);
+                items.push_back(animal);
+            }
+            else if (name == "SNAKE")
+            {
+                Carnivore animal(name);
+                items.push_back(animal);
+            }
+            else
+            {
+                Omnivore animal(name);
+                items.push_back(animal);
+            }
         }
     }
+
+    return items;
 }
 
-bool Store::checkIsLivingBeings(const string& name){
+bool Store::checkIsLivingBeings(const string &name)
+{
     vector<string> livingBeings = {"COW", "SHEEP", "HORSE", "RABBIT", "SNAKE", "CHICKEN", "DUCK", "TEAK_TREE", "SANDALWOOD_TREE", "ALOE_TREE", "IRONWOOD_TREE", "APPLE_TREE", "ORANGE_TREE", "BANANA_TREE", "GUAVA_TREE"};
 
     auto it = find(livingBeings.begin(), livingBeings.end(), name);
 
-    if (it == livingBeings.end()){
+    if (it == livingBeings.end())
+    {
         return false;
-    } else {
+    }
+    else
+    {
         return true;
     }
 }

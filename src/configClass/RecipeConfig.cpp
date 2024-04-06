@@ -6,7 +6,10 @@
 using namespace std;
 
 RecipeConfig::RecipeConfig(){
-
+    this->id = -1;
+    this->name = "";
+    this->code = "";
+    this->price = 0;
 }
 
 RecipeConfig::RecipeConfig(int id, string name, string code, int price, map<string, int> materials){

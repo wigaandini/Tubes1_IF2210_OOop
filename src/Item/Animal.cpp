@@ -20,7 +20,7 @@ Animal::Animal() : Item()
     this->weighToHarvest = 0;
 }
 
-Animal::Animal(int weight, string name) : Item(Game::getAnimalConfig()[name].name, Game::getAnimalConfig()[name].code, Game::getAnimalConfig()[name].price), weight(weight), animalId(Game::getAnimalConfig()[name].id), weighToHarvest(Game::getAnimalConfig()[name].weightToHarvest)
+Animal::Animal(int weight, string name) : Item(Game::getAnimalConfig()[name].name, Game::getAnimalConfig()[name].code, Game::getAnimalConfig()[name].price), animalId(Game::getAnimalConfig()[name].id), weight(weight), weighToHarvest(Game::getAnimalConfig()[name].weightToHarvest)
 {
 }
 
@@ -58,10 +58,10 @@ int Animal::getWeightToHarvest() const
     return this->weighToHarvest;
 }
 
-vector<Product> &Animal::collect()
+vector<Product> Animal::collect()
 {
     vector<Product> tempP;
-    for (int i = 0; i < harvestResult[this->name].size(); i++)
+    for (unsigned int i = 0; i < harvestResult[this->name].size(); i++)
     {
         tempP.push_back(Product(harvestResult[this->name][i]));
     }

@@ -4,18 +4,18 @@
 #include "../Player/Player.hpp"
 #include <vector>
 #include <map>
-#include "../configClass/RecipeConfig.hpp"
 
 class Mayor: public Player{
     public:
         Mayor();
         Mayor(int playerId, string username, float weight, int gulden);
         ~Mayor();
-        void taxCollection(vector<Player>&);
-        void buildBuilding(map<string, RecipeConfig>);
+        void taxCollection();
+        void buildBuilding();
         bool checkGuldenEnough(int);
-        void addPlayer(vector<Player>&);
-        void sell(Store&);
-        void buy(Store&);
+        void addPlayer();
+        void sell();
+        void buy();
+        int tax();
 };
 #endif

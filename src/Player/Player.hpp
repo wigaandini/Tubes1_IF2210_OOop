@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "../Inventory/Inventory.hpp"
-#include "../Item/Item.hpp"
 #include "../Store/Store.hpp"
 using namespace std;
 
@@ -20,10 +19,9 @@ private:
 public:
     Player();
     Player(string username, int weight, int gulden);
-    ~Player();
+    virtual ~Player();
     void eat();
-    virtual int tax() = 0;
-    virtual void buy(Store&) = 0;
-    virtual void sell(Store&) = 0;
+    virtual void buy() ;
+    virtual void sell() ;
 };
 #endif

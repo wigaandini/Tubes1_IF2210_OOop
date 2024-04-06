@@ -17,6 +17,17 @@ AnimalConfig::AnimalConfig(int id, string name, AnimalType type, int price, stri
 
 AnimalConfig::~AnimalConfig()
 {
+    
+}
+
+AnimalConfig::AnimalConfig()
+{
+    this->id = -1;
+    this->name = "";
+    this->type = AnimalType::CARNIVORE;
+    this->price = 0;
+    this->code = "";
+    this->weightToHarvest = 0;
 }
 
 

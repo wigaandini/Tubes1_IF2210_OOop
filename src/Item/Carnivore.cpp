@@ -10,12 +10,13 @@ Carnivore::Carnivore(string name) :Animal(0, name){
 }
 
 Carnivore& Carnivore::operator+(Product& product){
-    if (product.getProductType() == ProductType::PRODUCT_ANIMAL_PLANT){
+    if (product.getProductType() == ProductType::PRODUCT_ANIMAL){
         this->setWeight(this->getWeight() + product.getAddedWeight());
     } else {
         throw "";
     }
 
+    return *this;
 }
 
 Carnivore::~Carnivore(){

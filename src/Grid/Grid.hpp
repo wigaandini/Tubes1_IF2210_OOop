@@ -20,7 +20,7 @@ class Grid{
             intt = stoi(s.substr(1));
         }
     public:
-        Grid(int r, int c, T defaultValue) : row(r), col(c), defaultValue(defaultValue), emptySlot(r*c) {
+        Grid(int r, int c, T defaultValue) : row(r), col(c), emptySlot(r*c), defaultValue(defaultValue) {
             buffer.resize(row, vector<T>(col));
             for(int i = 0; i < row; i++){
                 for(int j = 0; j < col; j++){

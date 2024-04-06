@@ -2,6 +2,9 @@
 #define _MAINCONFIG_HPP_
 
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 using namespace std;
 
 class MainConfig{

@@ -15,6 +15,8 @@ Herbivore& Herbivore::operator+(Product& product){
         throw "";
     }
 
+    return *this;
+
 }
 
 Herbivore::~Herbivore(){

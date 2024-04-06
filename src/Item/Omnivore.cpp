@@ -19,6 +19,8 @@ Omnivore &Omnivore::operator+(Product &product)
     {
         this->setWeight(this->getWeight() + product.getAddedWeight());
     }
+
+    return *this;
 }
 
 Omnivore::~Omnivore(){

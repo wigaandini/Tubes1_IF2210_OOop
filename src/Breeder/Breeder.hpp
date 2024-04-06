@@ -2,10 +2,10 @@
 #define _BREEDER_HPP_
 
 #include "../Player/Player.hpp"
-#include "../Resident/Resident.hpp"
 #include "../Ranch/Ranch.hpp"
+#include "../Resident/Resident.hpp"
 
-class Breeder: public Player{
+class Breeder: public Player, public Resident{
     private:
         Ranch ranch;
     public:

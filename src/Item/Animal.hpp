@@ -1,7 +1,6 @@
 #ifndef __ANIMAL_HPP_
 #define __ANIMAL_HPP_
 
-#include "Item.hpp"
 #include "Product.hpp"
 #include <string>
 #include <vector>
@@ -26,7 +25,7 @@ public:
     int getAnimalId() const;
     int getWeight() const;
     int getWeightToHarvest() const;
-    vector<Product>& collect();
+    vector<Product> collect();
     bool checkReadyToHarvest();
     static map<string, vector<string>>& getHarvestResult();
 

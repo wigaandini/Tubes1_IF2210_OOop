@@ -7,19 +7,20 @@
 #include <map>
 
 
+
 #include "../Item/Item.hpp"
 using namespace std;
 
 class Store{
     private :
         map<string, vector<Item>> items;
+        bool checkIsLivingBeings(const string& name);
 
     public :
         Store();
-        Item& takeItem(const string& name);
+        vector<Item> takeItem(const string& name, const int&);
         void addItem(Item& item);
         friend ostream& operator<<(ostream& os, const Store& store);
-        bool checkIsLivingBeings(const string& name);
 
 };
 

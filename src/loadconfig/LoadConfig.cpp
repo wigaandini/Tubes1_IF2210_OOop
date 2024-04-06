@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include "../Game/Game.hpp"
 using namespace std;
 
 void LoadConfig::loadAnimalConfig(string filename){
@@ -129,4 +130,8 @@ void loadRecipeConfig(string filename){
     }
 
     Game::setRecipe(recipes);
+}
+
+LoadConfig::LoadConfig(){
+
 }

@@ -6,7 +6,6 @@
 #include "../configClass/ProductConfig.hpp"
 #include "../configClass/MainConfig.hpp"
 #include "../configClass/RecipeConfig.hpp"
-#include "../Game/Game.hpp"
 #include <map>
 
 class LoadConfig{
@@ -16,6 +15,7 @@ class LoadConfig{
         void loadProductConfig(string filename);
         void loadMainConfig(string filename);
         void loadRecipeConfig(string filename);
+        LoadConfig();
 };      
 
 #endif

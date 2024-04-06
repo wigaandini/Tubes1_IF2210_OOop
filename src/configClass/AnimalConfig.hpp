@@ -21,6 +21,7 @@ public:
 
     AnimalConfig(int id, string name, AnimalType type, int price, string code, int weightToHarvest);
     ~AnimalConfig();
+    AnimalConfig();
 };
 
 #endif

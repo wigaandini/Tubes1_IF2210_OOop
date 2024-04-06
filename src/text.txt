@@ -1,0 +1,1 @@
+ g++ -o main  ./Command/Command.cpp ./Mayor/Mayor.cpp ./configClass/MainConfig.cpp ./Store/Store.cpp ./Item/item.cpp ./configClass/ProductConfig.cpp ./configClass/RecipeConfig.cpp ./configClass/PlantConfig.cpp ./Item/Animal.cpp ./Item/Omnivore.cpp ./Item/Herbivore.cpp ./Item/Carnivore.cpp ./loadconfig/LoadConfig.cpp main.cpp ./Game/Game.cpp

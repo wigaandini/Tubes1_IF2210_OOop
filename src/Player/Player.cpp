@@ -1,7 +1,5 @@
 #include "Player.hpp"
-#include <iostream>
 #include "../Game/Game.hpp"
-#include "../Inventory/Inventory.hpp"
 
 
 int Player::countIdPlayer = 1;
@@ -12,6 +10,7 @@ Player::Player(){
     this->weight = 40;
     this->gulden = 50;
     Item i;
+
     this->inventory = new Inventory(Game::getMainConfig().inventorySize[0], Game::getMainConfig().inventorySize[1], i);
 }
 
@@ -40,11 +39,20 @@ void Player::eat(){
         cout << "Kamu mengambil harapan kosong dari penyimpanan." << endl << "Silahkan masukan slot yang berisi makanan." << endl;
     } else{
         if(Game::getProductConfig().find(this->inventory->see(slot).getName()) != Game::getProductConfig().end()){
+            
             int x = Game::getProductConfig()[this->inventory->see(slot).getName()].addedWeight;
+        
             this->inventory->take(slot);
             cout << "Dengan lahapnya, kamu memakanan hidangan itu" << endl << "Alhasil, berat badan kamu naik menjadi " << this->weight + x << endl;
         } else{
-           cout << "Apa yang kamu lakukan??!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan." << endl;
+           cout << "Apa yang kamu lakukan?!! Kamu mencoba untuk memakan itu?!!" << endl << "Silahkan masukan slot yang berisi makanan." << endl;
         }
     }
+}
+
+void Player::buy() {
+    cout << "halo";
+}
+void Player::sell() {
+
 }
