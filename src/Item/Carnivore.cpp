@@ -16,7 +16,6 @@ void Carnivore::eat(Product& product){
         throw "";
     }
 
-    return *this;
 }
 
 Carnivore::~Carnivore(){

@@ -21,7 +21,6 @@ public:
     void setAnimalId(int animalId);
     void setWeight(int weight);
     void setWeightToHarvest(int weightToHarvest);
-    AnimalType getAnimalType() const;
     int getAnimalId() const;
     int getWeight() const;
     int getWeightToHarvest() const;

@@ -88,16 +88,15 @@ class Grid{
             emptySlot++;
         }
 
-
-        T see(string slot) const {
+        T& see(string slot)  {
             int x; char y;
             parseInput(slot, x, y);
             int colIdx = y - 'A'; 
             if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
                 cerr << "Out of bounds\n";
-                return T();
+                return defaultValue;
             }
-            return buffer[x-1][colIdx];
+            return (buffer[x-1][colIdx]);
         }
 
 

@@ -9,10 +9,11 @@ using namespace std;
 class Command
 {
 private:
-    bool checkCommandBreeder(const string&);
-    bool checkCommandMayor(const string&);
-    bool checkCommandFarmer(const string&);
-    
+    vector<string> playerCommand;
+    vector<string> mayorCommand;
+    vector<string> breederCommand;
+    vector<string> farmerCommand;
+
     
 public:
     Command();

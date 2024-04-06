@@ -3,7 +3,6 @@
 
 #include "../Grid/Grid.hpp"
 #include "../Item/Animal.hpp"
-#include "../PColor/pcolor.h"
 using namespace std;
 
 class Ranch: public Grid<Animal> {

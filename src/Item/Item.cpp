@@ -1,9 +1,4 @@
 #include "Item.hpp"
-#include "../configClass/PlantConfig.hpp"
-#include "../configClass/AnimalConfig.hpp"
-#include "../configClass/ProductConfig.hpp"
-#include "../configClass/RecipeConfig.hpp"
-
 // class Item
 int Item::countIdItem = 1;
 

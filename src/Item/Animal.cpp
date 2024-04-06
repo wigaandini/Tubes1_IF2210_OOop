@@ -85,3 +85,4 @@ map<string, vector<string>>& Animal::getHarvestResult(){
 void Animal::eat(const Product& food){
     this->setWeight(this->getWeight() + food.getAddedWeight());
 }
+

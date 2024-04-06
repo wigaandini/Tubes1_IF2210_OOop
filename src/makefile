@@ -26,7 +26,7 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp) \
        $(wildcard $(SRC_DIR)/Item/*.cpp) \
        $(wildcard $(SRC_DIR)/loadconfig/*.cpp) \
        $(wildcard $(SRC_DIR)/Mayor/*.cpp) \
-       $(wildcard $(SRC_DIR)/PColor/*.cpp) \
+       $(wildcard $(SRC_DIR)/PColor/*.c) \
        $(wildcard $(SRC_DIR)/Player/*.cpp) \
        $(wildcard $(SRC_DIR)/Ranch/*.cpp) \
        $(wildcard $(SRC_DIR)/Resident/*.cpp) \
@@ -49,5 +49,5 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 # Clean build files
 clean:
-	@rm -rf $(OBJ_DIR)/*.o
+	@find $(OBJ_DIR) -type f -name '*.o' -delete
 	@rm -f $(TARGET)

@@ -1,4 +1,6 @@
 #include "Farm.hpp"
+#include "../PColor/pcolor.h"
+
 
 Farm::Farm(int r, int c, Plant defaultValue) : Grid<Plant>(r, c, defaultValue) {}
 
@@ -93,4 +95,5 @@ map<string, int> Farm::countPlant(){
             }
         }
     }
+    return plantCount;
 }

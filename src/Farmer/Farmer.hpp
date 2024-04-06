@@ -13,8 +13,8 @@ class Farmer: public Player, public Resident {
         Farmer(string username, int weight, int gulden);
         ~Farmer();
         void plant();
-        void sell(Store&);
-        void buy(Store&);
+        void sell();
+        void buy();
         void harvest();
         int tax();
 };

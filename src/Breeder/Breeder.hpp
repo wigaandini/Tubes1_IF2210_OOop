@@ -4,6 +4,8 @@
 #include "../Player/Player.hpp"
 #include "../Ranch/Ranch.hpp"
 #include "../Resident/Resident.hpp"
+using namespace std;
+
 
 class Breeder: public Player, public Resident{
     private:
@@ -14,8 +16,8 @@ class Breeder: public Player, public Resident{
         ~Breeder();
         void cattle();
         void feedAnimal();
-        void sell(Store&);
-        void buy(Store&);
+        void sell();
+        void buy();
         void harvest();
         int tax();
 };

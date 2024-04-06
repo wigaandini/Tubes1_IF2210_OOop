@@ -15,7 +15,6 @@ void Herbivore::eat(Product& product){
         throw "";
     }
 
-    return *this;
 
 }
 

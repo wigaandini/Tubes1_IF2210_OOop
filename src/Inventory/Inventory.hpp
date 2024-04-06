@@ -3,8 +3,6 @@
 
 #include "../Grid/Grid.hpp"
 #include "../Item/Item.hpp"
-#include <string>
-#include <iostream>
 
 class Inventory: public Grid<Item> {
 public:
@@ -17,8 +15,8 @@ public:
 
     void putRandom(const Item& );
 
-    bool Inventory::checkInventoryFruit();
-    bool Inventory::checkInventoryMeat();
+    bool checkInventoryFruit();
+    bool checkInventoryMeat();
 };
 
 #endif

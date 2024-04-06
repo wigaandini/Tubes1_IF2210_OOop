@@ -1,4 +1,6 @@
 #include "Ranch.hpp"
+#include "../PColor/pcolor.h"
+
 
 Ranch::Ranch(int r, int c, Animal defaultValue) : Grid<Animal>(r, c, defaultValue) {}
 
@@ -97,4 +99,6 @@ map<string, int> Ranch::countAnimal(){
             }
         }
     }
+
+    return animalCount;
 }

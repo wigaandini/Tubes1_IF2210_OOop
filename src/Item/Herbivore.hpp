@@ -7,7 +7,7 @@ class Herbivore : public Animal{
         Herbivore(string name, int weight);
         Herbivore(string name);
         void eat(Product& product);
-        ~Herbivore();
+        virtual ~Herbivore();
         
 };
 

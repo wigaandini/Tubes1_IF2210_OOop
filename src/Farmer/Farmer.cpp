@@ -54,7 +54,7 @@ void Farmer::plant(){
                     }
                     success = true;
                 } else {
-                    cout << "Apa yang kamu lakukan??!! Kamu mencoba untuk menanam itu?!!" << endl << "Silahkan masukan slot yang berisi tanaman." << endl;
+                    cout << "Apa yang kamu lakukan?!! Kamu mencoba untuk menanam itu?!!" << endl << "Silahkan masukan slot yang berisi tanaman." << endl;
                 }
             }
         }
@@ -62,11 +62,11 @@ void Farmer::plant(){
 
 }
 
-void Farmer::sell(Store&){
+void Farmer::sell(){
 
 }
 
-void Farmer::buy(Store&){
+void Farmer::buy(){
 
 }
 
@@ -132,7 +132,7 @@ void Farmer::harvest(){
             }
 
             vector<Product> tempP = this->farm->take(slot).collect();
-            int k = 0;
+            unsigned int k = 0;
             while( k < tempP.size()){
                 this->inventory->putRandom(tempP[k]);
                 k++;
@@ -152,6 +152,6 @@ void Farmer::harvest(){
 }
 
 int Farmer::tax(){
-
+    return 0;
 }
 
