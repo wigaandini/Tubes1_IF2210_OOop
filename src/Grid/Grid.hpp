@@ -1,6 +1,7 @@
 #ifndef _GRID_HPP_
 #define _GRID_HPP_
 
+#include "GridException.hpp"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -48,28 +49,39 @@ class Grid{
         }
 
         void put(string slot, const T& val) {
+            if(emptySlot == 0){
+                throw GridFullException();
+            }
             int x; char y;
             parseInput(slot, x, y);
             int colIdx = y - 'A';
-            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
-                cerr << "Out of bounds\n"; /* Ntar ganti pake exception index */
-                return;
+            if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                throw IndexOutOfBoundException();
             }
-            buffer[x-1][colIdx] = val;
-            emptySlot--;
+            if(buffer[x-1][colIdx] == defaultValue){
+                buffer[x-1][colIdx] = val;
+                emptySlot--;
+            } else{
+                throw SlotOccupiedException();
+            }
         }
 
         
 
         T take(string slot) {
+            if(emptySlot == row*col){
+                throw GridEmptyException();
+            }
             int x; char y;
             parseInput(slot, x, y);
             int colIdx = y - 'A'; 
-            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
-                cerr << "Out of bounds\n";
-                return T();
+            if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                throw IndexOutOfBoundException();
             }
             T val = buffer[x-1][colIdx];
+            if(val == defaultValue){
+                throw SlotEmptyException();
+            }
             buffer[x-1][colIdx] = defaultValue;
             emptySlot++;
             return val;
@@ -77,12 +89,17 @@ class Grid{
 
 
         void remove(string slot) {
+            if(emptySlot == row*col){
+                throw GridEmptyException();
+            }
             int x; char y;
             parseInput(slot, x, y);
             int colIdx = y - 'A'; 
-            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
-                cerr << "Out of bounds\n";
-                return;
+            if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                throw IndexOutOfBoundException();
+            }
+            if(buffer[x-1][colIdx] == defaultValue){
+                throw SlotEmptyException();
             }
             buffer[x-1][colIdx] = defaultValue;
             emptySlot++;
@@ -92,9 +109,11 @@ class Grid{
             int x; char y;
             parseInput(slot, x, y);
             int colIdx = y - 'A'; 
-            if (x < 0 || x >= row || colIdx < 0 || colIdx >= col) {
-                cerr << "Out of bounds\n";
-                return defaultValue;
+            if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col) {
+                throw IndexOutOfBoundException();
+            }
+            if(buffer[x-1][colIdx] == defaultValue){
+                throw SlotEmptyException();
             }
             return (buffer[x-1][colIdx]);
         }

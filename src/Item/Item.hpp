@@ -30,6 +30,7 @@ public:
     string getName() const;
     string getCode() const;
     int getPrice() const;
+    bool operator==(const Item&);
     friend ostream& operator<<(ostream&, const Item&);
 };
 
