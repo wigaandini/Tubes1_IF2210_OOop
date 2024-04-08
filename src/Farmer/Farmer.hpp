@@ -9,7 +9,6 @@
 
 class Farmer: public Player{
     private:
-        vector<Building> buildings;
         Farm *farm;
     public:
         Farmer();

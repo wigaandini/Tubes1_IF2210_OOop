@@ -9,7 +9,7 @@ Breeder::Breeder():Player(), ranch(new Ranch(Game::getMainConfig().ranchSize[0],
     type = "Peternak";
 }
         
-Breeder::Breeder(int playerId, string username, float weight, int gulden):Player(username,weight,gulden), ranch(new Ranch(Game::getMainConfig().ranchSize[0],Game::getMainConfig().ranchSize[1],Animal())) {
+Breeder::Breeder(string username, float weight, int gulden):Player(username,weight,gulden), ranch(new Ranch(Game::getMainConfig().ranchSize[0],Game::getMainConfig().ranchSize[1],Animal())) {
     type = "Peternak";
 }
         
@@ -226,9 +226,6 @@ int Breeder::getWealth(){
         for(int j = 0; j < ranch->getcol(); j++){
             wealth += ranch->getElmt(i,j).getPrice();
         }
-    }
-    for(auto building: buildings){
-        wealth += building.getPrice();
     }
     return wealth;
 }

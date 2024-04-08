@@ -169,9 +169,6 @@ int Farmer::getWealth(){
             wealth += farm->getElmt(i,j).getPrice();
         }
     }
-    for(auto building: buildings){
-        wealth += building.getPrice();
-    }
     return wealth;
 }
 

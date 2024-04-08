@@ -19,6 +19,12 @@ Game::Game()
 
 }
 
+Game::~Game(){
+    for(auto player: players){
+        delete player;
+    }
+}
+
 map<string, AnimalConfig> &Game::getAnimalConfig()
 {
     return animalConfig;

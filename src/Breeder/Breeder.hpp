@@ -10,11 +10,10 @@ using namespace std;
 
 class Breeder: public Player{
     private:
-        vector<Building> buildings;
         Ranch *ranch;
     public:
         Breeder();
-        Breeder(int playerId, string username, float weight, int gulden);
+        Breeder(string username, float weight, int gulden);
         ~Breeder();
         string getType();
         int getWealth();

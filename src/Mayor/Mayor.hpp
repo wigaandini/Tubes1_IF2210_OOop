@@ -9,8 +9,6 @@
 #include <map>
 
 class Mayor: public Player{
-    private:
-        vector<Building> buildings;
     public:
         Mayor();
         Mayor(int playerId, string username, float weight, int gulden);

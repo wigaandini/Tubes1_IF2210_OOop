@@ -25,6 +25,7 @@ private:
 
 public:
     Game();
+    ~Game();
     static map<string, AnimalConfig> &getAnimalConfig();
     static map<string, PlantConfig> &getPlantConfig();
     static map<string, RecipeConfig> &getRecipe();
