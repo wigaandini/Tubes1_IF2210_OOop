@@ -16,7 +16,7 @@ private:
     static map<string, RecipeConfig> recipe;
     static map<string, ProductConfig> productConfig;
     static MainConfig mainConfig;
-    static vector<Player> players;
+    static vector<Player*> players;
     static Player &currentPlayer;
     LoadConfig configHandler;
     Command commandHandler;
@@ -30,7 +30,7 @@ public:
     static map<string, RecipeConfig> &getRecipe();
     static map<string, ProductConfig> &getProductConfig();
     static MainConfig &getMainConfig();
-    static vector<Player> &getPlayers();
+    static vector<Player*> &getPlayers();
     static Player &getCurrentPlayer();
     static Store &getStore();
     static void setAnimalConfig(const map<string, AnimalConfig> &);

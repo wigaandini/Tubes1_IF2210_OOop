@@ -3,14 +3,20 @@
 
 #include "../Player/Player.hpp"
 #include "../Farm/Farm.hpp"
+#include "../Item/Building.hpp"
+
+#define KTKP 13
 
 class Farmer: public Player{
     private:
+        vector<Building> buildings;
         Farm *farm;
     public:
         Farmer();
         Farmer(string username, int weight, int gulden);
         ~Farmer();
+        string getType();
+        int getWealth();
         void plant();
         void sell();
         void buy();

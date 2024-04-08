@@ -78,6 +78,22 @@ void Player::eat()
     }
 }
 
+string Player::getName(){
+    return username;
+}
+
+int Player::getGulden(){
+    return gulden;
+}
+
+int Player::getWeight(){
+    return weight;
+}
+
+void Player::setGulden(int gulden){
+    this->gulden = gulden;
+}
+
 void Player::buy()
 {
 }

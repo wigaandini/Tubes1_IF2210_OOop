@@ -6,17 +6,21 @@
 #include <exception>
 
 Breeder::Breeder():Player(), ranch(new Ranch(Game::getMainConfig().ranchSize[0],Game::getMainConfig().ranchSize[1],Animal())){
-
+    type = "Peternak";
 }
         
 Breeder::Breeder(int playerId, string username, float weight, int gulden):Player(username,weight,gulden), ranch(new Ranch(Game::getMainConfig().ranchSize[0],Game::getMainConfig().ranchSize[1],Animal())) {
-    
+    type = "Peternak";
 }
         
 Breeder::~Breeder(){
 
 }
-        
+
+string Breeder::getType(){
+    return type;
+}
+
 void Breeder::cattle(){
 
     if(this->inventory->isEmpty()){
@@ -210,7 +214,42 @@ void Breeder::harvest(){
         cout << " telah dipanen" << endl;
     }
 }
-        
+
+int Breeder::getWealth(){
+    int wealth = gulden;
+    for(int i = 0; i < inventory->getRow(); i++){
+        for(int j = 0; j < inventory->getcol(); j++){
+            wealth += inventory->getElmt(i,j).getPrice();
+        }
+    }
+    for(int i = 0; i < ranch->getRow(); i++){
+        for(int j = 0; j < ranch->getcol(); j++){
+            wealth += ranch->getElmt(i,j).getPrice();
+        }
+    }
+    for(auto building: buildings){
+        wealth += building.getPrice();
+    }
+    return wealth;
+}
+
+
+
 int Breeder::tax(){
-    return 0;
+    int kkp = getWealth() - KTKP;
+    if(kkp <= 0){
+        return 0;
+    } else{
+        if(kkp <= 6){
+            return 0.05*kkp;
+        } else if(kkp <= 25 && kkp > 6){
+            return 0.15*kkp;
+        } else if(kkp <= 50 && kkp > 25){
+            return 0.25*kkp;
+        } else if(kkp <= 500 && kkp > 50){
+            return 0.30*kkp;
+        } else{
+            return 0.35*kkp;
+        }
+    }
 }

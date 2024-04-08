@@ -7,7 +7,7 @@ map<string, PlantConfig> Game::plantConfig;
 map<string, RecipeConfig> Game::recipe;
 map<string, ProductConfig> Game::productConfig;
 MainConfig Game::mainConfig;
-vector<Player> Game::players;
+vector<Player*> Game::players;
 Player &Game::currentPlayer = *(new Mayor());
 Store Game::store;
 
@@ -15,7 +15,7 @@ Game::Game()
 {
     Mayor mayor;
 
-    players.push_back(mayor);
+    players.push_back(&mayor);
 
 }
 
@@ -53,6 +53,10 @@ Store &Game::getStore()
     return store;
 }
 
+vector<Player*> & Game::getPlayers(){
+    return players;
+}
+
 void Game::setAnimalConfig(const map<string, AnimalConfig> &config)
 {
     animalConfig = config;
@@ -79,7 +83,7 @@ void Game::setMainConfig(const MainConfig &config)
 }
 
 void Game::setCurrentPlayer(int index){
-    currentPlayer = players[index];
+    currentPlayer = *(players[index]);
 }
 
 void Game::mainLoop()

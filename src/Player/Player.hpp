@@ -11,6 +11,7 @@ class Player
 protected:
     static int countIdPlayer;
     int playerId;
+    string type;
     string username;
     int weight;
     int gulden;
@@ -20,8 +21,15 @@ public:
     Player();
     Player(string username, int weight, int gulden);
     virtual ~Player();
+    string getName();
+    int getWeight();
+    virtual string getType() = 0;
+    virtual int getWealth() = 0;
+    int getGulden();
+    void setGulden(int);
     void eat();
-    virtual void buy() ;
-    virtual void sell() ;
+    virtual void buy() = 0;
+    virtual void sell() = 0;
+    virtual int tax() = 0;
 };
 #endif

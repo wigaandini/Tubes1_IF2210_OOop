@@ -33,11 +33,11 @@ class Grid{
         ~Grid() {}
 
         int getRow() const{
-            return this.row;
+            return this->row;
         }
 
         int getcol() const{
-            return this.col;
+            return this->col;
         }
 
         bool isEmpty(){
@@ -46,6 +46,10 @@ class Grid{
 
         int countEmpty() const{
             return emptySlot;
+        }
+        
+        T getElmt(int i, int j) const {
+            return buffer[i][j];
         }
 
         void put(string slot, const T& val) {

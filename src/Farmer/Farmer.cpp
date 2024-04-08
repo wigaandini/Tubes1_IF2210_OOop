@@ -2,18 +2,24 @@
 #include "../Game/Game.hpp"
 
 Farmer::Farmer() : Player(){
+    type = "Petani";
     Plant p;
     this->farm = new Farm(Game::getMainConfig().farmSize[0], Game::getMainConfig().farmSize[1], p);
 }
 
 Farmer::Farmer(string username, int weight, int gulden) : Player(username, weight, gulden){
-
+    type = "Petani";
+    Plant p;
+    this->farm = new Farm(Game::getMainConfig().farmSize[0], Game::getMainConfig().farmSize[1], p);
 }
 
 Farmer::~Farmer(){
-
+    delete farm;
 }
 
+string Farmer::getType(){
+    return type;
+}
 void Farmer::plant(){
     if(this->inventory->isEmpty()){
         cout << endl << "Inventory anda kosong" << endl;
@@ -151,7 +157,40 @@ void Farmer::harvest(){
     }
 }
 
+int Farmer::getWealth(){
+    int wealth = gulden;
+    for(int i = 0; i < inventory->getRow(); i++){
+        for(int j = 0; j < inventory->getcol(); j++){
+            wealth += inventory->getElmt(i,j).getPrice();
+        }
+    }
+    for(int i = 0; i < farm->getRow(); i++){
+        for(int j = 0; j < farm->getcol(); j++){
+            wealth += farm->getElmt(i,j).getPrice();
+        }
+    }
+    for(auto building: buildings){
+        wealth += building.getPrice();
+    }
+    return wealth;
+}
+
 int Farmer::tax(){
-    return 0;
+    int kkp = getWealth() - KTKP;
+    if(kkp <= 0){
+        return 0;
+    } else{
+        if(kkp <= 6){
+            return 0.05*kkp;
+        } else if(kkp <= 25 && kkp > 6){
+            return 0.15*kkp;
+        } else if(kkp <= 50 && kkp > 25){
+            return 0.25*kkp;
+        } else if(kkp <= 500 && kkp > 50){
+            return 0.30*kkp;
+        } else{
+            return 0.35*kkp;
+        }
+    }
 }
 
