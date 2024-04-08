@@ -38,7 +38,7 @@ public:
     static void setRecipe(const map<string, RecipeConfig> &);
     static void setProductConfig(const map<string, ProductConfig> &);
     static void setMainConfig(const MainConfig &);
-    static void setPlayers(vector<Player> &);
+    static void setPlayers(vector<Player*> &);
     static void setCurrentPlayer(int);
     LoadConfig &getLoadConfig();
     void mainLoop();
