@@ -3,11 +3,11 @@
 
 #include "../Player/Player.hpp"
 #include "../Ranch/Ranch.hpp"
-#include "../Resident/Resident.hpp"
+
 using namespace std;
 
 
-class Breeder: public Player, public Resident{
+class Breeder: public Player{
     private:
         Ranch *ranch;
     public:

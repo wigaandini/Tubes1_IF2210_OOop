@@ -1,4 +1,4 @@
-    #include "Grid.hpp"
+    #include "src/Grid/Grid.hpp"
     using namespace std;
 
     int main() {

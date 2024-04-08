@@ -3,9 +3,8 @@
 
 #include "../Player/Player.hpp"
 #include "../Farm/Farm.hpp"
-#include "../Resident/Resident.hpp"
 
-class Farmer: public Player, public Resident {
+class Farmer: public Player{
     private:
         Farm *farm;
     public:
