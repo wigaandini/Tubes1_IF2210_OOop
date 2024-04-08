@@ -19,6 +19,9 @@ protected:
 public:
     Player();
     Player(string username, int weight, int gulden);
+    Inventory* getInventory();
+    void setInventory(Inventory& inventory);
+    string getName() const;
     virtual ~Player();
     void eat();
     virtual void buy() ;

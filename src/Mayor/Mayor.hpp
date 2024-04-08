@@ -8,7 +8,7 @@
 class Mayor: public Player{
     public:
         Mayor();
-        Mayor(int playerId, string username, float weight, int gulden);
+        Mayor(string username, float weight, int gulden);
         ~Mayor();
         void taxCollection();
         void buildBuilding();

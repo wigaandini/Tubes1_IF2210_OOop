@@ -1,6 +1,8 @@
 #include "Game.hpp"
 #include <string.h>
 #include "../Mayor/Mayor.hpp"
+#include "../Player/Player.hpp"
+#include "../Breeder/Breeder.hpp"
 
 map<string, AnimalConfig> Game::animalConfig;
 map<string, PlantConfig> Game::plantConfig;
@@ -17,6 +19,8 @@ Game::Game()
 
     players.push_back(mayor);
 
+    Breeder breeder;
+    players.push_back(breeder);
 }
 
 map<string, AnimalConfig> &Game::getAnimalConfig()
@@ -34,19 +38,19 @@ map<string, RecipeConfig> &Game::getRecipe()
     return recipe;
 }
 
-MainConfig &Game::getMainConfig(){
+MainConfig &Game::getMainConfig()
+{
     return mainConfig;
 }
-
 
 map<string, ProductConfig> &Game::getProductConfig()
 {
     return productConfig;
 }
-Player &Game::getCurrentPlayer(){
+Player &Game::getCurrentPlayer()
+{
     return currentPlayer;
 }
-
 
 Store &Game::getStore()
 {
@@ -78,7 +82,8 @@ void Game::setMainConfig(const MainConfig &config)
     mainConfig = config;
 }
 
-void Game::setCurrentPlayer(int index){
+void Game::setCurrentPlayer(int index)
+{
     currentPlayer = players[index];
 }
 
@@ -87,11 +92,23 @@ void Game::mainLoop()
     cout << "WELCOME TO THE GAME" << endl
          << endl;
 
-    // this->configHandler.loadAnimalConfig("animal.txt");
-    // this->configHandler.loadPlantConfig("plant.txt");
-    // this->configHandler.loadMainConfig("misc.txt");
-    // this->configHandler.loadProductConfig("product.txt");
-    // this->configHandler.loadRecipeConfig("recipe.txt");
+    this->configHandler.loadAnimalConfig("../config/animal.txt");
+    cout << "1" << endl;
+    this->configHandler.loadPlantConfig("../config/plant.txt");
+    cout << "1" << endl;
+    this->configHandler.loadMainConfig("../config/misc.txt");
+    cout << "1" << endl;
+    this->configHandler.loadProductConfig("../config/product.txt");
+    cout << "1" << endl;
+    this->configHandler.loadRecipeConfig("../config/recipe.txt");
+    cout << "5" << endl;
+
+    cout << "10" << endl;
+
+    // cout << mainConfig.ranchSize[0] << mainConfig.ranchSize[1];
+    // cout << "dad";
+    // this->configHandler.loadStateConfig("../config/state.txt");
+    // cout << "1" << endl;
 
     cout << "LOAD CONFIG..." << endl;
     cout << "LOAD CONFIG..." << endl;
@@ -100,6 +117,27 @@ void Game::mainLoop()
 
     cout << "Finish Load Config" << endl;
 
+    // std::cout << "Players in the game:" << std::endl;
+    // for (auto &player : players)
+    // {
+    //     std::cout << player.getName() << std::endl;
+
+    //     std::cout << *player.getInventory() << std::endl;
+
+    //     Breeder *breederPtr = dynamic_cast<Breeder *>(&player);
+    //     if(breederPtr == nullptr){
+    //         cout << "dada";
+    //     }
+    //     std::cout << *breederPtr->getRanch() << std::endl;
+    // }
+
+    // std::cout << "Items in the store:" << std::endl;
+    // for (const auto& pair : this->store.getItems()) {
+    //     std::cout << "Category: " << pair.first << std::endl;
+    //     for (const auto& item : pair.second) {
+    //         std::cout << " - " << item.getName() << std::endl;
+    //     }
+    // }
     bool isGameOver = false;
 
     Game::setCurrentPlayer(0);
@@ -108,8 +146,21 @@ void Game::mainLoop()
         string input;
         cout << "> ";
         cin >> input;
-        if (this->commandHandler.checkCommand(input)){
+        if (this->commandHandler.checkCommand(input))
+        {
             this->commandHandler.handleCommand(input);
         }
+
+        Game::setCurrentPlayer(1);
     }
+}
+
+void Game::setPlayers(vector<Player> &tempplayers)
+{
+    players = tempplayers;
+}
+
+vector<Player> &Game::getPlayers()
+{
+    return players;
 }

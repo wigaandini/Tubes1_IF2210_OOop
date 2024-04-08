@@ -6,13 +6,15 @@ Farmer::Farmer() : Player(){
     this->farm = new Farm(Game::getMainConfig().farmSize[0], Game::getMainConfig().farmSize[1], p);
 }
 
-Farmer::Farmer(string username, int weight, int gulden) : Player(username, weight, gulden){
+Farmer::Farmer(string username, int weight, int gulden) : Player(username, weight, gulden), farm(new Farm(Game::getMainConfig().farmSize[0], Game::getMainConfig().farmSize[1], Plant())){
 
 }
 
 Farmer::~Farmer(){
-
+    delete farm; // Delete the dynamically allocated Farm object
+    farm = nullptr; // Optional: Set the pointer to nullptr after deletion
 }
+
 
 void Farmer::plant(){
     if(this->inventory->isEmpty()){
@@ -155,3 +157,6 @@ int Farmer::tax(){
     return 0;
 }
 
+Farm* Farmer::getFarm(){
+    return this->farm;
+}

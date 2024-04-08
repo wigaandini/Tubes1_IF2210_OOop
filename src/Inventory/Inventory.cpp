@@ -64,6 +64,7 @@ void Inventory::putRandom(const Item& item){
         for(int j = 0; j < col ; j++){
             if(this->buffer[i][j].getItemId() == -1){
                 this->buffer[i][j] = item;
+                return;
             }
         }
     }

@@ -4,6 +4,10 @@ Mayor::Mayor(): Player(){
 
 }
 
+Mayor::Mayor(string username, float weight, int gulden):Player(username,weight,gulden){
+    
+}
+
 Mayor::~Mayor(){
 
 }

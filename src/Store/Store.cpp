@@ -8,6 +8,7 @@
 
 Store::Store()
 {
+    
 }
 
 void Store::addItem(Item &item)
@@ -78,4 +79,12 @@ bool Store::checkIsLivingBeings(const string &name)
     {
         return true;
     }
+}
+
+map<string, vector<Item>> Store::getItems() const{
+    return this->items;
+}
+
+Store::~Store(){
+    
 }

@@ -15,6 +15,7 @@ class LoadConfig{
         void loadProductConfig(string filename);
         void loadMainConfig(string filename);
         void loadRecipeConfig(string filename);
+        void loadStateConfig(string filename);
         LoadConfig();
 };      
 

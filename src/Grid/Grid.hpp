@@ -29,7 +29,9 @@ class Grid{
             }
         }
 
-        ~Grid() {}
+        ~Grid() {
+            
+        }
 
         int getRow() const{
             return this.row;

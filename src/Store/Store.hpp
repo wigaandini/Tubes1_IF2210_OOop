@@ -18,10 +18,11 @@ class Store{
 
     public :
         Store();
+        map<string, vector<Item>> getItems() const;
         vector<Item> takeItem(const string& name, const int&);
         void addItem(Item& item);
         friend ostream& operator<<(ostream& os, const Store& store);
-
+        ~Store();
 };
 
 #endif

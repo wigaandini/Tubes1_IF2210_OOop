@@ -85,3 +85,11 @@ void Player::buy()
 void Player::sell()
 {
 }
+
+Inventory* Player::getInventory(){
+    return this->inventory;
+}
+
+string Player::getName() const{
+    return this->username;
+}
