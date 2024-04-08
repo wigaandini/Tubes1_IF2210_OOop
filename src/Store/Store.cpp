@@ -5,31 +5,30 @@
 #include "../Item/Carnivore.hpp"
 #include "../Item/Omnivore.hpp"
 
-
 Store::Store()
 {
-    
 }
 
-void Store::addItem(Item &item)
+void Store::addItem(shared_ptr<Item> item)
 {
-   
 
-    if (!this->checkIsLivingBeings(item.getName()))
+    if (!this->checkIsLivingBeings(item->getName()))
     {
-        this->items[item.getName()].push_back(item);
+        this->items.at(item->getName()).push_back(item);
     }
 }
 
-vector<Item> Store::takeItem(const string &name, const int &num)
+
+
+vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
 {
 
-    if ((int) this->items[name].size() < num)
+    if ((int)this->items[name].size() < num)
     {
         throw ""; // stock tidak cukup
     }
 
-    vector<Item> items;
+    vector<shared_ptr<Item>> items;
 
     for (int i = 0; i < num; i++)
     {
@@ -37,7 +36,7 @@ vector<Item> Store::takeItem(const string &name, const int &num)
         if (!this->checkIsLivingBeings(name))
         {
 
-            Item item = this->items[name].front();
+            auto item = this->items[name].front();
             this->items[name].erase(this->items[name].begin());
             items.push_back(item);
         }
@@ -46,17 +45,19 @@ vector<Item> Store::takeItem(const string &name, const int &num)
 
             if (name == "COW" || name == "SHEEP" || name == "HORSE" || name == "RABBIT")
             {
-                Herbivore animal(name);
+                auto animal = make_shared<Herbivore>(name);
                 items.push_back(animal);
             }
             else if (name == "SNAKE")
             {
-                Carnivore animal(name);
+                auto animal = make_shared<Carnivore>(name);
+
                 items.push_back(animal);
             }
             else
             {
-                Omnivore animal(name);
+                auto animal = make_shared<Omnivore>(name);
+
                 items.push_back(animal);
             }
         }
@@ -81,10 +82,11 @@ bool Store::checkIsLivingBeings(const string &name)
     }
 }
 
-map<string, vector<Item>> Store::getItems() const{
+map<string, vector<shared_ptr<Item>>> Store::getItems() const
+{
     return this->items;
 }
 
-Store::~Store(){
-    
+Store::~Store()
+{
 }

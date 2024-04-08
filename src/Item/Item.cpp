@@ -54,6 +54,9 @@ int Item::getPrice() const{
     return this->price;
 }
 
+bool Item::operator==(const Item& other){
+    return itemId == other.itemId;
+}
 ostream& operator<<(ostream& os, const Item& item){
     os << item.code;
     return os;

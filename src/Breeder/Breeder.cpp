@@ -5,53 +5,55 @@
 #include "../Item/Omnivore.hpp"
 #include <exception>
 
-Breeder::Breeder():Player(), ranch(new Ranch(Game::getMainConfig().ranchSize[0],Game::getMainConfig().ranchSize[1],Animal())){
-
+Breeder::Breeder():Player() {
 }
         
-Breeder::Breeder(int playerId, string username, float weight, int gulden):Player(username,weight,gulden), ranch(new Ranch(Game::getMainConfig().ranchSize[0],Game::getMainConfig().ranchSize[1],Animal())) {
-    
+Breeder::Breeder(string username, float weight, int gulden):Player(username,weight,gulden) {
 }
         
 Breeder::~Breeder(){
 
 }
-        
+
+string Breeder::getType(){
+    return type;
+}
+
 void Breeder::cattle(){
 
-    if(this->inventory->isEmpty()){
+    if(this->inventory.isEmpty()){
         cout << "Invenotry Kosong" <<endl;
-    }else if(this->ranch->countEmpty() == 0){
+    }else if(this->ranch.countEmpty() == 0){
         cout << "Peternakan sudah penuh" <<endl;
-    }else if(this->inventory->checkInventoryAnimal() == false){
+    }else if(this->inventory.checkInventoryAnimal() == false){
         cout << "Tidak ada hewan yang bisa diternak."<<endl;
     }else{
         cout << "Pilih hewan dari peternakan"<<endl;
-        this->inventory->displayStorage(false);
+        this->inventory.displayStorage(false);
         string answer;
         cout << endl << "Slot: ";
         cin >> answer;
-        while (Game::getAnimalConfig().find(this->inventory->see(answer).getName()) == Game::getAnimalConfig().end()){
+        while (Game::getAnimalConfig().find(this->inventory.see(answer).getName()) == Game::getAnimalConfig().end()){
             cout << "Maaf yang kamu pilih bukan animal"<<endl;
             cout << endl << "Slot: ";
             cin >> answer;
         }
 
         cout << endl << "Pilih petak tanah yang akan ditinggali"<<endl;
-        this->ranch->displayStorage(false);
+        this->ranch.displayStorage(false);
 
         cout<< endl<<"Petak tanah:";
         string answer2;
         cin >> answer2;
-        while(this->ranch->see(answer2).getAnimalId() == -1){
+        while(this->ranch.see(answer2).getAnimalId() == -1){
             cout << "SLot yang dipilih sudah diisi" <<endl;
             cout<< endl<<"Petak tanah:";
             cin >> answer;
         }
-        string itemName = this->inventory->see(answer).getName();
-        const Item& itemRef = this->inventory->take(answer);
-        const Animal* animalRef = dynamic_cast<const Animal*>(&itemRef); 
-        this->ranch->put(answer2, *animalRef);
+        string itemName = this->inventory.see(answer).getName();
+        shared_ptr<Item> itemRef = this->inventory.take(answer);
+        shared_ptr<Animal> animalRef = dynamic_pointer_cast<Animal>(itemRef); 
+        this->ranch.put(answer2, animalRef);
 
         cout << "Dengan hati-hati, kamu meletakkan seekor"<< itemName << " di kandang."<<endl;
         cout << itemName << "telah menjadi peliharaanmu sekarang!"<<endl;
@@ -59,40 +61,40 @@ void Breeder::cattle(){
 }
         
 void Breeder::feedAnimal(){
-    if(this->ranch->isEmpty()){
+    if(this->ranch.isEmpty()){
         cout << "Peternakan Kosong" << endl;
     }else{
         cout << "Pilih petak kandang yang akan ditinggal"<<endl;
-        this->ranch->displayStorage(false);
+        this->ranch.displayStorage(false);
 
         string answer;
         cout << "Petak Kandang: ";
         cin >> answer;
-        while (Game::getAnimalConfig().find(this->ranch->see(answer).getName()) == Game::getAnimalConfig().end()){
+        while (Game::getAnimalConfig().find(this->ranch.see(answer).getName()) == Game::getAnimalConfig().end()){
             cout << "Maaf yang kamu pilih bukan animal"<<endl;
             cout << "Petak Kandang: ";
             cin >> answer;
         }
 
-        cout << "Kamu memilih "<< this->ranch->see(answer).getName()<< " untuk diberi makan. "<<endl;
+        cout << "Kamu memilih "<< this->ranch.see(answer).getName()<< " untuk diberi makan. "<<endl;
         cout << "Pilih pangan yang akan diberikan:"<<endl;
 
-        this->inventory->displayStorage(false);
+        this->inventory.displayStorage(false);
         bool adaMakanan = false;
-         if (const Herbivore *_ = dynamic_cast<const Herbivore *>(&this->ranch->see(answer))){
-            adaMakanan = this->inventory->checkInventoryFruit();
+         if (const Herbivore *_ = dynamic_cast<const Herbivore *>(&this->ranch.see(answer))){
+            adaMakanan = this->inventory.checkInventoryFruit();
 
-         }else if(const Carnivore *_ = dynamic_cast<const Carnivore *>(&this->ranch->see(answer))){
-            adaMakanan = this->inventory->checkInventoryMeat();
+         }else if(const Carnivore *_ = dynamic_cast<const Carnivore *>(&this->ranch.see(answer))){
+            adaMakanan = this->inventory.checkInventoryMeat();
         }else{
-            adaMakanan = (this->inventory->checkInventoryFruit()) || (this->inventory->checkInventoryMeat());
+            adaMakanan = (this->inventory.checkInventoryFruit()) || (this->inventory.checkInventoryMeat());
         }
-        // if(this->ranch->see(answer).getAnimalType() == AnimalType::HERBIVORE){
-        //     adaMakanan = this->inventory->checkInventoryFruit();
-        // }else if(this->ranch->see(answer).getAnimalType() == AnimalType::CARNIVORE){
-        //     adaMakanan = this->inventory->checkInventoryMeat();
+        // if(this->ranch.see(answer).getAnimalType() == AnimalType::HERBIVORE){
+        //     adaMakanan = this->inventory.checkInventoryFruit();
+        // }else if(this->ranch.see(answer).getAnimalType() == AnimalType::CARNIVORE){
+        //     adaMakanan = this->inventory.checkInventoryMeat();
         // }else{
-        //     adaMakanan = (this->inventory->checkInventoryFruit()) || (this->inventory->checkInventoryMeat());
+        //     adaMakanan = (this->inventory.checkInventoryFruit()) || (this->inventory.checkInventoryMeat());
         // }
 
         if(!adaMakanan){
@@ -103,12 +105,12 @@ void Breeder::feedAnimal(){
             cout << "Slot : ";
             cin >> answer1;
 
-            const Item& itemRef = this->inventory->take(answer);
-            const Product* productRef = dynamic_cast<const Product*>(&itemRef); 
+            shared_ptr<Item> itemRef = this->inventory.take(answer);
+            shared_ptr<Product> productRef = dynamic_pointer_cast<Product>(itemRef); 
             try{
-                this->ranch->see(answer).eat(*productRef);
+                this->ranch.see(answer).eat(*productRef);
 
-                cout << this->ranch->see(answer).getName() << " sudah diberi makan dan beratnya bertambah " << productRef->getAddedWeight() << endl;
+                cout << this->ranch.see(answer).getName() << " sudah diberi makan dan beratnya bertambah " << productRef->getAddedWeight() << endl;
             }catch(exception& e){
                 cout << e.what();
             }
@@ -131,14 +133,14 @@ void Breeder::buy(){
 }
         
 void Breeder::harvest(){
-    if(this->ranch->isEmpty()){
+    if(this->ranch.isEmpty()){
         cout << endl << "Peternakan anda kosong" << endl;
-    } else if (!this->ranch->checkAnimalReadyToHarvest()){
+    } else if (!this->ranch.checkAnimalReadyToHarvest()){
         cout << endl << "Peternakan anda tidak ada yang siap dipanen" << endl;
     } else {
-        this->ranch->displayStorage(true);
+        this->ranch.displayStorage(true);
         cout << endl << "Pilih hewan siap panen yang kamu miliki" << endl;
-        map<string, int> plantReady = this->ranch->countAnimal();
+        map<string, int> plantReady = this->ranch.countAnimal();
         int number = 1;
         vector<int> total;
         vector<string> kode;
@@ -166,7 +168,7 @@ void Breeder::harvest(){
             cin >> answer2;
 
             if(answer2 <= total[answer1 - 1]){
-                if (answer2 > this->inventory->countEmpty()){
+                if (answer2 > this->inventory.countEmpty()){
                     cout << endl << "Jumlah penyimpanan tidak cukup!" << endl;
                     return;
                 } else {
@@ -183,7 +185,7 @@ void Breeder::harvest(){
             while(!sukses3){
                 cout << "Petak ke-"<< i << ": ";
                 cin >> slot;
-                if(this->ranch->see(slot).getCode() != kode[answer1 - 1]){
+                if(this->ranch.see(slot).getCode() != kode[answer1 - 1]){
                     cout << "Petak tidak sesuai. Silahkan input kembali!" << endl;
                 } else{
                     petak.push_back(slot);
@@ -191,10 +193,10 @@ void Breeder::harvest(){
                 }
             }
 
-            vector<Product> tempP = this->ranch->take(slot).collect();
+            vector<Product> tempP = this->ranch.take(slot)->collect();
             unsigned int k = 0;
             while( k < tempP.size()){
-                this->inventory->putRandom(tempP[k]);
+                this->inventory.putRandom(make_shared<Product>(tempP[k]));
                 k++;
             }
             
@@ -210,7 +212,43 @@ void Breeder::harvest(){
         cout << " telah dipanen" << endl;
     }
 }
-        
+
+int Breeder::getWealth(){
+    int wealth = gulden;
+    for(int i = 0; i < this->inventory.getRow(); i++){
+        for(int j = 0; j < this->inventory.getcol(); j++){
+            wealth += this->inventory.see(i,j)->getPrice();
+        }
+    }
+    for(int i = 0; i < this->ranch.getRow(); i++){
+        for(int j = 0; j < this->ranch.getcol(); j++){
+            wealth += this->ranch.see(i,j)->getPrice();
+        }
+    }
+    return wealth;
+}
+
+
+
 int Breeder::tax(){
-    return 0;
+    int kkp = getWealth() - KTKP_PETERNAK;
+    if(kkp <= 0){
+        return 0;
+    } else{
+        if(kkp <= 6){
+            return 0.05*kkp;
+        } else if(kkp <= 25 && kkp > 6){
+            return 0.15*kkp;
+        } else if(kkp <= 50 && kkp > 25){
+            return 0.25*kkp;
+        } else if(kkp <= 500 && kkp > 50){
+            return 0.30*kkp;
+        } else{
+            return 0.35*kkp;
+        }
+    }
+}
+
+Ranch& Breeder::getRanch(){
+    return this->ranch;
 }

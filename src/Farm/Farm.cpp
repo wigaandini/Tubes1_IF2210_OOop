@@ -1,8 +1,13 @@
 #include "Farm.hpp"
+#include "../Game/Game.hpp"
 #include "../PColor/pcolor.h"
 
 
 Farm::Farm(int r, int c, Plant defaultValue) : Grid<Plant>(r, c, defaultValue) {}
+
+Farm::Farm() :Grid<Plant>(Game::getMainConfig().farmSize[0], Game::getMainConfig().farmSize[1]){
+
+}
 
 Farm::~Farm() {}
 
@@ -31,17 +36,17 @@ void Farm::displayStorage(bool printInfo) {
     for (int i = 0; i < this->row; ++i) {
         cout << setw(2) << setfill(' ') << (i + 1) << "   |";
         for (int j = 0; j < this->col; ++j) {
-            string name = this->buffer[i][j].getCode();
+            string name = this->buffer[i][j]->getCode();
             cout << " " << setw(2) << setfill(' ');
-            if(this->buffer[i][j].getPlantId() == -1){
+            if(this->buffer[i][j]->getPlantId() == -1){
                 cout << "   ";
                 cout << " |";
-            } else if (!this->buffer[i][j].checkReadyToHarvest()){
+            } else if (!this->buffer[i][j]->checkReadyToHarvest()){
                 for (char ch : name) {
                     print_red(ch);
                 }
                 cout << "|";
-            } else if(this->buffer[i][j].checkReadyToHarvest()){
+            } else if(this->buffer[i][j]->checkReadyToHarvest()){
                 for (char ch : name) {
                     print_green(ch); 
                 }
@@ -60,8 +65,8 @@ void Farm::displayStorage(bool printInfo) {
     if(printInfo){
          for (int i = 0; i < this->row; i++) {
             for (int j = 0; j < this->col; j++) {
-                if(this->buffer[i][j].getPlantId() != -1){
-                    cout << "- " << this->buffer[i][j].getCode() << ": " << this->buffer[i][j].getName() << endl;
+                if(this->buffer[i][j]->getPlantId() != -1){
+                    cout << "- " << this->buffer[i][j]->getCode() << ": " << this->buffer[i][j]->getName() << endl;
                 }
             }
         }
@@ -73,7 +78,7 @@ bool Farm::checkPlantReadyToHarvest(){
     {
        for (int j = 0; j < this->col; j++)
        {
-        if(this->buffer[i][j].checkReadyToHarvest()){
+        if(this->buffer[i][j]->checkReadyToHarvest()){
             return true;
         }
        }
@@ -85,8 +90,8 @@ map<string, int> Farm::countPlant(){
     map<string, int> plantCount;
     for (int i = 0; i < this->row; i++) {
         for (int j = 0; j < this->col; j++) {
-            if (this->buffer[i][j].checkReadyToHarvest()) {
-                string plantName = this->buffer[i][j].getCode();
+            if (this->buffer[i][j]->checkReadyToHarvest()) {
+                string plantName = this->buffer[i][j]->getCode();
                 if (plantCount.find(plantName) == plantCount.end()) {
                     plantCount[plantName] = 1;
                 } else {

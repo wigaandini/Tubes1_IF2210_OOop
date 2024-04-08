@@ -5,8 +5,13 @@ using namespace std;
 // Constructor
 Inventory::Inventory(int r, int c, Item defaultValue) : Grid<Item>(r, c, defaultValue) {}
 
-// Destructor
-Inventory::~Inventory() {}
+Inventory::Inventory(): Grid(Game::getMainConfig().inventorySize[0], Game::getMainConfig().inventorySize[1]) {
+
+}
+
+Inventory::~Inventory() {
+
+}
 
 // Member function displayStorage
 void Inventory::displayStorage(bool printInfo) {
@@ -29,7 +34,7 @@ void Inventory::displayStorage(bool printInfo) {
 bool Inventory::checkInventoryEdible(){
     for(int i = 0; i < this->row; i++){
         for(int j = 0; j < this->col; j++){
-            if(Game::getProductConfig()[this->buffer[i][j].getName()].type != ProductType::PRODUCT_MATERIAL_PLANT){
+            if(Game::getProductConfig()[this->buffer[i][j]->getName()].type != ProductType::PRODUCT_MATERIAL_PLANT){
                 return true;
             }
         }
@@ -40,7 +45,7 @@ bool Inventory::checkInventoryEdible(){
 bool Inventory::checkInventoryAnimal(){
     for(int i = 0; i < this->row; i++){
         for(int j = 0; j < this->col; j++){
-            if(Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::OMNIVORE){
+            if(Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE){
                 return true;
             }
         }
@@ -51,7 +56,7 @@ bool Inventory::checkInventoryAnimal(){
 bool Inventory::checkInventoryPlant(){
     for(int i = 0; i < this->row; i++){
         for(int j = 0; j < this->col; j++){
-            if(Game::getPlantConfig()[this->buffer[i][j].getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j].getName()].type == PlantType::FRUIT_PLANT){
+            if(Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::FRUIT_PLANT){
                 return true;
             }
         }
@@ -59,10 +64,10 @@ bool Inventory::checkInventoryPlant(){
     return false;
 }
 
-void Inventory::putRandom(const Item& item){
+void Inventory::putRandom(const shared_ptr<Item> item){
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col ; j++){
-            if(this->buffer[i][j].getItemId() == -1){
+            if(this->buffer[i][j] == nullptr){
                 this->buffer[i][j] = item;
                 return;
             }
@@ -73,7 +78,7 @@ void Inventory::putRandom(const Item& item){
 bool Inventory::checkInventoryFruit(){
     for(int i = 0; i < this->row; i++){
         for(int j = 0; j < this->col; j++){
-            if(Game::getProductConfig()[this->buffer[i][j].getName()].type == ProductType::PRODUCT_FRUIT_PLANT ){
+            if(Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT ){
                 return true;
             }
         }
@@ -85,7 +90,7 @@ bool Inventory::checkInventoryFruit(){
 bool Inventory::checkInventoryMeat(){
     for(int i = 0; i < this->row; i++){
         for(int j = 0; j < this->col; j++){
-            if(Game::getProductConfig()[this->buffer[i][j].getName()].type == ProductType::PRODUCT_ANIMAL){
+            if(Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL){
                 return true;
             }
         }

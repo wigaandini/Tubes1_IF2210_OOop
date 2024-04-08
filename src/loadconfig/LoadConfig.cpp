@@ -184,7 +184,7 @@ void LoadConfig::loadStateConfig(string filename)
 
         if (role == "Walikota")
         {
-            Mayor *player = new Mayor(playerName, weight, gulden);
+            auto player = make_shared<Mayor>(playerName, weight, gulden);
             file >> totalItem;
             string itemName;
             for (int j = 0; j < totalItem; j++)
@@ -195,36 +195,36 @@ void LoadConfig::loadStateConfig(string filename)
                 {
                     if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                     {
-                        player->getInventory()->putRandom(Carnivore(itemName));
+                        player->getInventory().putRandom(make_shared<Carnivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                     {
-                        player->getInventory()->putRandom(Herbivore(itemName));
+                        player->getInventory().putRandom(make_shared<Herbivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                     {
-                        player->getInventory()->putRandom(Omnivore(itemName));
+                        player->getInventory().putRandom(make_shared<Omnivore>(itemName));
                     }
                 }
                 else if (Game::getPlantConfig().find(itemName) != Game::getPlantConfig().end())
                 {
-                    player->getInventory()->putRandom(Plant(itemName));
+                    player->getInventory().putRandom(make_shared<Plant>(itemName));
                 }
                 else if (Game::getProductConfig().find(itemName) != Game::getProductConfig().end())
                 {
-                    player->getInventory()->putRandom(Product(itemName));
+                    player->getInventory().putRandom(make_shared<Product>(itemName));
                 }
                 else if (Game::getRecipe().find(itemName) != Game::getRecipe().end())
                 {
-                    player->getInventory()->putRandom(Building(itemName));
+                    player->getInventory().putRandom(make_shared<Building>(itemName));
                 }
             }
 
-            Game::getPlayers().push_back(*player);
+            Game::getPlayers().push_back(player);
         }
         else if (role == "Peternak")
         {
-            Breeder *player = new Breeder(playerName, weight, gulden);
+            auto player = make_shared<Breeder>(playerName, weight, gulden);
             file >> totalItem;
             string itemName;
             for (int j = 0; j < totalItem; j++)
@@ -235,28 +235,28 @@ void LoadConfig::loadStateConfig(string filename)
                 {
                     if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                     {
-                        player->getInventory()->putRandom(Carnivore(itemName));
+                        player->getInventory().putRandom(make_shared<Carnivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                     {
-                        player->getInventory()->putRandom(Herbivore(itemName));
+                        player->getInventory().putRandom(make_shared<Herbivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                     {
-                        player->getInventory()->putRandom(Omnivore(itemName));
+                        player->getInventory().putRandom(make_shared<Omnivore>(itemName));
                     }
                 }
                 else if (Game::getPlantConfig().find(itemName) != Game::getPlantConfig().end())
                 {
-                    player->getInventory()->putRandom(Plant(itemName));
+                    player->getInventory().putRandom(make_shared<Plant>(itemName));
                 }
                 else if (Game::getProductConfig().find(itemName) != Game::getProductConfig().end())
                 {
-                    player->getInventory()->putRandom(Product(itemName));
+                    player->getInventory().putRandom(make_shared<Product>(itemName));
                 }
                 else if (Game::getRecipe().find(itemName) != Game::getRecipe().end())
                 {
-                    player->getInventory()->putRandom(Building(itemName));
+                    player->getInventory().putRandom(make_shared<Building>(itemName));
                 }
             }
 
@@ -273,29 +273,29 @@ void LoadConfig::loadStateConfig(string filename)
                 if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                 {
                     cout << Game::getAnimalConfig()[itemName].name << endl;
-                    player->getRanch()->put(slot, Carnivore(itemName));
+                    player->getRanch().put(slot, make_shared<Carnivore>(itemName));
                 }
                 else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                 {
                     cout << Game::getAnimalConfig()[itemName].name << endl;
 
-                    player->getRanch()->put(slot, Herbivore(itemName));
+                    player->getRanch().put(slot, make_shared<Herbivore>(itemName));
                 }
                 else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                 {
                     cout << Game::getAnimalConfig()[itemName].name << endl;
 
-                    player->getRanch()->put(slot, Omnivore(itemName));
+                    player->getRanch().put(slot, make_shared<Omnivore>(itemName));
                 }
                 
             }
             
 
-            Game::getPlayers().push_back(*player);
+            Game::getPlayers().push_back(player);
         }
         else if (role == "Petani")
         {
-            Farmer *player = new Farmer(playerName, weight, gulden);
+            auto player = make_shared<Farmer>(playerName, weight, gulden);
             file >> totalItem;
             string itemName;
             for (int j = 0; j < totalItem; j++)
@@ -306,28 +306,28 @@ void LoadConfig::loadStateConfig(string filename)
                 {
                     if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                     {
-                        player->getInventory()->putRandom(Carnivore(itemName));
+                        player->getInventory().putRandom(make_shared<Carnivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                     {
-                        player->getInventory()->putRandom(Herbivore(itemName));
+                        player->getInventory().putRandom(make_shared<Herbivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                     {
-                        player->getInventory()->putRandom(Omnivore(itemName));
+                        player->getInventory().putRandom(make_shared<Omnivore>(itemName));
                     }
                 }
                 else if (Game::getPlantConfig().find(itemName) != Game::getPlantConfig().end())
                 {
-                    player->getInventory()->putRandom(Plant(itemName));
+                    player->getInventory().putRandom(make_shared<Plant>(itemName));
                 }
                 else if (Game::getProductConfig().find(itemName) != Game::getProductConfig().end())
                 {
-                    player->getInventory()->putRandom(Product(itemName));
+                    player->getInventory().putRandom(make_shared<Product>(itemName));
                 }
                 else if (Game::getRecipe().find(itemName) != Game::getRecipe().end())
                 {
-                    player->getInventory()->putRandom(Building(itemName));
+                    player->getInventory().putRandom(make_shared<Building>(itemName));
                 }
             }
 
@@ -338,10 +338,10 @@ void LoadConfig::loadStateConfig(string filename)
             {
                 file >> slot >> itemName >> jumlah;
 
-                player->getFarm()->put(slot, Plant(itemName));
+                player->getFarm().put(slot, make_shared<Plant>(itemName));
             }
 
-            Game::getPlayers().push_back(*player);
+            Game::getPlayers().push_back(player);
         }
 
 

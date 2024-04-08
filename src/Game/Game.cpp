@@ -9,7 +9,7 @@ map<string, PlantConfig> Game::plantConfig;
 map<string, RecipeConfig> Game::recipe;
 map<string, ProductConfig> Game::productConfig;
 MainConfig Game::mainConfig;
-vector<Player> Game::players;
+vector<shared_ptr<Player>> Game::players ;
 Player &Game::currentPlayer = *(new Mayor());
 Store Game::store;
 
@@ -17,10 +17,12 @@ Game::Game()
 {
     Mayor mayor;
 
-    players.push_back(mayor);
+    // players.push_back(&mayor);
 
-    Breeder breeder;
-    players.push_back(breeder);
+}
+
+Game::~Game(){
+    
 }
 
 map<string, AnimalConfig> &Game::getAnimalConfig()
@@ -57,6 +59,10 @@ Store &Game::getStore()
     return store;
 }
 
+vector<shared_ptr<Player>> &Game::getPlayers(){
+    return players;
+}
+
 void Game::setAnimalConfig(const map<string, AnimalConfig> &config)
 {
     animalConfig = config;
@@ -82,9 +88,8 @@ void Game::setMainConfig(const MainConfig &config)
     mainConfig = config;
 }
 
-void Game::setCurrentPlayer(int index)
-{
-    currentPlayer = players[index];
+void Game::setCurrentPlayer(int index){
+    currentPlayer = *(players[index]);
 }
 
 void Game::mainLoop()
@@ -107,7 +112,7 @@ void Game::mainLoop()
 
     // cout << mainConfig.ranchSize[0] << mainConfig.ranchSize[1];
     // cout << "dad";
-    // this->configHandler.loadStateConfig("../config/state.txt");
+    this->configHandler.loadStateConfig("../config/state.txt");
     // cout << "1" << endl;
 
     cout << "LOAD CONFIG..." << endl;
@@ -117,50 +122,43 @@ void Game::mainLoop()
 
     cout << "Finish Load Config" << endl;
 
-    // std::cout << "Players in the game:" << std::endl;
-    // for (auto &player : players)
-    // {
-    //     std::cout << player.getName() << std::endl;
+    std::cout << "Players in the game:" << std::endl;
+    for (auto player : players)
+    {
+        std::cout << player->getName() << std::endl;
 
-    //     std::cout << *player.getInventory() << std::endl;
+        std::cout << player->getInventory() << std::endl;
 
-    //     Breeder *breederPtr = dynamic_cast<Breeder *>(&player);
-    //     if(breederPtr == nullptr){
-    //         cout << "dada";
-    //     }
-    //     std::cout << *breederPtr->getRanch() << std::endl;
-    // }
+        shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
+        std::cout << breeder->getRanch() << std::endl;
+    }
 
     // std::cout << "Items in the store:" << std::endl;
     // for (const auto& pair : this->store.getItems()) {
     //     std::cout << "Category: " << pair.first << std::endl;
     //     for (const auto& item : pair.second) {
-    //         std::cout << " - " << item.getName() << std::endl;
+    //         std::cout << " - " << item->getName() << std::endl;
     //     }
     // }
-    bool isGameOver = false;
+    // bool isGameOver = false;
 
-    Game::setCurrentPlayer(0);
-    while (!isGameOver)
-    {
-        string input;
-        cout << "> ";
-        cin >> input;
-        if (this->commandHandler.checkCommand(input))
-        {
-            this->commandHandler.handleCommand(input);
-        }
+    // Game::setCurrentPlayer(0);
+    // while (!isGameOver)
+    // {
+    //     string input;
+    //     cout << "> ";
+    //     cin >> input;
+    //     if (this->commandHandler.checkCommand(input))
+    //     {
+    //         this->commandHandler.handleCommand(input);
+    //     }
 
-        Game::setCurrentPlayer(1);
-    }
+    //     Game::setCurrentPlayer(1);
+    // }
 }
 
-void Game::setPlayers(vector<Player> &tempplayers)
+void Game::setPlayers(vector<shared_ptr<Player>> &tempplayers)
 {
     players = tempplayers;
 }
 
-vector<Player> &Game::getPlayers()
-{
-    return players;
-}
