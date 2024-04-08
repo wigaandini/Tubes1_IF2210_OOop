@@ -15,8 +15,10 @@ class Mayor: public Player{
         ~Mayor();
         string getType();
         void taxCollection(vector<Player*>);
+        int getWealth();
         void buildBuilding(map<string, RecipeConfig>);
-        void addPlayer(vector<Player*>);
+        bool canBuild(string, map<string, RecipeConfig>);
+        void addPlayer(vector<Player*>&);
         void sell();
         void buy();
         int tax();

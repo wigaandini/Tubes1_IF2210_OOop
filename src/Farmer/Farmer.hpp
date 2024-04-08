@@ -5,7 +5,7 @@
 #include "../Farm/Farm.hpp"
 #include "../Item/Building.hpp"
 
-#define KTKP 13
+#define KTKP_PETANI 13
 
 class Farmer: public Player{
     private:

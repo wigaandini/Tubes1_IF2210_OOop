@@ -24,7 +24,7 @@ public:
     string getName();
     int getWeight();
     virtual string getType() = 0;
-    virtual int getWealth();
+    virtual int getWealth() = 0;
     int getGulden();
     void setGulden(int);
     void eat();

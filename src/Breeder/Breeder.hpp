@@ -6,7 +6,7 @@
 #include "../Item/Building.hpp"
 using namespace std;
 
-#define KTKP 11
+#define KTKP_PETERNAK 11
 
 class Breeder: public Player{
     private:

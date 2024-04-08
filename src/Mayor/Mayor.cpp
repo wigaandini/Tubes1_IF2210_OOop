@@ -17,6 +17,10 @@ string Mayor::getType(){
     return type;
 }
 
+int Mayor::getWealth(){
+    return 0;
+}
+
 void Mayor::taxCollection(vector<Player*> players){
     vector<Player*> residents; int tax, sumTax = 0 ;
     cout << "Cring cring cring..." << endl;
@@ -47,6 +51,58 @@ void Mayor::taxCollection(vector<Player*> players){
     gulden += sumTax;
 }
 
+bool Mayor::canBuild(string buildingName, map<string, RecipeConfig> recipe){
+    auto itr = find_if(recipe.begin(), recipe.end(), [buildingName](pair<string, RecipeConfig> building){return buildingName == building.second.name;});
+    if(itr != recipe.end()){
+        map<string, int> availableMaterials;
+        for(auto material: itr->second.materials){
+            availableMaterials[material.first] = 0;
+            for(int i = 0; i < inventory->getRow(); i++){
+                for(int j = 0; j < inventory->getcol(); j++){
+                    if(inventory->getElmt(i,j).getName() == material.first){
+                        availableMaterials[material.first]++;
+                    }
+                }
+            }
+            availableMaterials[material.first] -= material.second;
+        }
+        
+        auto checkNegItr = find_if(availableMaterials.begin(), availableMaterials.end(), [](pair<string,int> material){return material.second < 0;});
+        if(checkNegItr != availableMaterials.end() || gulden < itr->second.price){
+            cout << "Kamu tidak punya sumber daya yang cukup! Masih memerlukan ";
+            if(gulden < itr->second.price){
+                cout << itr->second.price - gulden << " gulden ";
+            }
+            if(checkNegItr != availableMaterials.end()){
+                for(auto availableMaterial: availableMaterials){
+                    if(availableMaterial.second < 0 ){
+                        cout << availableMaterial.second*-1 << " " << availableMaterial.first << " "; 
+                    }
+                }
+            }
+            cout << "!" << endl;
+            return false;
+        }
+    } else{
+        cout << "Kamu tidak punya resep bangunan tersebut!" << endl;
+        cout << "Resep bangunan yang ada adalah sebagai berikut." << endl;
+        for(auto itr = recipe.begin(); itr != recipe.end(); itr++){
+            cout << "   " << itr->second.id << ". " << itr->second.name << "(" << itr->second.price << " gulden, "; 
+            int ctr = 0;
+            for(auto material: itr->second.materials){
+                cout << material.first << " " <<  material.second;
+                if(ctr < int(itr->second.materials.size())){
+                    cout << ",";
+                }
+                ctr++;
+            }
+            cout << ")" << endl;
+        }
+        return false;
+    }
+    return true;
+}
+
 void Mayor::buildBuilding(map<string, RecipeConfig> recipe){
     cout << "Resep bangunan yang ada adalah sebagai berikut." << endl;
     for(auto itr = recipe.begin(); itr != recipe.end(); itr++){
@@ -63,19 +119,21 @@ void Mayor::buildBuilding(map<string, RecipeConfig> recipe){
     }
     cout << endl;
     string buildingName;
-    cout << "Bangunan yang ingin dibangun: ";
-    cin >> buildingName;
-           
+    do{
+        cout << "Bangunan yang ingin dibangun: ";
+        cin >> buildingName;
+    } while(!canBuild(buildingName, recipe));
+    
 }
 
-void Mayor::addPlayer(vector<Player*> players){
+void Mayor::addPlayer(vector<Player*>& players){
     if(gulden >= 50){
         string playerType; string playerName;
         cout << "Masukkan jenis pemain: ";
         cin >> playerType;
         cout << "Masukkan nama pemain: ";
         cin >> playerName;
-        auto itr = find_if(players.begin(), players.end(), [&playerName](Player* player){player->getName() == playerName;});
+        auto itr = find_if(players.begin(), players.end(), [&playerName](Player* player){return player->getName() == playerName;});
         if(itr == players.end()){
             Player* newPlayer;
             if(playerType == "Peternak"){
@@ -94,7 +152,6 @@ void Mayor::addPlayer(vector<Player*> players){
     } else{
         cout << "Uang tidak cukup!" << endl;
     }
-
 }
 
 int Mayor::tax(){
