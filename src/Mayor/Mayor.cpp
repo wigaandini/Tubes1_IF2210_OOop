@@ -21,18 +21,26 @@ int Mayor::getWealth(){
     return 0;
 }
 
-void Mayor::taxCollection(vector<Player*> players){
-    vector<Player*> residents; int tax, sumTax = 0 ;
+string Mayor::toLower(string s){
+    string snew;
+    for(char c: s){
+        snew += tolower(c);
+    }
+    return snew;
+}
+
+void Mayor::taxCollection(vector<shared_ptr<Player>>& players){
+    vector<shared_ptr<Player>> residents; int tax, sumTax = 0 ;
     cout << "Cring cring cring..." << endl;
     cout << "Pajak sudah dipungut!" << endl << endl;
     cout << "Berikut adalah detil dari pemungutan pajak:" << endl;
 
-    for(Player* player : players){
+    for(auto player : players){
         if(player->getType() != "Walikota"){
             residents.push_back(player);
         } 
     }
-    sort(players.begin(), players.end(), [](Player* a, Player* b){
+    sort(players.begin(), players.end(), [](auto a, auto b){
         if(a->getWealth() == b->getWealth()){
             return a->getName() < b->getName();
         }
@@ -140,20 +148,21 @@ void Mayor::buildBuilding(map<string, RecipeConfig> recipe){
     inventory.putRandom(make_shared<Building>(buildingName));
 }
 
-void Mayor::addPlayer(vector<Player*>& players){
+void Mayor::addPlayer(vector<shared_ptr<Player>>& players){
     if(gulden >= 50){
         string playerType; string playerName;
         cout << "Masukkan jenis pemain: ";
         cin >> playerType;
+        playerType = toLower(playerType);
         cout << "Masukkan nama pemain: ";
         cin >> playerName;
-        auto itr = find_if(players.begin(), players.end(), [&playerName](Player* player){return player->getName() == playerName;});
+        auto itr = find_if(players.begin(), players.end(), [&playerName, this](auto player){return toLower(player->getName()) == toLower(playerName);});
         if(itr == players.end()){
-            Player* newPlayer;
-            if(playerType == "Peternak"){
-                newPlayer = new Breeder(playerName, 40, 50);
-            } else{
-                newPlayer = new Farmer(playerName, 40, 50);
+            shared_ptr<Player> newPlayer;
+            if(playerType == "peternak"){
+                newPlayer = make_shared<Breeder>(playerName, 40, 50);
+            } else if (playerType == "petani"){
+                newPlayer = make_shared<Farmer>(playerName, 40, 50);
             }
             players.push_back(newPlayer);
             gulden -= 50;

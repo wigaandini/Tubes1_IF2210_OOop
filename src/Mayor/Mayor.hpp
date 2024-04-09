@@ -14,13 +14,14 @@ class Mayor: public Player{
         Mayor(string username, float weight, int gulden);
         ~Mayor();
         string getType();
-        void taxCollection(vector<Player*>);
+        void taxCollection(vector<shared_ptr<Player>>&);
         int getWealth();
         void buildBuilding(map<string, RecipeConfig>);
         bool canBuild(string, map<string, RecipeConfig>);
-        void addPlayer(vector<Player*>&);
+        void addPlayer(vector<shared_ptr<Player>>&);
         void sell();
         void buy();
         int tax();
+        string toLower(string);
 };
 #endif
