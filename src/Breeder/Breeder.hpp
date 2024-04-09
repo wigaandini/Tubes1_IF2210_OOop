@@ -17,7 +17,7 @@ class Breeder: public Player, public Resident{
         void cattle();
         void feedAnimal();
         void sell();
-        void buy();
+        void buy(Item&, int);
         void harvest();
         int tax();
 };

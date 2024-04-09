@@ -2,10 +2,11 @@
 #define _MAYOR_HPP_
 
 #include "../Player/Player.hpp"
+#include "../Customer/Customer.hpp"
 #include <vector>
 #include <map>
 
-class Mayor: public Player{
+class Mayor: public Player, public Customer{
     public:
         Mayor();
         Mayor(int playerId, string username, float weight, int gulden);
@@ -14,8 +15,8 @@ class Mayor: public Player{
         void buildBuilding();
         bool checkGuldenEnough(int);
         void addPlayer();
-        void sell();
-        void buy();
+        void sell(vector<string>);
+        void buy(Item&, int);
         int tax();
 };
 #endif

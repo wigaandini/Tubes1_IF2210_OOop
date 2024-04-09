@@ -23,5 +23,7 @@ public:
     void eat();
     virtual void buy() ;
     virtual void sell() ;
+    int getGulden() const;
+    Inventory* getInventory() const ;
 };
 #endif

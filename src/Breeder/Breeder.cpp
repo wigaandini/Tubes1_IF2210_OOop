@@ -126,8 +126,19 @@ void Breeder::sell(){
 
 }
         
-void Breeder::buy(){
+void Breeder::buy(Item &item, int quantity)
+{
+    if (item.getPrice() * quantity > this->gulden)
+    {
+        throw ""; // uang  tidak cukup
+    }
 
+    if (this->inventory->countEmpty() < quantity)
+    {
+        throw ""; // Penyimpanan tidak cukup
+    }
+
+    this->gulden -= item.getPrice() * quantity;
 }
         
 void Breeder::harvest(){
