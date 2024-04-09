@@ -1,4 +1,5 @@
-#include "Ranch.hpp"
+#include "src/Ranch/Ranch.hpp"
+
 using namespace std;
 int main() {
     Animal def;

@@ -1,4 +1,5 @@
-#include "Inventory.hpp"
+#include "src/Inventory/Inventory.hpp"
+
 using namespace std;
 int main() {
     Item def;
