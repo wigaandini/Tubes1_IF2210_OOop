@@ -85,6 +85,11 @@ public:
         return buffer[i][j];
     }
 
+    void remove(int i, int j){
+        buffer[i][j] = nullptr;
+        emptySlot++;
+    }
+    
     void put(string slot, const shared_ptr<T> val)
     {
         if (emptySlot == 0)
