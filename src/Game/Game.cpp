@@ -3,6 +3,7 @@
 #include "../Mayor/Mayor.hpp"
 #include "../Player/Player.hpp"
 #include "../Breeder/Breeder.hpp"
+#include "../Farmer/Farmer.hpp"
 
 map<string, AnimalConfig> Game::animalConfig;
 map<string, PlantConfig> Game::plantConfig;
@@ -129,17 +130,29 @@ void Game::mainLoop()
 
         std::cout << player->getInventory() << std::endl;
 
+
         shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
-        std::cout << breeder->getRanch() << std::endl;
+        if (breeder != nullptr) {
+            // The player is a Breeder, so we can safely call getRanch
+            cout << breeder->getRanch() << endl;
+            continue; // Move to the next player
+        }
+
+        // Try to cast player to Farmer
+        shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
+        if (farmer != nullptr) {
+            // The player is a Farmer, so we can safely call getFarm
+            cout << farmer->getFarm() << endl;
+        }
     }
 
-    // std::cout << "Items in the store:" << std::endl;
-    // for (const auto& pair : this->store.getItems()) {
-    //     std::cout << "Category: " << pair.first << std::endl;
-    //     for (const auto& item : pair.second) {
-    //         std::cout << " - " << item->getName() << std::endl;
-    //     }
-    // }
+    std::cout << "Items in the store:" << std::endl;
+    for (const auto& pair : this->store.getItems()) {
+        std::cout << "Category: " << pair.first << std::endl;
+        for (const auto& item : pair.second) {
+            std::cout << " - " << item->getName() << std::endl;
+        }
+    }
     // bool isGameOver = false;
 
     // Game::setCurrentPlayer(0);

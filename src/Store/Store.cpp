@@ -14,7 +14,7 @@ void Store::addItem(shared_ptr<Item> item)
 
     if (!this->checkIsLivingBeings(item->getName()))
     {
-        this->items.at(item->getName()).push_back(item);
+        this->items[item->getName()].push_back(item);
     }
 }
 

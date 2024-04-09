@@ -263,29 +263,29 @@ void LoadConfig::loadStateConfig(string filename)
             file >> totalItem;
             cout << totalItem << endl;
             string  slot;
-            int jumlah;
+            int berat;
             for (int j = 0; j < totalItem; j++)
             {
-                file >> slot >> itemName >> jumlah;
+                file >> slot >> itemName >> berat;
                 cout << itemName;
                     cout << Game::getAnimalConfig()[itemName].name << endl;
             
                 if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                 {
                     cout << Game::getAnimalConfig()[itemName].name << endl;
-                    player->getRanch().put(slot, make_shared<Carnivore>(itemName));
+                    player->getRanch().put(slot, make_shared<Carnivore>(itemName,berat));
                 }
                 else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                 {
                     cout << Game::getAnimalConfig()[itemName].name << endl;
 
-                    player->getRanch().put(slot, make_shared<Herbivore>(itemName));
+                    player->getRanch().put(slot, make_shared<Herbivore>(itemName,berat));
                 }
                 else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                 {
                     cout << Game::getAnimalConfig()[itemName].name << endl;
 
-                    player->getRanch().put(slot, make_shared<Omnivore>(itemName));
+                    player->getRanch().put(slot, make_shared<Omnivore>(itemName,berat));
                 }
                 
             }
@@ -333,64 +333,41 @@ void LoadConfig::loadStateConfig(string filename)
 
             file >> totalItem;
             string  slot;
-            int jumlah;
+            int umur;
             for (int j = 0; j < totalItem; j++)
             {
-                file >> slot >> itemName >> jumlah;
+                file >> slot >> itemName >> umur;
 
-                player->getFarm().put(slot, make_shared<Plant>(itemName));
+                player->getFarm().put(slot, make_shared<Plant>(umur,itemName));
             }
 
             Game::getPlayers().push_back(player);
         }
+    
+    }  
 
+    int storeAmount;
+    string storeItemName;
+    int amount;
+    file >> storeAmount;
 
+    for (int j = 0; j < storeAmount; j++)
+    {
+        file >> storeItemName >> amount;
+
+        for (int k = 0; k < amount; k++)
+        {
+           
+            if (Game::getProductConfig().find(storeItemName) != Game::getProductConfig().end())
+            {
+                Game::getStore().addItem(make_shared<Product>(storeItemName));
+            }
+            else if (Game::getRecipe().find(storeItemName) != Game::getRecipe().end())
+            {
+                Game::getStore().addItem(make_shared<Building>(storeItemName));
+            }
+        }
+    } 
 }
-}
 
-// int storeAmount;
-// string storeItemName;
-// int amount;
-// file >> storeAmount;
 
-// for (int j = 0; j < storeAmount; j++)
-// {
-//     file >> storeItemName >> amount;
-
-//     for (int k = 0; k < amount; k++)
-//     {
-//         if (Game::getAnimalConfig().find(storeItemName) != Game::getAnimalConfig().end())
-//         {
-//             if (Game::getAnimalConfig()[storeItemName].type == AnimalType::CARNIVORE)
-//             {
-//                 Carnivore item(storeItemName);
-//                 Game::getStore().addItem(item);
-//             }
-//             else if (Game::getAnimalConfig()[storeItemName].type == AnimalType::HERBIVORE)
-//             {
-//                 Herbivore item(storeItemName);
-//                 Game::getStore().addItem(item);
-//             }
-//             else if (Game::getAnimalConfig()[storeItemName].type == AnimalType::OMNIVORE)
-//             {
-//                 Omnivore item(storeItemName);
-//                 Game::getStore().addItem(item);
-//             }
-//         }
-//         else if (Game::getPlantConfig().find(storeItemName) != Game::getPlantConfig().end())
-//         {
-//             Plant item(storeItemName);
-//             Game::getStore().addItem(item);
-//         }
-//         else if (Game::getProductConfig().find(storeItemName) != Game::getProductConfig().end())
-//         {
-//             Product item(storeItemName);
-//             Game::getStore().addItem(item);
-//         }
-//         else if (Game::getRecipe().find(storeItemName) != Game::getRecipe().end())
-//         {
-//             Building item(storeItemName);
-//             Game::getStore().addItem(item);
-//         }
-//     }
-// }
