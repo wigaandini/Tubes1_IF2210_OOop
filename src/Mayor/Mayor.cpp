@@ -95,10 +95,12 @@ bool Mayor::canBuild(string buildingName, map<string, RecipeConfig> recipe){
         gulden -= itr->second.price;
         for(auto material: itr->second.materials){
             for(int k = 0; k < material.second; k++){
-                for(int i = 0; i < inventory.getRow(); i++){
-                    for(int j = 0; j < inventory.getcol(); j++){
+                bool materialRemoved = false;
+                for(int i = 0; i < inventory.getRow() && !materialRemoved; i++){
+                    for(int j = 0; j < inventory.getcol() && !materialRemoved; j++){
                         if(this->inventory.see(i,j)->getName() == material.first){
                             inventory.remove(i,j);
+                            materialRemoved = true;
                         }
                     }
                 }
