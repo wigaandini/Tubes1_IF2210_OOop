@@ -1,6 +1,5 @@
 #ifndef _GRID_HPP_
 #define _GRID_HPP_
-
 #include "GridException.hpp"
 #include <iostream>
 #include <memory>
@@ -8,7 +7,6 @@
 #include <map>
 #include <iomanip>
 using namespace std;
-
 template <class T>
 class Grid
 {
@@ -53,6 +51,18 @@ public:
             }
         }
     };
+
+    Grid(const Grid& other){
+        row = other.row;
+        col = other.col;
+        emptySlot = other.emptySlot;
+        for(int i =0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                buffer[i][j] = other.buffer[i][j];
+            }
+        }
+        defaultValue = other.defaultValue;
+    }
     ~Grid(){
 
     };

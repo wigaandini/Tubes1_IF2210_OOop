@@ -18,7 +18,7 @@ Player::Player(string username, int weight, int gulden)
     this->username = username;
     this->weight = weight;
     this->gulden = gulden;
-    Item i;
+    this->inventory = Inventory();
     countIdPlayer++;
 }
 

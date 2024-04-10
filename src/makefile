@@ -43,6 +43,10 @@ all: $(TARGET)
 debug: CXXFLAGS = $(BASE_CXXFLAGS) -g
 debug: $(TARGET)
 
+# Run the main file
+run: all
+	./$(TARGET)
+
 # Link object files into a binary
 $(TARGET): $(OBJS)
 	$(CXX) $(OBJS) -o $@
