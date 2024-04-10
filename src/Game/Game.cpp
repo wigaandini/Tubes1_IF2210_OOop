@@ -16,7 +16,7 @@ Store Game::store;
 
 Game::Game()
 {
-    players.push_back(make_shared<Mayor>());
+    players.push_back(make_shared<Mayor>("der",40,50));
 
 }
 
@@ -151,21 +151,21 @@ void Game::mainLoop()
             std::cout << " - " << item->getName() << std::endl;
         }
     }
-    // bool isGameOver = false;
+    bool isGameOver = false;
 
-    // Game::setCurrentPlayer(0);
-    // while (!isGameOver)
-    // {
-    //     string input;
-    //     cout << "> ";
-    //     cin >> input;
-    //     if (this->commandHandler.checkCommand(input))
-    //     {
-    //         this->commandHandler.handleCommand(input);
-    //     }
+    Game::setCurrentPlayer(0);
+    while (!isGameOver)
+    {
+        string input;
+        cout << "> ";
+        cin >> input;
+        if (this->commandHandler.checkCommand(input))
+        {
+            this->commandHandler.handleCommand(input);
+        }
 
-    //     Game::setCurrentPlayer(1);
-    // }
+        Game::setCurrentPlayer(1);
+    }
 }
 
 void Game::setPlayers(vector<shared_ptr<Player>> &tempplayers)
