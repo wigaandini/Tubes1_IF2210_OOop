@@ -9,7 +9,7 @@ Player::Player()
     this->username = "anonim";
     this->weight = 40;
     this->gulden = 50;
-
+    this->inventory = Inventory();
 }
 
 Player::Player(string username, int weight, int gulden)
@@ -18,7 +18,7 @@ Player::Player(string username, int weight, int gulden)
     this->username = username;
     this->weight = weight;
     this->gulden = gulden;
-    Item i;
+    this->inventory = Inventory();
     countIdPlayer++;
 }
 

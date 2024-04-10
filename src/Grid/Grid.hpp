@@ -53,6 +53,19 @@ public:
     ~Grid()
     {
     }
+
+    Grid(const Grid& other){
+        row = other.row;
+        col = other.col;
+        emptySlot = other.emptySlot;
+        for(int i =0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                buffer[i][j] = other.buffer[i][j];
+            }
+        }
+        defaultValue = other.defaultValue;
+    }
+
     int getRow() const
     {
         return this->row;
