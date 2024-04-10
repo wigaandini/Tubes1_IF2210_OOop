@@ -16,9 +16,7 @@ Store Game::store;
 
 Game::Game()
 {
-    Mayor mayor;
-
-    // players.push_back(&mayor);
+    players.push_back(make_shared<Mayor>());
 
 }
 
