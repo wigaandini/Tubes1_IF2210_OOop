@@ -16,7 +16,6 @@ Store Game::store;
 
 Game::Game()
 {
-    players.push_back(make_shared<Mayor>("der",40,50));
 
 }
 
@@ -121,6 +120,8 @@ void Game::mainLoop()
 
     cout << "Finish Load Config" << endl;
 
+    players.push_back(make_shared<Mayor>("der",40,50));
+    
     std::cout << "Players in the game:" << std::endl;
     for (auto player : players)
     {
