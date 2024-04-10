@@ -38,22 +38,25 @@ void Item::setPrice (int price){
     this->price = price;
 }
 
-int Item::getItemId() const{
+const int& Item::getItemId() const{
     return this->itemId;
 }
 
-string Item::getName() const{
+const string& Item::getName() const{
     return this->name;
 }
 
-string Item::getCode() const{
+const string& Item::getCode() const{
     return this->code;
 }
 
-int Item::getPrice() const{
+const int& Item::getPrice() const {
     return this->price;
 }
 
+bool Item::operator==(const Item& other){
+    return itemId == other.itemId;
+}
 ostream& operator<<(ostream& os, const Item& item){
     os << item.code;
     return os;

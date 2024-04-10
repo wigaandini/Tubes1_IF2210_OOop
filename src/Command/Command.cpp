@@ -7,10 +7,10 @@
 
 Command::Command()
 {
-    vector<string> playerCommand = { "NEXT", "CETAK_PENYIMPANAN", "MAKAN","SIMPAN", "JUAL", "BELI" };
-    vector<string> mayorCommand = {"TAMBAH_PEMAIN"};
-    vector<string> farmerCommand = {"TANAM"};
-    vector<string> breederCommand = {"TERNAK"};
+    this->playerCommand = { "CETAK_PENYIMPANAN", "MAKAN","SIMPAN", "JUAL", "BELI" , "MUAT"};
+    this->mayorCommand = {"TAMBAH_PEMAIN", "PUNGUT_PAJAK", "BANGUN_BANGUNAN", "TAMBAH_PEMAIN"};
+    this->farmerCommand = {"TANAM", "CETAK_LADANG", "PANEN"};
+    this->breederCommand = {"TERNAK", "CETAK_PETERNAKAN", "KASIH_MAKAN", "PANEN"};
 
 
 }
@@ -19,25 +19,38 @@ Command::~Command()
 {
 }
 
-bool Command::checkCommand(const string &command)
-{
+pair<vector<string>, string> Command::allCommandFor(shared_ptr<Player>& player){
     vector<string> commands(playerCommand);
+    
+    pair<vector<string>,string> data;
 
-    if (const Mayor *mayor = dynamic_cast<const Mayor *>(&Game::getCurrentPlayer()))
+    if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer()))
     {
         commands.insert(commands.end(), mayorCommand.begin(), mayorCommand.end());
+        data.second = "Walikota";
     }
-    else if (const Farmer *farmer = dynamic_cast<const Farmer *>(&Game::getCurrentPlayer()))
+    else if (shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(Game::getCurrentPlayer()))
     {
         commands.insert(commands.end(), farmerCommand.begin(), farmerCommand.end());
+        data.second = "Petani";
 
 
     }
     else
     {
         commands.insert(commands.end(), breederCommand.begin(), breederCommand.end());
+        data.second = "Peternak";
 
     }
+    // cout << "command" << playerCommand.size() << endl;
+    data.first = commands;
+
+    return data;
+}
+
+bool Command::checkCommand(const string &command)
+{
+    vector<string> commands(allCommandFor(Game::getCurrentPlayer()).first);
 
     auto it = find(commands.begin(), commands.end(), command);
 
@@ -52,7 +65,28 @@ bool Command::checkCommand(const string &command)
 
 
 void Command::handleCommand(const string& command){
-    if (command.compare("BELI") == 0){
-        Game::getCurrentPlayer().buy();
+    if (command == "BELI"){
+        Game::getStore().handleCustomerBuy();
+    } else if (command == "JUAL"){
+        Game::getStore().handleCustomerSell();
+    } else if (command == "MAKAN") {
+        Game::getCurrentPlayer()->eat();
     }
 }
+
+void Command::printCommand(shared_ptr<Player>& player){
+    pair<vector<string>, string> data = allCommandFor(player);
+    // cout << allCommandFor(player).first.size() << endl;
+    vector<string> commands(data.first);
+    commands.push_back("NEXT");
+
+    cout << "Role pemain adalah " << data.second << endl;
+    cout << "Command yang tersedia: " << endl;
+    for (unsigned int i = 0; i < commands.size(); i++){
+        cout << i+1 << ". " << commands[i] << endl;
+    }
+
+    cout << endl;
+}
+
+

@@ -15,6 +15,8 @@ Product::Product(string name) : Item(Game::getProductConfig()[name].name, Game::
     this->addedWeight = Game::getProductConfig()[name].addedWeight;
 }
 
+
+
 Product::~Product(){
     
 }

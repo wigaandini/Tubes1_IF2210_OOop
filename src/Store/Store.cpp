@@ -8,27 +8,63 @@
 #include "../Game/Game.hpp"
 #include <sstream>
 #include <string>
+// #include "../Customer/Customer.hpp"
 
 Store::Store()
 {
     // this->unlimitedAnimalSell = {"COW", "SHEEP", "HORSE", "RABBIT", "SNAKE", "CHICKEN", "DUCK", "TEAK_TREE", "SANDALWOOD_TREE", "ALOE_TREE", "IRONWOOD_TREE", "APPLE_TREE", "ORANGE_TREE", "BANANA_TREE", "GUAVA_TREE"};
-    transform(Game::getAnimalConfig().begin(), Game::getAnimalConfig().end(), back_inserter(this->unlimitedAnimalSell), [](const pair<const string, AnimalConfig> &el)
+    // transform(Game::getAnimalConfig().begin(), Game::getAnimalConfig().end(), back_inserter(this->unlimitedAnimalSell), [](auto &el)
+    //           { return el.second.name; });
+
+    // transform(Game::getPlantConfig().begin(), Game::getPlantConfig().end(), back_inserter(this->unlimitedPlantSell), [](auto &el)
+    //           { return el.second.name; });
+
+    // for (const auto& pair : Game::getAnimalConfig()) {
+    //     this->unlimitedAnimalSell.push_back(pair.first);
+    // }
+
+    // // Mengisi unlimitedPlantSell
+    // for (const auto& pair : Game::getPlantConfig()) {
+    //     this->unlimitedPlantSell.push_back(pair.first);
+    // }
+}
+
+void Store::setUnlimitedAnimalSell()
+{
+    transform(Game::getAnimalConfig().begin(), Game::getAnimalConfig().end(), back_inserter(this->unlimitedAnimalSell), [](auto &el)
               { return el.first; });
 
-    transform(Game::getPlantConfig().begin(), Game::getPlantConfig().end(), back_inserter(this->unlimitedPlantSell), [](const pair<const string, PlantConfig> &el)
+    
+}
+void Store::setUnlimitedPlantSell()
+{
+    transform(Game::getPlantConfig().begin(), Game::getPlantConfig().end(), back_inserter(this->unlimitedPlantSell), [](auto &el)
               { return el.first; });
 }
 
-void Store::addItem(Item &item)
+void Store::addItem(shared_ptr<Item> item)
 {
 
-    if (!this->checkIsLivingBeings(item.getName()))
+    if (!this->checkIsLivingBeings(item->getName()))
     {
-        this->items[item.getName()].push_back(item);
+        this->items[item->getName()].push_back(item);
     }
 }
 
-vector<Item> Store::takeItem(const string &name, const int &num)
+void Store::addItem(vector<shared_ptr<Item>> &items)
+{
+
+    for (auto &item : items)
+    {
+
+        if (!this->checkIsLivingBeings(item->getName()))
+        {
+            this->items[item->getName()].push_back(item);
+        }
+    }
+}
+
+vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
 {
 
     if ((int)this->items[name].size() < num)
@@ -36,7 +72,7 @@ vector<Item> Store::takeItem(const string &name, const int &num)
         throw ""; // stock tidak cukup
     }
 
-    vector<Item> items;
+    vector<shared_ptr<Item>> items;
 
     for (int i = 0; i < num; i++)
     {
@@ -44,7 +80,7 @@ vector<Item> Store::takeItem(const string &name, const int &num)
         if (!this->checkIsLivingBeings(name))
         {
 
-            Item item = this->items[name].front();
+            auto item = this->items[name].front();
             this->items[name].erase(this->items[name].begin());
             items.push_back(item);
         }
@@ -53,17 +89,19 @@ vector<Item> Store::takeItem(const string &name, const int &num)
 
             if (name == "COW" || name == "SHEEP" || name == "HORSE" || name == "RABBIT")
             {
-                Herbivore animal(name);
+                auto animal = make_shared<Herbivore>(name);
                 items.push_back(animal);
             }
             else if (name == "SNAKE")
             {
-                Carnivore animal(name);
+                auto animal = make_shared<Carnivore>(name);
+
                 items.push_back(animal);
             }
             else
             {
-                Omnivore animal(name);
+                auto animal = make_shared<Omnivore>(name);
+
                 items.push_back(animal);
             }
         }
@@ -86,7 +124,7 @@ vector<string> Store::itemsCanSell() const
     return items;
 }
 
-bool Store::checkIsLivingBeings(const string &name) const
+bool Store::checkIsLivingBeings(const string &name)
 {
     vector<string> livingBeings(this->unlimitedAnimalSell);
     livingBeings.insert(livingBeings.end(), this->unlimitedPlantSell.begin(), this->unlimitedPlantSell.end());
@@ -141,13 +179,13 @@ void Store::handleCustomerBuy()
 
     cout << *this << endl;
 
-    cout << "Uang Anda : " << Game::getCurrentPlayer().getGulden() << endl;
-    cout << "Slot penyimpanan tersedia : " << Game::getCurrentPlayer().getInventory()->countEmpty() << endl
+    cout << "Uang Anda : " << Game::getCurrentPlayer()->getGulden() << endl;
+    cout << "Slot penyimpanan tersedia : " << Game::getCurrentPlayer()->getInventory().countEmpty() << endl
          << endl;
 
     bool isValid = false;
 
-    vector<Item> itemBuys;
+    vector<shared_ptr<Item>> itemBuys;
     while (!isValid)
     {
 
@@ -165,16 +203,18 @@ void Store::handleCustomerBuy()
         cout << "Kuantitas : ";
         cin >> quantity;
 
-        Customer *customer = dynamic_cast<Customer *>(&Game::getCurrentPlayer());
+        // shared_ptr<Customer> customer = dynamic_pointer_cast<Customer>(Game::getCurrentPlayer());
 
-        Item &itemBuyChoose = this->takeItem(allItemsSell.at(numItemBuy - 1), 1).at(0);
+        shared_ptr<Item> itemBuyChoose = this->takeItem(allItemsSell.at(numItemBuy - 1), 1).at(0);
         itemBuys.push_back(itemBuyChoose);
         try
         {
-            customer->buy(itemBuyChoose, quantity);
+            Game::getCurrentPlayer()->buy(itemBuyChoose, quantity);
 
-            vector<Item> items(this->takeItem(allItemsSell.at(numItemBuy - 1), quantity - 1));
+            vector<shared_ptr<Item>> items(this->takeItem(allItemsSell.at(numItemBuy - 1), quantity - 1));
             itemBuys.insert(itemBuys.end(), itemBuys.begin(), items.end());
+
+            cout << "Selamat Anda berhasil membeli " << quantity << " " << itemBuys.at(0)->getName() << ". Uang Anda tersisa " << Game::getCurrentPlayer()->getGulden() << " gulden.";
 
             isValid = true;
         }
@@ -192,7 +232,7 @@ void Store::handleCustomerBuy()
 
         cout << "Pilih slot untuk menyimpan barang yang Anda beli!" << endl
              << endl;
-        cout << *Game::getCurrentPlayer().getInventory() << endl;
+        cout << Game::getCurrentPlayer()->getInventory() << endl;
 
         string chooseSlot;
         cout << "Petak slot : ";
@@ -213,10 +253,10 @@ void Store::handleCustomerBuy()
 
             for (unsigned int i = 0; i < chooseSlotArray.size(); i++)
             {
-                Game::getCurrentPlayer().getInventory()->put(chooseSlotArray.at(i), itemBuys.at(i));
+                Game::getCurrentPlayer()->getInventory().put(chooseSlotArray.at(i), itemBuys.at(i));
             }
 
-            cout << itemBuys.at(0).getName() << " berhasil disimpan dalam penyimpanan!!" << endl;
+            cout << itemBuys.at(0)->getName() << " berhasil disimpan dalam penyimpanan!!" << endl;
 
             isValid = true;
         }
@@ -230,30 +270,55 @@ void Store::handleCustomerBuy()
 void Store::handleCustomerSell()
 
 {
-    if (Game::getCurrentPlayer().getInventory()->isEmpty()){
+    if (Game::getCurrentPlayer()->getInventory().isEmpty())
+    {
         cout << "Inventory Anda kosong tidak ada barang yang bisa Anda jual" << endl;
-        return ;
+        return;
     }
     cout << "Berikut merupakan penyimpanan Anda" << endl;
 
-    cout << *Game::getCurrentPlayer().getInventory() << endl;
+    cout << Game::getCurrentPlayer()->getInventory() << endl;
 
     cout << "Silahkan pilih petak yang ingin Anda jual!" << endl;
+    bool isValid = false;
 
-    cout << "Petak : ";
-
-    string chooseSlot;
-
-    cin >> chooseSlot;
-    vector<string> chooseSlotArray;
-
-    chooseSlot.erase(remove(chooseSlot.begin(), chooseSlot.end(), ' '), chooseSlot.end());
-    string token;
-    istringstream tokenStream(chooseSlot);
-
-    while (getline(tokenStream, token, ','))
+    while (!isValid)
     {
-        chooseSlotArray.push_back(token);
+        try
+        {
+            cout << "Petak (Ketik q untuk keluar) : ";
+
+            string chooseSlot;
+
+            cin >> chooseSlot;
+
+            if (chooseSlot.compare("q"))
+            {
+                cout << "Terimakasih atas kujungan Anda" << endl;
+                return;
+            }
+            vector<string> chooseSlotArray;
+
+            chooseSlot.erase(remove(chooseSlot.begin(), chooseSlot.end(), ' '), chooseSlot.end());
+            string token;
+            istringstream tokenStream(chooseSlot);
+
+            while (getline(tokenStream, token, ','))
+            {
+                chooseSlotArray.push_back(token);
+            }
+
+            pair<vector<shared_ptr<Item>>, int> items(Game::getCurrentPlayer()->sell(chooseSlotArray));
+
+            this->addItem(items.first);
+
+            cout << "Barang Anda berhasil dijual! Uang Anda bertambah " << items.second << " gulden!" << endl;
+
+            isValid = true;
+        }
+        catch (const char *)
+        {
+        }
     }
 
     cout << "Barang Anda berhasil dijual! Uang Anda bertambah 12 gulden!" << endl;
@@ -266,10 +331,11 @@ ostream &operator<<(ostream &os, const Store &store)
     int num = 1;
     for (string element : itemsSell)
     {
-        os << num++ << ". " << element << " - " << store.items.at(element).at(0).getPrice() << " (" << store.items.at(element).size() << ")" << endl;
+        os << num++ << ". " << element << " - " << store.items.at(element).at(0)->getPrice() << " (" << store.items.at(element).size() << ")" << endl;
         ;
     }
-
+    // cout << store.unlimitedAnimalSell.size() << endl;
+    // cout << Game::getAnimalConfig().begin()->second.name << endl;
     for (string element : store.unlimitedAnimalSell)
     {
         os << num++ << ". " << element << " - " << Game::getAnimalConfig().at(element).price << endl;
@@ -283,4 +349,13 @@ ostream &operator<<(ostream &os, const Store &store)
     }
 
     return os;
+}
+
+map<string, vector<shared_ptr<Item>>> Store::getItems() const
+{
+    return this->items;
+}
+
+Store::~Store()
+{
 }

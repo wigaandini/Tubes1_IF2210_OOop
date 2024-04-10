@@ -10,7 +10,8 @@
 
 using namespace std;
 
-class Item {
+class Item
+{
 protected:
     static int countIdItem;
     int itemId;
@@ -26,11 +27,12 @@ public:
     void setName(string name);
     void setCode(string code);
     void setPrice(int price);
-    int getItemId() const;
-    string getName() const;
-    string getCode() const;
-    int getPrice() const;
-    friend ostream& operator<<(ostream&, const Item&);
+    const int& getItemId() const;
+    const string& getName() const;
+    const string& getCode() const;
+    const int& getPrice() const ;
+    bool operator==(const Item &);
+    friend ostream &operator<<(ostream &, const Item &);
 };
 
 #endif

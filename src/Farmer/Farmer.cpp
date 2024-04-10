@@ -1,13 +1,11 @@
 #include "Farmer.hpp"
 #include "../Game/Game.hpp"
 
-Farmer::Farmer() : Player()
+Farmer::Farmer() : Resident()
 {
-    Plant p;
-    this->farm = new Farm(Game::getMainConfig().farmSize[0], Game::getMainConfig().farmSize[1], p);
 }
 
-Farmer::Farmer(string username, int weight, int gulden) : Player(username, weight, gulden)
+Farmer::Farmer(string username, int weight, int gulden) : Resident(username, weight, gulden)
 {
 }
 
@@ -15,26 +13,30 @@ Farmer::~Farmer()
 {
 }
 
+string Farmer::getType()
+{
+    return type;
+}
 void Farmer::plant()
 {
-    if (this->inventory->isEmpty())
+    if (this->inventory.isEmpty())
     {
         cout << endl
              << "Inventory anda kosong" << endl;
     }
-    else if (!this->inventory->checkInventoryPlant())
+    else if (!this->inventory.checkInventoryPlant())
     {
         cout << endl
              << "Inventory anda tidak ada tanaman" << endl;
     }
-    else if (!this->farm->isEmpty())
+    else if (!this->farm.isEmpty())
     {
         cout << endl
              << "Ladang anda penuh" << endl;
     }
     else
     {
-        this->inventory->displayStorage(false);
+        this->inventory.displayStorage(false);
         bool success = false;
         while (!success)
         {
@@ -42,7 +44,7 @@ void Farmer::plant()
                  << "Slot: ";
             string slot;
             cin >> slot;
-            if (this->inventory->see(slot).getItemId() == -1)
+            if (this->inventory.see(slot)->getItemId() == -1)
             {
                 cout << endl
                      << "Kamu mengambil harapan kosong dari penyimpanan." << endl
@@ -50,17 +52,17 @@ void Farmer::plant()
             }
             else
             {
-                if (Game::getPlantConfig().find(this->inventory->see(slot).getName()) != Game::getPlantConfig().end())
+                if (Game::getPlantConfig().find(this->inventory.see(slot)->getName()) != Game::getPlantConfig().end())
                 {
-                    string s = Game::getPlantConfig()[this->inventory->see(slot).getName()].name;
+                    string s = Game::getPlantConfig()[this->inventory.see(slot)->getName()].name;
                     cout << endl
                          << "Kamu memilih " << s << "." << endl;
                     cout << endl
                          << "Pilih petak tanah yang akan ditanami" << endl;
-                    const Item &itemRef = this->inventory->take(slot);
-                    const Plant &plantRef = dynamic_cast<const Plant &>(itemRef);
+                    shared_ptr<Item> itemRef = (this->inventory.take(slot));
+                    shared_ptr<Plant> plantRef = dynamic_pointer_cast<Plant>(itemRef);
 
-                    this->farm->displayStorage(false);
+                    this->farm.displayStorage(false);
                     bool done = false;
                     while (!done)
                     {
@@ -68,7 +70,7 @@ void Farmer::plant()
                              << "Petak: ";
                         string petak;
                         cin >> petak;
-                        if (this->farm->see(petak).getItemId() != -1)
+                        if (this->farm.see(petak)->getItemId() != -1)
                         {
                             cout << endl
                                  << "Petak sudah terisi." << endl
@@ -76,7 +78,7 @@ void Farmer::plant()
                         }
                         else
                         {
-                            this->farm->put(petak, plantRef);
+                            this->farm.put(petak, plantRef);
                             cout << endl
                                  << "Cangkul, cangkul, cangkul yang dalam~!" << endl
                                  << "Orange tree berhasil ditanam!" << endl;
@@ -95,24 +97,66 @@ void Farmer::plant()
     }
 }
 
+// void Farmer::buy(shared_ptr<Item> &item, int quantity)
+// {
+//     if (item->getPrice() * quantity > this->gulden)
+//     {
+//         throw ""; // uang  tidak cukup
+//     }
+
+//     if (this->inventory.countEmpty() < quantity)
+//     {
+//         throw ""; // Penyimpanan tidak cukup
+//     }
+
+//     this->gulden -= item->getPrice() * quantity;
+// }
+
+// vector<shared_ptr<Item>> Farmer::sell(vector<string> &slots)
+// {
+//     vector<shared_ptr<Item>> items;
+//     for (string slot : slots)
+//     {
+
+//         if (this->inventory.isEmpty(slot))
+//         {
+//             throw ""; // empty slot
+//         }
+
+//         if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(this->inventory.see(slot))){
+//             throw ""; //Tidak bisa jual bangunan
+//         }
+//     }
+
+//     for (string slot : slots)
+//     {
+
+//         const shared_ptr<Item> &item = this->inventory.take(slot);
+//         this->gulden += item->getPrice();
+//         items.push_back(item);
+//     }
+
+//     return items;
+// }
+
 void Farmer::harvest()
 {
-    if (this->farm->isEmpty())
+    if (this->farm.isEmpty())
     {
         cout << endl
              << "Ladang anda kosong" << endl;
     }
-    else if (!this->farm->checkPlantReadyToHarvest())
+    else if (!this->farm.checkPlantReadyToHarvest())
     {
         cout << endl
              << "Ladang anda tidak ada yang siap dipanen" << endl;
     }
     else
     {
-        this->farm->displayStorage(true);
+        this->farm.displayStorage(true);
         cout << endl
              << "Pilih tanaman siap panen yang kamu miliki" << endl;
-        map<string, int> plantReady = this->farm->countPlant();
+        map<string, int> plantReady = this->farm.countPlant();
         int number = 1;
         vector<int> total;
         vector<string> kode;
@@ -147,7 +191,7 @@ void Farmer::harvest()
 
             if (answer2 <= total[answer1 - 1])
             {
-                if (answer2 > this->inventory->countEmpty())
+                if (answer2 > this->inventory.countEmpty())
                 {
                     cout << endl
                          << "Jumlah penyimpanan tidak cukup!" << endl;
@@ -170,7 +214,7 @@ void Farmer::harvest()
             {
                 cout << "Petak ke-" << i << ": ";
                 cin >> slot;
-                if (this->farm->see(slot).getCode() != kode[answer1 - 1])
+                if (this->farm.see(slot)->getCode() != kode[answer1 - 1])
                 {
                     cout << "Petak tidak sesuai. Silahkan input kembali!" << endl;
                 }
@@ -181,11 +225,11 @@ void Farmer::harvest()
                 }
             }
 
-            vector<Product> tempP = this->farm->take(slot).collect();
+            vector<Product> tempP = this->farm.take(slot)->collect();
             unsigned int k = 0;
             while (k < tempP.size())
             {
-                this->inventory->putRandom(tempP[k]);
+                this->inventory.putRandom(make_shared<Product>(tempP[k]));
                 k++;
             }
         }
@@ -206,22 +250,59 @@ void Farmer::harvest()
     }
 }
 
-int Farmer::tax()
+int Farmer::getWealth()
 {
-    return 0;
+    int wealth = gulden;
+    for (int i = 0; i < this->inventory.getRow(); i++)
+    {
+        for (int j = 0; j < this->inventory.getCol(); j++)
+        {
+            wealth += this->inventory.see(i, j)->getPrice();
+        }
+    }
+    for (int i = 0; i < this->farm.getRow(); i++)
+    {
+        for (int j = 0; j < this->farm.getCol(); j++)
+        {
+            wealth += this->farm.see(i, j)->getPrice();
+        }
+    }
+    return wealth;
 }
 
-void Farmer::buy(Item &item, int quantity)
+int Farmer::tax()
 {
-    if (item.getPrice() * quantity > this->gulden)
+    int kkp = getWealth() - KTKP_PETANI;
+    if (kkp <= 0)
     {
-        throw ""; // uang  tidak cukup
+        return 0;
     }
-
-    if (this->inventory->countEmpty() < quantity)
+    else
     {
-        throw ""; // Penyimpanan tidak cukup
+        if (kkp <= 6)
+        {
+            return 0.05 * kkp;
+        }
+        else if (kkp <= 25 && kkp > 6)
+        {
+            return 0.15 * kkp;
+        }
+        else if (kkp <= 50 && kkp > 25)
+        {
+            return 0.25 * kkp;
+        }
+        else if (kkp <= 500 && kkp > 50)
+        {
+            return 0.30 * kkp;
+        }
+        else
+        {
+            return 0.35 * kkp;
+        }
     }
+}
 
-    this->gulden -= item.getPrice() * quantity;
+Farm &Farmer::getFarm()
+{
+    return this->farm;
 }

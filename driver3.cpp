@@ -1,22 +1,23 @@
-#include "Ranch.hpp"
+
+#include <vector>
+#include <iostream>
+
 using namespace std;
-int main() {
-    Animal def;
-    Ranch g(6, 10, def);
-    Animal mesac;
-    mesac.setCode("MSC");
-    mesac.setAnimalId(1);
-    mesac.setName("Mesac");
-    Animal der;
-    der.setName("der");
-    der.setAnimalId(2);
-    der.setCode("DER");
-    der.setWeight(100);
-    der.setWeightToHarvest(90);
-    mesac.setWeight(10);
-    mesac.setWeightToHarvest(20);
-    g.put("A01", mesac);
-    g.put("A02", der);
-    g.displayStorage(true);
-    return 0;
+int main()
+{
+    vector<int> integer = {0, 1, 2, 3};
+
+    for (auto a = 0; a < integer.size(); ++a)
+    {
+
+        if (integer[a] == 2)
+        {
+            integer.push_back(4);
+        }
+        if (integer[a] == 4)
+        {
+            integer.push_back(6);
+        }
+        cout << integer[a] << endl;
+    }
 }

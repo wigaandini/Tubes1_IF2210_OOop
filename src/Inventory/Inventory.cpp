@@ -5,31 +5,77 @@ using namespace std;
 // Constructor
 Inventory::Inventory(int r, int c, Item defaultValue) : Grid<Item>(r, c, defaultValue) {}
 
-// Destructor
-Inventory::~Inventory() {}
+Inventory::Inventory() : Grid(Game::getMainConfig().inventorySize[0], Game::getMainConfig().inventorySize[1])
+{
+}
+
+Inventory::~Inventory()
+{
+}
+
+int Inventory::countItemStock(const string &name)
+{
+    int count = 0;
+    for (int i = 0; i < this->row; i++)
+    {
+        for (int j = 0; j < this->col; j++)
+        {
+            if (this->buffer[i][j]->getName().compare(name) == 0)
+            {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+void Inventory::useItem(const string &name, int quantity)
+{
+    for (int k = 0; k < quantity; k++)
+    {
+        for (int i = 0; i < this->row; i++)
+        {
+            for (int j = 0; j < this->col; j++)
+            {
+                if (this->buffer[i][j]->getName().compare(name) == 0)
+                {
+                    this->remove(i, j);
+                }
+            }
+        }
+    }
+}
 
 // Member function displayStorage
-void Inventory::displayStorage(bool printInfo) {
+void Inventory::displayStorage(bool printInfo)
+{
     string title = "[ Penyimpanan ]";
-    int columnWidthWithBorders = 6; 
+    int columnWidthWithBorders = 6;
     int totalGridWidth = this->col * columnWidthWithBorders;
     int equalsLength = (totalGridWidth - title.length()) / 2;
     string equalsSide(equalsLength, '=');
     cout << "     " << equalsSide << title << equalsSide;
-    if ((totalGridWidth - title.length()) % 2 != 0) {
+    if ((totalGridWidth - title.length()) % 2 != 0)
+    {
         cout << "=";
     }
     cout << "=\n";
     cout << (*this);
-    if(printInfo){
+    if (printInfo)
+    {
         cout << "Total slot kosong: " << this->emptySlot << endl;
     }
 }
 
-bool Inventory::checkInventoryEdible(){
-    for(int i = 0; i < this->row; i++){
-        for(int j = 0; j < this->col; j++){
-            if(Game::getProductConfig()[this->buffer[i][j].getName()].type != ProductType::PRODUCT_MATERIAL_PLANT){
+bool Inventory::checkInventoryEdible()
+{
+    for (int i = 0; i < this->row; i++)
+    {
+        for (int j = 0; j < this->col; j++)
+        {
+            if (Game::getProductConfig()[this->buffer[i][j]->getName()].type != ProductType::PRODUCT_MATERIAL_PLANT)
+            {
                 return true;
             }
         }
@@ -37,10 +83,14 @@ bool Inventory::checkInventoryEdible(){
     return false;
 }
 
-bool Inventory::checkInventoryAnimal(){
-    for(int i = 0; i < this->row; i++){
-        for(int j = 0; j < this->col; j++){
-            if(Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j].getName()].type == AnimalType::OMNIVORE){
+bool Inventory::checkInventoryAnimal()
+{
+    for (int i = 0; i < this->row; i++)
+    {
+        for (int j = 0; j < this->col; j++)
+        {
+            if (Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE)
+            {
                 return true;
             }
         }
@@ -48,10 +98,14 @@ bool Inventory::checkInventoryAnimal(){
     return false;
 }
 
-bool Inventory::checkInventoryPlant(){
-    for(int i = 0; i < this->row; i++){
-        for(int j = 0; j < this->col; j++){
-            if(Game::getPlantConfig()[this->buffer[i][j].getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j].getName()].type == PlantType::FRUIT_PLANT){
+bool Inventory::checkInventoryPlant()
+{
+    for (int i = 0; i < this->row; i++)
+    {
+        for (int j = 0; j < this->col; j++)
+        {
+            if (Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::FRUIT_PLANT)
+            {
                 return true;
             }
         }
@@ -59,20 +113,29 @@ bool Inventory::checkInventoryPlant(){
     return false;
 }
 
-void Inventory::putRandom(const Item& item){
-    for(int i = 0; i < row; i++){
-        for(int j = 0; j < col ; j++){
-            if(this->buffer[i][j].getItemId() == -1){
+void Inventory::putRandom(const shared_ptr<Item> item)
+{
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (this->buffer[i][j] == nullptr)
+            {
                 this->buffer[i][j] = item;
+                return;
             }
         }
     }
 }
 
-bool Inventory::checkInventoryFruit(){
-    for(int i = 0; i < this->row; i++){
-        for(int j = 0; j < this->col; j++){
-            if(Game::getProductConfig()[this->buffer[i][j].getName()].type == ProductType::PRODUCT_FRUIT_PLANT ){
+bool Inventory::checkInventoryFruit()
+{
+    for (int i = 0; i < this->row; i++)
+    {
+        for (int j = 0; j < this->col; j++)
+        {
+            if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT)
+            {
                 return true;
             }
         }
@@ -80,11 +143,14 @@ bool Inventory::checkInventoryFruit(){
     return false;
 }
 
-
-bool Inventory::checkInventoryMeat(){
-    for(int i = 0; i < this->row; i++){
-        for(int j = 0; j < this->col; j++){
-            if(Game::getProductConfig()[this->buffer[i][j].getName()].type == ProductType::PRODUCT_ANIMAL){
+bool Inventory::checkInventoryMeat()
+{
+    for (int i = 0; i < this->row; i++)
+    {
+        for (int j = 0; j < this->col; j++)
+        {
+            if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)
+            {
                 return true;
             }
         }

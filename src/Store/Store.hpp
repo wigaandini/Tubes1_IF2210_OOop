@@ -4,31 +4,36 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include <map>
 
 
 
 #include "../Item/Item.hpp"
-#include "../Customer/Customer.hpp"
 using namespace std;
 
 class Store{
     private :
-        map<string, vector<Item>> items;
-        bool checkIsLivingBeings(const string& name) const;
         vector<string> unlimitedAnimalSell;
         vector<string> unlimitedPlantSell;
         vector<string> itemsCanSell() const;
+        map<string, vector<shared_ptr<Item>>> items;
+        bool checkIsLivingBeings(const string& name);
 
     public :
         Store();
-        vector<Item> takeItem(const string& name, const int&);
-        Item seeItem(const string& name);
-        void addItem(Item& item);
+        void setUnlimitedAnimalSell();
+        void setUnlimitedPlantSell();
+        map<string, vector<shared_ptr<Item>>> getItems() const;
+        vector<shared_ptr<Item>> takeItem(const string& name, const int&);
+        void addItem(shared_ptr<Item> item);
+        void addItem(vector<shared_ptr<Item>>& items);
+        
         friend ostream& operator<<(ostream& os, const Store& store);
         void handleCustomerBuy();
         void handleCustomerSell();
 
+        ~Store();
 };
 
 #endif

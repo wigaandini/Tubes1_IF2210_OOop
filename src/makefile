@@ -1,8 +1,8 @@
 # Compiler
 CXX = g++
 
-# Compiler flags
-CXXFLAGS = -Wall -g
+# Base compiler flags
+BASE_CXXFLAGS = -Wall
 
 # Build directory for object files
 OBJ_DIR = build
@@ -36,7 +36,12 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp) \
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Default make target
+all: CXXFLAGS = $(BASE_CXXFLAGS) -O2
 all: $(TARGET)
+
+# Debug target
+debug: CXXFLAGS = $(BASE_CXXFLAGS) -g
+debug: $(TARGET)
 
 # Link object files into a binary
 $(TARGET): $(OBJS)

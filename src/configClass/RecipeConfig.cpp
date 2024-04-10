@@ -24,3 +24,24 @@ RecipeConfig::~RecipeConfig(){
 
 }
 
+
+ostream& operator<<(ostream& os, map<string,RecipeConfig>& recipe){
+    cout << "Resep bangunan yang ada adalah sebagai berikut." << endl;
+    for (auto itr = recipe.begin(); itr != recipe.end(); itr++)
+    {
+        cout << "   " << itr->second.id << ". " << itr->second.name << "(" << itr->second.price << " gulden, ";
+        int ctr = 0;
+        for (auto material : itr->second.materials)
+        {
+            cout << material.first << " " << material.second;
+            if (ctr < int(itr->second.materials.size()))
+            {
+                cout << ",";
+            }
+            ctr++;
+        }
+        cout << ")" << endl;
+    }
+
+    return os;
+}

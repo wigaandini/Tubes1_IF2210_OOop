@@ -11,19 +11,24 @@ class Player
 protected:
     static int countIdPlayer;
     int playerId;
+    string type;
     string username;
     int weight;
     int gulden;
-    Inventory* inventory;
+    Inventory inventory;
 
 public:
     Player();
     Player(string username, int weight, int gulden);
+    Inventory &getInventory();
+    string &getName();
     virtual ~Player();
+    int &getWeight();
+    virtual string getType() = 0;
+    virtual void buy(shared_ptr<Item> &, int);
+    virtual pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
+    int &getGulden();
+    void setGulden(int);
     void eat();
-    virtual void buy() ;
-    virtual void sell() ;
-    int getGulden() const;
-    Inventory* getInventory() const ;
 };
 #endif

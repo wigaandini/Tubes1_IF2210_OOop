@@ -8,6 +8,7 @@ using namespace std;
 class Ranch: public Grid<Animal> {
 public:
     Ranch(int r, int c, Animal defaultValue);
+    Ranch();
     ~Ranch();
     void displayStorage(bool printInfo);
     bool checkAnimalReadyToHarvest();

@@ -1,7 +1,9 @@
 #ifndef _GRID_HPP_
 #define _GRID_HPP_
 
+#include "GridException.hpp"
 #include <iostream>
+#include <memory>
 #include <vector>
 #include <map>
 #include <iomanip>
@@ -11,7 +13,7 @@ template <class T>
 class Grid
 {
 protected:
-    vector<vector<T>> buffer;
+    vector<vector<shared_ptr<T>>> buffer;
     int row;
     int col;
     int emptySlot;
@@ -20,118 +22,162 @@ protected:
     {
         charr = s[0];
         intt = stoi(s.substr(1));
-    }
+    };
+    void parseInput(string s, int &row, int &col) const
+    {
+        char colTemp = s[0];
+        row = stoi(s.substr(1));
+        col = colTemp - 'A';
+    };
 
 public:
     Grid(int r, int c, T defaultValue) : row(r), col(c), emptySlot(r * c), defaultValue(defaultValue)
     {
-        buffer.resize(row, vector<T>(col));
+        buffer.resize(row, vector<shared_ptr<T>>(col));
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
-                buffer[i][j] = defaultValue;
+                buffer[i][j] = nullptr;
             }
         }
-    }
+    };
+    Grid(int r, int c) : row(r), col(c), emptySlot(r * c)
+    {
+        buffer.resize(row, vector<shared_ptr<T>>(col));
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                buffer[i][j] = nullptr;
+            }
+        }
+    };
+    ~Grid(){
 
-    ~Grid() {}
-
+    };
     int getRow() const
     {
-        return this.row;
-    }
-
-    int getcol() const
+        return this->row;
+    };
+    int getCol() const
     {
-        return this.col;
-    }
-
+        return this->col;
+    };
     bool isEmpty()
     {
         return emptySlot == row * col;
-    }
-
-    bool isEmpty(string slot)
+    };
+    bool isEmpty(const string & slot)
     {
         int row;
-        char kol;
-
-        this->parseInput(slot);
-        int kolIdx = kol - 'A';
-
-        if (this->buffer[row][kolIdx] == this->defaultValue){
+        int col;
+        this->parseInput(slot, row, col);
+        if (this->buffer[row][col] == nullptr)
+        {
             return true;
         }
 
         return false;
-    }
-
+    };
     int countEmpty() const
     {
         return emptySlot;
-    }
-
-    void put(string slot, const T &val)
+    };
+    shared_ptr<T> &see(int i, int j)
     {
+        return buffer[i][j];
+    };
+    void remove(int i, int j)
+    {
+        buffer[i][j] = nullptr;
+        emptySlot++;
+    };
+    void put(string slot, const shared_ptr<T> val)
+    {
+        if (emptySlot == 0)
+        {
+            throw GridFullException();
+        }
         int x;
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x < 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
         {
-            cerr << "Out of bounds\n"; /* Ntar ganti pake exception index */
-            return;
+            throw IndexOutOfBoundException();
         }
-        buffer[x - 1][colIdx] = val;
-        emptySlot--;
-    }
-
-    T take(string slot)
+        if (buffer[x - 1][colIdx] == nullptr)
+        {
+            buffer[x - 1][colIdx] = val;
+            emptySlot--;
+        }
+        else
+        {
+            throw SlotOccupiedException();
+        }
+    };
+    shared_ptr<T> take(string slot)
     {
+        if (emptySlot == row * col)
+        {
+            throw GridEmptyException();
+        }
         int x;
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x < 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
         {
-            cerr << "Out of bounds\n";
-            return T();
+            throw IndexOutOfBoundException();
         }
-        T val = buffer[x - 1][colIdx];
-        buffer[x - 1][colIdx] = defaultValue;
+        auto &val = buffer[x - 1][colIdx];
+        if (val == nullptr)
+        {
+            throw SlotEmptyException();
+        }
+        buffer[x - 1][colIdx] = nullptr;
         emptySlot++;
         return val;
-    }
-
+    };
     void remove(string slot)
     {
+
+        if (emptySlot == row * col)
+        {
+            throw GridEmptyException();
+        }
         int x;
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x < 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
         {
-            cerr << "Out of bounds\n";
-            return;
+            throw IndexOutOfBoundException();
         }
-        buffer[x - 1][colIdx] = defaultValue;
+        if (buffer[x - 1][colIdx] == nullptr)
+        {
+            throw SlotEmptyException();
+        }
+        buffer[x - 1][colIdx] = nullptr;
         emptySlot++;
-    }
-
-    T &see(string slot)
+    };
+    shared_ptr<T> &see(string slot)
     {
         int x;
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x < 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
         {
-            cerr << "Out of bounds\n";
-            return defaultValue;
+            throw IndexOutOfBoundException();
+        }
+        if (buffer[x - 1][colIdx] == nullptr)
+        {
+            throw SlotEmptyException();
         }
         return (buffer[x - 1][colIdx]);
-    }
+    };
 
     friend ostream &operator<<(ostream &os, const Grid &g)
     {
@@ -139,7 +185,7 @@ public:
         os << "    ";
         for (int j = 0; j < g.col; ++j)
         {
-            os << setw(5) << static_cast<char>('A' + j) << " ";
+            os << setw(5) << (char)('A' + j) << " ";
         }
         os << "\n";
 
@@ -159,7 +205,15 @@ public:
             for (int j = 0; j < g.col; ++j)
             {
                 // Cetak isi selpe
-                os << " " << setw(3) << setfill(' ') << g.buffer[i][j] << " |";
+                if (g.buffer[i][j] != nullptr)
+                {
+                    os << " " << setw(3) << setfill(' ') << *g.buffer[i][j] << " |";
+                }
+                else
+                {
+                    os << " " << setw(3) << setfill(' ') << "   "
+                       << " |";
+                }
             }
             os << "\n";
 
@@ -172,7 +226,9 @@ public:
             os << "+\n";
         }
         return os;
-    }
+    };
 };
+
+// #include "Grid_impl.hpp"
 
 #endif

@@ -17,6 +17,7 @@ class RecipeConfig {
         RecipeConfig();
         RecipeConfig(int id, string name, string code, int price, map<string, int> materials);
         ~RecipeConfig();
+        friend ostream& operator<<(ostream&, map<string, RecipeConfig>&);
 };      
 
 #endif

@@ -1,24 +1,29 @@
 #ifndef _FARMER_HPP_
 #define _FARMER_HPP_
 
-#include "../Player/Player.hpp"
 #include "../Farm/Farm.hpp"
+#include "../Item/Building.hpp"
+// #include "../Customer/Customer.hpp"
 #include "../Resident/Resident.hpp"
 
-class Farmer : public Player, public Resident
-{
-private:
-    Farm *farm;
+#define KTKP_PETANI 13
 
-public:
-    Farmer();
-    Farmer(string username, int weight, int gulden);
-    ~Farmer();
-    void plant();
-    void sell();
-    void buy(Item &, int);
-    void harvest();
-    int tax();
+class Farmer: public Resident{
+    private:
+        Farm farm;
+    public:
+        Farmer();
+        Farmer(string username, int weight, int gulden);
+        ~Farmer();
+        string getType();
+        int getWealth();
+
+        Farm& getFarm();
+        void plant();
+        // vector<shared_ptr<Item>> sell(vector<string>&);
+        // void buy(shared_ptr<Item>&, int);
+        void harvest();
+        int tax();
 };
 
 #endif
