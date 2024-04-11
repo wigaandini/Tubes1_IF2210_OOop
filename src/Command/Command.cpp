@@ -71,6 +71,16 @@ void Command::handleCommand(const string& command){
         Game::getStore().handleCustomerSell();
     } else if (command == "MAKAN") {
         Game::getCurrentPlayer()->eat();
+    } else if (command == "CETAK_PENYIMPANAN"){
+        Game::getCurrentPlayer()->getInventory().displayStorage(true);
+    } else if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer())){
+        if (command == "PUNGUT_PAJAK"){
+            mayor->taxCollection();
+        } else if (command == "TAMBAH_PEMAIN"){
+            mayor->addPlayer();
+        } else if (command == "BANGUN_BANGUNAN"){
+            mayor->buildBuilding();
+        }
     }
 }
 

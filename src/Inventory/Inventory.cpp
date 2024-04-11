@@ -20,9 +20,11 @@ int Inventory::countItemStock(const string &name)
     {
         for (int j = 0; j < this->col; j++)
         {
-            if (this->buffer[i][j]->getName().compare(name) == 0)
-            {
-                count++;
+            if(this->buffer[i][j] != nullptr){
+                if (this->buffer[i][j]->getName() == name)
+                {
+                    count++;
+                }
             }
         }
     }
@@ -34,13 +36,17 @@ void Inventory::useItem(const string &name, int quantity)
 {
     for (int k = 0; k < quantity; k++)
     {
-        for (int i = 0; i < this->row; i++)
+        bool itemRemoved = false;
+        for (int i = 0; i < this->row && !itemRemoved; i++)
         {
-            for (int j = 0; j < this->col; j++)
+            for (int j = 0; j < this->col && !itemRemoved; j++)
             {
-                if (this->buffer[i][j]->getName().compare(name) == 0)
-                {
-                    this->remove(i, j);
+                if(this->buffer[i][j] != nullptr){
+                    if (this->buffer[i][j]->getName() == name)
+                    {
+                        this->remove(i, j);
+                        itemRemoved = true;
+                    }
                 }
             }
         }
@@ -122,6 +128,7 @@ void Inventory::putRandom(const shared_ptr<Item> item)
             if (this->buffer[i][j] == nullptr)
             {
                 this->buffer[i][j] = item;
+                Grid::emptySlot--;
                 return;
             }
         }

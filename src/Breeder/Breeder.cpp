@@ -6,9 +6,11 @@
 #include <exception>
 
 Breeder::Breeder(): Resident() {
+    type = "Peternak";
 }
         
 Breeder::Breeder(string username, float weight, int gulden):Resident(username,weight,gulden) {
+    type = "Peternak";
 }
         
 Breeder::~Breeder(){
@@ -253,12 +255,16 @@ int Breeder::getWealth(){
     int wealth = gulden;
     for(int i = 0; i < this->inventory.getRow(); i++){
         for(int j = 0; j < this->inventory.getCol(); j++){
-            wealth += this->inventory.see(i,j)->getPrice();
+            if(this->inventory.see(i,j) != nullptr){
+                wealth += this->inventory.see(i, j)->getPrice();
+            }
         }
     }
     for(int i = 0; i < this->ranch.getRow(); i++){
         for(int j = 0; j < this->ranch.getCol(); j++){
-            wealth += this->ranch.see(i,j)->getPrice();
+            if(this->ranch.see(i,j) != nullptr){
+                wealth += this->ranch.see(i, j)->getPrice();
+            }
         }
     }
     return wealth;

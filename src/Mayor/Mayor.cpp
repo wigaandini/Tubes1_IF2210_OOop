@@ -4,6 +4,7 @@
 #include "../Farmer/Farmer.hpp"
 #include <algorithm>
 #include "MayorException.hpp"
+using namespace std;
 
 Mayor::Mayor() : Player()
 {
@@ -206,7 +207,6 @@ void Mayor::taxCollection()
 
 void Mayor::buildBuilding()
 {
-
     cout << Game::getRecipe() << endl;
     string buildingName;
     bool isValid = false;
@@ -265,7 +265,7 @@ void Mayor::buildBuilding()
             cout << Game::getRecipe() << endl;
         }
     }
-    cout << buildingName << "berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
+    cout << buildingName << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
     inventory.putRandom(make_shared<Building>(buildingName));
 }
 

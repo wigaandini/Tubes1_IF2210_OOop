@@ -3,10 +3,12 @@
 
 Farmer::Farmer() : Resident()
 {
+    type = "Petani";
 }
 
 Farmer::Farmer(string username, int weight, int gulden) : Resident(username, weight, gulden)
 {
+    type = "Petani";
 }
 
 Farmer::~Farmer()
@@ -257,14 +259,18 @@ int Farmer::getWealth()
     {
         for (int j = 0; j < this->inventory.getCol(); j++)
         {
-            wealth += this->inventory.see(i, j)->getPrice();
+            if(this->inventory.see(i,j) != nullptr){
+                wealth += this->inventory.see(i, j)->getPrice();
+            }
         }
     }
     for (int i = 0; i < this->farm.getRow(); i++)
     {
         for (int j = 0; j < this->farm.getCol(); j++)
         {
-            wealth += this->farm.see(i, j)->getPrice();
+            if(this->farm.see(i,j) != nullptr){
+                wealth += this->farm.see(i, j)->getPrice();
+            }
         }
     }
     return wealth;
