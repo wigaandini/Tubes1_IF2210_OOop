@@ -4,6 +4,7 @@
 #include <iostream>
 #include <exception>
 #include <map>
+#include <string>
 using namespace std;
 
 class NotEnoughMaterialException : public exception
@@ -22,10 +23,10 @@ public:
         }
 
     }
-    string what()
+    const char*  what() const noexcept override
     {
         
-        return message;
+        return message.c_str();
     }
 };
 
@@ -34,10 +35,9 @@ class NoRecipeException : public exception
 
 public:
     
-    string what()
+    const char*  what() const noexcept override
     {
-        string message = "Kamu tidak punya resep bangunan tersebut!";
-        return message;
+        return "Kamu tidak punya resep bangunan tersebut!";
     }
 };
 #endif
