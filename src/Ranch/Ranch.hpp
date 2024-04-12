@@ -13,6 +13,7 @@ public:
     void displayStorage(bool printInfo);
     bool checkAnimalReadyToHarvest();
     map<string, int> countAnimal();
+    int countAnimalType();
 };
 
 #endif

@@ -107,3 +107,8 @@ map<string, int> Ranch::countAnimal(){
 
     return animalCount;
 }
+
+int Ranch::countAnimalType(){
+    map<string, int> animalCount = countAnimal();
+    return animalCount.size();
+}

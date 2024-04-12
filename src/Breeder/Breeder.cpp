@@ -4,6 +4,7 @@
 #include "../Item/Carnivore.hpp"
 #include "../Item/Omnivore.hpp"
 #include <exception>
+#include <fstream>
 
 Breeder::Breeder(): Resident() {
     type = "Peternak";
@@ -24,7 +25,7 @@ string Breeder::getType(){
 void Breeder::cattle(){
 
     if(this->inventory.isEmpty()){
-        cout << "Invenotry Kosong" <<endl;
+        cout << "Inventory Kosong" <<endl;
     }else if(this->ranch.countEmpty() == 0){
         cout << "Peternakan sudah penuh" <<endl;
     }else if(this->inventory.checkInventoryAnimal() == false){

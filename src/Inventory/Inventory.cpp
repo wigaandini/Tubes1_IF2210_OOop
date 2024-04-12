@@ -194,3 +194,19 @@ bool Inventory::checkInventoryMeat()
     }
     return false;
 }
+
+int Inventory::countInventoryItem()
+{
+    int count = 0;
+    for (int i = 0; i < this->row; i++)
+    {
+        for (int j = 0; j < this->col; j++)
+        {
+            if (this->buffer[i][j] != nullptr)
+            {
+                count++;
+            }
+        }
+    }
+    return count;
+}

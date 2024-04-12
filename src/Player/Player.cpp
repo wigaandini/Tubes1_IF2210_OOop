@@ -94,7 +94,7 @@ void Player::buy(shared_ptr<Item> &item, int quantity)
 {
     if (item->getPrice() * quantity > this->gulden)
     {
-        throw NotEnoughGuldenException(); // uang  tidak cukup
+        throw NotEnoughGuldenException(); // Uang  tidak cukup
     }
 
     if (!this->inventory.isInventoryEnough(quantity))

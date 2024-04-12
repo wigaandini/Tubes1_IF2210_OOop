@@ -3,7 +3,6 @@
 
 #include "../Farm/Farm.hpp"
 #include "../Item/Building.hpp"
-// #include "../Customer/Customer.hpp"
 #include "../Resident/Resident.hpp"
 
 #define KTKP_PETANI 13

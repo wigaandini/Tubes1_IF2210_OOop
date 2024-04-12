@@ -76,6 +76,10 @@ void Command::handleCommand(const string &command)
     {
         Game::getCurrentPlayer()->getInventory().displayStorage(true);
     }
+    else if (command == "SIMPAN") 
+    { 
+        
+    }
     else if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer()))
     {
         if (command == "PUNGUT_PAJAK")
@@ -89,6 +93,42 @@ void Command::handleCommand(const string &command)
         else if (command == "BANGUN_BANGUNAN")
         {
             mayor->buildBuilding();
+        }
+    }
+    else if (shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(Game::getCurrentPlayer()))
+    {
+        if (command == "TANAM")
+        {
+            farmer->plant();
+        }
+        else if (command == "CETAK_LADANG")
+        {
+            Farm &farm = farmer->getFarm();
+            cout << farm;
+        }
+        else if (command == "PANEN")
+        {
+            farmer->harvest();
+        }
+    }
+    else if (shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(Game::getCurrentPlayer()))
+    {
+        if (command == "TERNAK")
+        {
+            breeder->cattle();
+        }
+        else if (command == "CETAK_PETERNAKAN")
+        {
+            Ranch &ranch = breeder->getRanch();
+            cout << ranch;
+        }
+        else if (command == "KASIH_MAKAN")
+        {
+            breeder->feedAnimal();
+        }
+        else if (command == "PANEN")
+        {
+            breeder->harvest();
         }
     }
 }

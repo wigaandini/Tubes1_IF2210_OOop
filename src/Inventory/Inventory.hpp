@@ -21,6 +21,7 @@ public:
 
     bool checkInventoryFruit();
     bool checkInventoryMeat();
+    int countInventoryItem();
 };
 
 #endif

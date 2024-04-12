@@ -25,5 +25,6 @@ class Breeder: public Resident{
         void harvest();
         int tax();
         Ranch& getRanch();
+        void saveFile(const string& filename);
 };
 #endif
