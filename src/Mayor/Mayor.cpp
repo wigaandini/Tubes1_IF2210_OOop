@@ -23,15 +23,6 @@ string Mayor::getType()
     return type;
 }
 
-string Mayor::toLower(string s)
-{
-    string snew;
-    for (char c : s)
-    {
-        snew += tolower(c);
-    }
-    return snew;
-}
 
 void Mayor::taxCollection()
 {
@@ -149,11 +140,15 @@ void Mayor::addPlayer()
         string playerName;
         cout << "Masukkan jenis pemain: ";
         cin >> playerType;
-        playerType = toLower(playerType);
+        if(Utils::toLower(playerType) != "peternak" && Utils::toLower(playerType) != "petani"){
+            cout << "Jenis permain tersebut tidak ditemukan!" << endl;
+            return;
+        }
+        playerType = Utils::toLower(playerType);
         cout << "Masukkan nama pemain: ";
         cin >> playerName;
         auto itr = find_if(Game::getPlayers().begin(), Game::getPlayers().end(), [&playerName, this](auto player)
-                           { return toLower(player->getName()) == toLower(playerName); });
+                           { return Utils::toLower(player->getName()) == Utils::toLower(playerName); });
         if (itr == Game::getPlayers().end())
         {
             shared_ptr<Player> newPlayer;
@@ -174,7 +169,7 @@ void Mayor::addPlayer()
         }
         else
         {
-            cout << "Pemain dengan nama " << playerName << "telah terdaftar!" << endl;
+            cout << "Pemain dengan nama " << playerName << " telah terdaftar!" << endl;
         }
     }
     else
