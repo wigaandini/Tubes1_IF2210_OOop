@@ -5,11 +5,11 @@
 
 int main()
 {
-    cout << "Halo" << endl;
+    // cout << "Halo" << endl;
     // cout.flush();
     Game game;
     game.start();
-    cout << "Halo" << endl;
+    // cout << "Halo" << endl;
 
     return 0;
 }

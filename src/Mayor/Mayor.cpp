@@ -23,11 +23,6 @@ string Mayor::getType()
     return type;
 }
 
-// int Mayor::getWealth()
-// {
-//     return 0;
-// }
-
 string Mayor::toLower(string s)
 {
     string snew;
@@ -87,9 +82,11 @@ void Mayor::buildBuilding()
     {
         try
         {
-            cout << "Bangunan yang ingin dibangun: ";
+            cout << "Bangunan yang ingin dibangun (Ketik q untuk keluar): ";
             cin >> buildingName;
-
+            if(buildingName == "q"){
+                break;
+            }
             auto itr = find_if(Game::getRecipe().begin(), Game::getRecipe().end(), [buildingName](pair<string, RecipeConfig> building)
                                { return buildingName == building.second.name; });
             if (itr != Game::getRecipe().end())
@@ -138,8 +135,10 @@ void Mayor::buildBuilding()
             cout << Game::getRecipe() << endl;
         }
     }
-    cout << buildingName << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
-    inventory.putRandom(make_shared<Building>(buildingName));
+    if(isValid){
+        cout << buildingName << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
+        inventory.putRandom(make_shared<Building>(buildingName));
+    }
 }
 
 void Mayor::addPlayer()
@@ -221,9 +220,11 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
     {
 
         const shared_ptr<Item> &item = this->inventory.take(slot);
-        this->gulden += item->getPrice();
-        items.second += item->getPrice();
-        items.first.push_back(item);
+        if(item != nullptr){
+            this->gulden += item->getPrice();
+            items.second += item->getPrice();
+            items.first.push_back(item);
+        }
     }
 
     return items;

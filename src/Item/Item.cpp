@@ -18,6 +18,13 @@ Item::Item(string name, string code, int price){
     countIdItem ++;
 }
 
+// Item::Item(Item& other){
+//     this->itemId = other.itemId;
+//     this->name = other.name;
+//     this->code = other.code;
+//     this->price = other.price;
+// }
+
 Item::~Item(){
     
 }
