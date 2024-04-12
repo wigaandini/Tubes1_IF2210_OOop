@@ -39,4 +39,15 @@ public:
         return "Kamu tidak punya resep bangunan tersebut!";
     }
 };
+
+class CannotBuyBuildingException : public exception
+{
+public:
+    const char *what() const noexcept override
+    {
+
+        return "Tidak bisa membeli bangunan!!!";
+    }
+};
+
 #endif

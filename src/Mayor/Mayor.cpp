@@ -4,6 +4,7 @@
 #include "../Farmer/Farmer.hpp"
 #include <algorithm>
 #include "MayorException.hpp"
+#include "../Player/PlayerException.hpp"
 using namespace std;
 
 Mayor::Mayor() : Player()
@@ -184,17 +185,17 @@ void Mayor::buy(shared_ptr<Item> &item, int quantity)
 {
     if (item->getPrice() * quantity > this->gulden)
     {
-        throw ""; // uang  tidak cukup
+        throw NotEnoughGuldenException(); // uang  tidak cukup
     }
 
     if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(item))
     {
-        throw ""; // tidak bisa beli building
+        throw CannotBuyBuildingException(); // tidak bisa beli building
     }
 
     if (this->inventory.countEmpty() < quantity)
     {
-        throw ""; // Penyimpanan tidak cukup
+        throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
     }
 
     this->gulden -= item->getPrice() * quantity;
