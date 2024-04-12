@@ -129,14 +129,14 @@ public:
         {
             throw IndexOutOfBoundException();
         }
-        auto val = buffer[x - 1][colIdx];
-        if (val == nullptr)
+        if (buffer[x-1][colIdx] == nullptr)
         {
             throw SlotEmptyException();
         }
+        T val = *(buffer[x-1][colIdx]);
         buffer[x - 1][colIdx] = nullptr;
         emptySlot++;
-        return val;
+        return make_shared<T>(val);
     };
     void remove(string slot)
     {

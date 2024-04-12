@@ -23,11 +23,6 @@ string Mayor::getType()
     return type;
 }
 
-// int Mayor::getWealth()
-// {
-//     return 0;
-// }
-
 string Mayor::toLower(string s)
 {
     string snew;
@@ -78,133 +73,6 @@ void Mayor::taxCollection()
     gulden += sumTax;
 }
 
-// bool Mayor::canBuild(string buildingName)
-// {
-//     auto itr = find_if(Game::getRecipe().begin(), Game::getRecipe().end(), [buildingName](pair<string, RecipeConfig> building)
-//                        { return buildingName == building.second.name; });
-//     if (itr != Game::getRecipe().end())
-//     {
-//         map<string, int> availableMaterials;
-//         for (auto material : itr->second.materials)
-//         {
-//             availableMaterials[material.first] = 0;
-//             for (int i = 0; i < this->inventory.getRow(); i++)
-//             {
-//                 for (int j = 0; j < this->inventory.getcol(); j++)
-//                 {
-//                     if (this->inventory.see(i, j)->getName() == material.first)
-//                     {
-//                         availableMaterials[material.first]++;
-//                     }
-//                 }
-//             }
-//             availableMaterials[material.first] -= material.second;
-//         }
-
-//         auto checkNegItr = find_if(availableMaterials.begin(), availableMaterials.end(), [](pair<string, int> material)
-//                                    { return material.second < 0; });
-//         if (checkNegItr != availableMaterials.end() || gulden < itr->second.price)
-//         {
-//             cout << "Kamu tidak punya sumber daya yang cukup! Masih memerlukan ";
-//             if (gulden < itr->second.price)
-//             {
-//                 cout << itr->second.price - gulden << " gulden ";
-//             }
-//             if (checkNegItr != availableMaterials.end())
-//             {
-//                 for (auto availableMaterial : availableMaterials)
-//                 {
-//                     if (availableMaterial.second < 0)
-//                     {
-//                         cout << availableMaterial.second * -1 << " " << availableMaterial.first << " ";
-//                     }
-//                 }
-//             }
-//             cout << "!" << endl;
-//             return false;
-//         }
-//         // Kasus ketika SDA cukup untuk membangun building
-//         gulden -= itr->second.price;
-//         for (auto material : itr->second.materials)
-//         {
-//             for (int k = 0; k < material.second; k++)
-//             {
-//                 for (int i = 0; i < inventory.getRow(); i++)
-//                 {
-//                     for (int j = 0; j < inventory.getcol(); j++)
-//                     {
-//                         if (this->inventory.see(i, j)->getName() == material.first)
-//                         {
-//                             inventory.remove(i, j);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     else
-//     {
-//         cout << "Kamu tidak punya resep bangunan tersebut!" << endl;
-//         cout << "Resep bangunan yang ada adalah sebagai berikut." << endl;
-//         for (auto itr = Game::getRecipe().begin(); itr != Game::getRecipe().end(); itr++)
-//         {
-//             cout << "   " << itr->second.id << ". " << itr->second.name << "(" << itr->second.price << " gulden, ";
-//             int ctr = 0;
-//             for (auto material : itr->second.materials)
-//             {
-//                 cout << material.first << " " << material.second;
-//                 if (ctr < int(itr->second.materials.size()))
-//                 {
-//                     cout << ",";
-//                 }
-//                 ctr++;
-//             }
-//             cout << ")" << endl;
-//         }
-//         return false;
-//     }
-//     return true;
-// }
-
-// void Mayor::canBuild(string buildingName)
-// {
-//     auto itr = find_if(Game::getRecipe().begin(), Game::getRecipe().end(), [buildingName](pair<string, RecipeConfig> building)
-//                        { return buildingName == building.second.name; });
-//     if (itr != Game::getRecipe().end())
-//     {
-//         map<string, int> notEnoughMaterials;
-//         if (this->gulden < Game::getRecipe()[buildingName].price)
-//         {
-//             notEnoughMaterials["gulden"] = Game::getRecipe()[buildingName].price - this->gulden;
-//         }
-//         for (auto material : itr->second.materials)
-//         {
-//             int count = this->inventory.countItemStock(material.first);
-//             if (count < material.second)
-//             {
-//                 notEnoughMaterials[material.first] = material.second - count;
-//             }
-//         }
-
-//         if (notEnoughMaterials.size() > 0)
-//         {
-//             throw NotEnoughMaterialException(notEnoughMaterials);
-//         }
-
-//         // Kasus ketika SDA cukup untuk membangun building
-//         this->gulden -= itr->second.price;
-//         for (auto material : itr->second.materials)
-//         {
-
-//             this->inventory.useItem(material.first, material.second);
-//         }
-//     }
-//     else
-//     {
-//         throw NoRecipeException();
-//     }
-// }
-
 void Mayor::buildBuilding()
 {
     cout << Game::getRecipe() << endl;
@@ -214,9 +82,11 @@ void Mayor::buildBuilding()
     {
         try
         {
-            cout << "Bangunan yang ingin dibangun: ";
+            cout << "Bangunan yang ingin dibangun (Ketik q untuk keluar): ";
             cin >> buildingName;
-
+            if(buildingName == "q"){
+                break;
+            }
             auto itr = find_if(Game::getRecipe().begin(), Game::getRecipe().end(), [buildingName](pair<string, RecipeConfig> building)
                                { return buildingName == building.second.name; });
             if (itr != Game::getRecipe().end())
@@ -265,8 +135,10 @@ void Mayor::buildBuilding()
             cout << Game::getRecipe() << endl;
         }
     }
-    cout << buildingName << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
-    inventory.putRandom(make_shared<Building>(buildingName));
+    if(isValid){
+        cout << buildingName << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
+        inventory.putRandom(make_shared<Building>(buildingName));
+    }
 }
 
 void Mayor::addPlayer()
@@ -348,9 +220,11 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
     {
 
         const shared_ptr<Item> &item = this->inventory.take(slot);
-        this->gulden += item->getPrice();
-        items.second += item->getPrice();
-        items.first.push_back(item);
+        if(item != nullptr){
+            this->gulden += item->getPrice();
+            items.second += item->getPrice();
+            items.first.push_back(item);
+        }
     }
 
     return items;

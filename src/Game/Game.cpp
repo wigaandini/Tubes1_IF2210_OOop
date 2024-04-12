@@ -209,6 +209,7 @@ void Game::start()
             {
                 cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl;
                 isGameOver = true;
+                break;
             }
         }
     }
