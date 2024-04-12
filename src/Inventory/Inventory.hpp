@@ -3,6 +3,7 @@
 
 #include "../Grid/Grid.hpp"
 #include "../Item/Item.hpp"
+#include "../Item/Product.hpp"
 
 class Inventory: public Grid<Item> {
 public:

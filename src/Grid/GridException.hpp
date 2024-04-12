@@ -7,31 +7,36 @@
 using namespace std;
 
 class IndexOutOfBoundException: public exception{
-    string what(){
+    public:
+    const char*  what() const noexcept override{
         return "Slot penyimpanan tidak tersedia";
     }
 };
 
 class SlotOccupiedException: public exception{
-    string what(){
+    public:
+    const char*  what() const noexcept override{
         return "Slot tersebut telah diisi";
     }
 };
 
 class SlotEmptyException: public exception{
-    string what(){
+    public:
+    const char*  what() const noexcept override{
         return "Slot tersebut kosong";
     }
 };
 
 class GridFullException: public exception{
-    string what(){
+    public:
+    const char*  what() const noexcept override{
         return "Slot penyimpanan telah penuh";
     }
 };
 
 class GridEmptyException: public exception{
-    string what(){
+    public:
+    const char*  what() const noexcept override{
         return "Slot penyimpanan kosong";
     }
 };
