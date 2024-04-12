@@ -163,7 +163,8 @@ void Game::start()
     cout << store << endl;
     bool isGameOver = false;
 
-    cout << "Selamat Bermain!!" << endl << endl;
+    cout << "Selamat Bermain!!" << endl
+         << endl;
 
     Game::setCurrentPlayer(0);
     while (!isGameOver)
@@ -171,37 +172,44 @@ void Game::start()
         for (unsigned int i = 0; i < players.size(); i++)
         {
             cout << "Sekarang giliran pemain " << Game::getCurrentPlayer()->getName() << " untuk bermain!!" << endl;
-            
+
             commandHandler.printCommand(Game::getCurrentPlayer());
 
-            string input;
-            cout << "> ";
-            cin >> input;
-            if (input == "NEXT")
+            bool isNext = false;
+
+            while (!isNext)
             {
-                if (Game::getCurrentPlayer()->getName() == players[i]->getName())
+
+                string input;
+                cout << "> ";
+                cin >> input;
+                if (input == "NEXT")
                 {
-                    i++;
+                    if (Game::getCurrentPlayer()->getName() == players[i]->getName())
+                    {
+                        i++;
+                    }
+                    handleNext(i);
+                    break;
                 }
-                handleNext(i);
-                // break;
+                else if (this->commandHandler.checkCommand(input))
+                {
+                    this->commandHandler.handleCommand(input);
+                }
+                else
+                {
+                    cout << "Tidak ada command tersebut!!" << endl
+                         << endl;
+                }
             }
-            else if (this->commandHandler.checkCommand(input))
-            {
-                this->commandHandler.handleCommand(input);
-            }
-            else
-            {
-                cout << "Tidak ada command tersebut!!" << endl << endl;
-            }
-        }
 
-        auto winnner = checkWinner();
+            auto winnner = checkWinner();
 
-        if (winnner != nullptr)
-        {
-            cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl;
-            isGameOver = true;
+            if (winnner != nullptr)
+            {
+                cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl;
+                isGameOver = true;
+            }
         }
     }
 }

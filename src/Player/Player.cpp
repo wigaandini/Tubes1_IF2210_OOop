@@ -98,12 +98,12 @@ pair<vector<shared_ptr<Item>>, int> Player::sell(vector<string> &slots)
 
         if (this->inventory.isEmpty(slot))
         {
-            throw ""; // empty slot
+            throw "Empty slot"; // empty slot
         }
 
         if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(this->inventory.see(slot)))
         {
-            throw ""; // Tidak bisa jual bangunan
+            throw "Tidak bisa jual bangunan"; // Tidak bisa jual bangunan
         }
     }
 

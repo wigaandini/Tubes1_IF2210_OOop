@@ -7,22 +7,21 @@
 
 Command::Command()
 {
-    this->playerCommand = { "CETAK_PENYIMPANAN", "MAKAN","SIMPAN", "JUAL", "BELI" , "MUAT"};
+    this->playerCommand = {"CETAK_PENYIMPANAN", "MAKAN", "SIMPAN", "JUAL", "BELI", "MUAT"};
     this->mayorCommand = {"TAMBAH_PEMAIN", "PUNGUT_PAJAK", "BANGUN_BANGUNAN", "TAMBAH_PEMAIN"};
     this->farmerCommand = {"TANAM", "CETAK_LADANG", "PANEN"};
     this->breederCommand = {"TERNAK", "CETAK_PETERNAKAN", "KASIH_MAKAN", "PANEN"};
-
-
 }
 
 Command::~Command()
 {
 }
 
-pair<vector<string>, string> Command::allCommandFor(shared_ptr<Player>& player){
+pair<vector<string>, string> Command::allCommandFor(shared_ptr<Player> &player)
+{
     vector<string> commands(playerCommand);
-    
-    pair<vector<string>,string> data;
+
+    pair<vector<string>, string> data;
 
     if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer()))
     {
@@ -33,14 +32,11 @@ pair<vector<string>, string> Command::allCommandFor(shared_ptr<Player>& player){
     {
         commands.insert(commands.end(), farmerCommand.begin(), farmerCommand.end());
         data.second = "Petani";
-
-
     }
     else
     {
         commands.insert(commands.end(), breederCommand.begin(), breederCommand.end());
         data.second = "Peternak";
-
     }
     // cout << "command" << playerCommand.size() << endl;
     data.first = commands;
@@ -62,29 +58,43 @@ bool Command::checkCommand(const string &command)
     return true;
 }
 
-
-
-void Command::handleCommand(const string& command){
-    if (command == "BELI"){
+void Command::handleCommand(const string &command)
+{
+    if (command == "BELI")
+    {
         Game::getStore().handleCustomerBuy();
-    } else if (command == "JUAL"){
+    }
+    else if (command == "JUAL")
+    {
         Game::getStore().handleCustomerSell();
-    } else if (command == "MAKAN") {
+    }
+    else if (command == "MAKAN")
+    {
         Game::getCurrentPlayer()->eat();
-    } else if (command == "CETAK_PENYIMPANAN"){
+    }
+    else if (command == "CETAK_PENYIMPANAN")
+    {
         Game::getCurrentPlayer()->getInventory().displayStorage(true);
-    } else if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer())){
-        if (command == "PUNGUT_PAJAK"){
+    }
+    else if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer()))
+    {
+        if (command == "PUNGUT_PAJAK")
+        {
             mayor->taxCollection();
-        } else if (command == "TAMBAH_PEMAIN"){
+        }
+        else if (command == "TAMBAH_PEMAIN")
+        {
             mayor->addPlayer();
-        } else if (command == "BANGUN_BANGUNAN"){
+        }
+        else if (command == "BANGUN_BANGUNAN")
+        {
             mayor->buildBuilding();
         }
     }
 }
 
-void Command::printCommand(shared_ptr<Player>& player){
+void Command::printCommand(shared_ptr<Player> &player)
+{
     pair<vector<string>, string> data = allCommandFor(player);
     // cout << allCommandFor(player).first.size() << endl;
     vector<string> commands(data.first);
@@ -92,11 +102,10 @@ void Command::printCommand(shared_ptr<Player>& player){
 
     cout << "Role pemain adalah " << data.second << endl;
     cout << "Command yang tersedia: " << endl;
-    for (unsigned int i = 0; i < commands.size(); i++){
-        cout << i+1 << ". " << commands[i] << endl;
+    for (unsigned int i = 0; i < commands.size(); i++)
+    {
+        cout << i + 1 << ". " << commands[i] << endl;
     }
 
     cout << endl;
 }
-
-
