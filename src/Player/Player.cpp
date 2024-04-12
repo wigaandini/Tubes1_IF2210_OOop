@@ -117,7 +117,7 @@ pair<vector<shared_ptr<Item>>, int> Player::sell(vector<string> &slots)
         {
             this->inventory.put(slots[i], items.first[i]);
         }
-        throw e;
+        throw ;
     }
 
     this->gulden += items.second;

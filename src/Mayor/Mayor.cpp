@@ -229,7 +229,7 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
         for (unsigned int  i = 0 ; i < items.first.size(); i++){
             this->inventory.put(slots[i], items.first[i]);
         }
-        throw e;
+        throw ;
     }
     this->gulden += items.second;
     return items;
