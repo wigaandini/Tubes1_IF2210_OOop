@@ -1,6 +1,7 @@
 #include "Player.hpp"
 #include "../Game/Game.hpp"
 #include "../Item/Building.hpp"
+#include "PlayerException.hpp"
 
 int Player::countIdPlayer = 1;
 
@@ -78,12 +79,12 @@ void Player::buy(shared_ptr<Item> &item, int quantity)
 {
     if (item->getPrice() * quantity > this->gulden)
     {
-        throw ""; // uang  tidak cukup
+        throw NotEnoughGuldenException(); // uang  tidak cukup
     }
 
-    if (this->inventory.countEmpty() < quantity)
+    if (!this->inventory.isInventoryEnough(quantity))
     {
-        throw ""; // Penyimpanan tidak cukup
+        throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
     }
 
     this->gulden -= item->getPrice() * quantity;
@@ -93,28 +94,33 @@ pair<vector<shared_ptr<Item>>, int> Player::sell(vector<string> &slots)
 {
     pair<vector<shared_ptr<Item>>, int> items;
     items.second = 0;
-    for (string slot : slots)
+
+    try
     {
 
-        if (this->inventory.isEmpty(slot))
+        for (string slot : slots)
         {
-            throw "Empty slot"; // empty slot
-        }
 
-        if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(this->inventory.see(slot)))
-        {
-            throw "Tidak bisa jual bangunan"; // Tidak bisa jual bangunan
+            if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(this->inventory.see(slot)))
+            {
+                throw CannotSellBuildingException();
+            }
+
+            const shared_ptr<Item> &item = this->inventory.take(slot);
+            items.second += item->getPrice();
+            items.first.push_back(item);
         }
     }
-
-    for (string slot : slots)
+    catch (const exception &e)
     {
-
-        const shared_ptr<Item> &item = this->inventory.take(slot);
-        this->gulden += item->getPrice();
-        items.second += item->getPrice();
-        items.first.push_back(item);
+        for (unsigned int i = 0; i < items.first.size(); i++)
+        {
+            this->inventory.put(slots[i], items.first[i]);
+        }
+        throw e;
     }
+
+    this->gulden += items.second;
 
     return items;
 }
@@ -163,4 +169,3 @@ Inventory &Player::getInventory()
 {
     return this->inventory;
 }
-

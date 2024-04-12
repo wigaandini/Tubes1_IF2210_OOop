@@ -7,6 +7,7 @@
 #include "../Item/Omnivore.hpp"
 #include "../Game/Game.hpp"
 #include "../Utils/Utils.hpp"
+#include "StoreException.hpp"
 #include <limits>
 // #include "../Customer/Customer.hpp"
 
@@ -67,7 +68,7 @@ vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
 
     if (!checkQuantity(name, num))
     {
-        throw "Stock tidak cukup"; // stock tidak cukup
+        throw StockNotEnoughException(); // stock tidak cukup
     }
 
     vector<shared_ptr<Item>> items;
@@ -78,8 +79,8 @@ vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
         if (!this->checkIsLivingBeings(name))
         {
 
-            auto item = this->items[name].front();
-            this->items[name].erase(this->items[name].begin());
+            shared_ptr<Item> item = this->items[name].back();
+            this->items[name].pop_back();
             items.push_back(item);
         }
         else
@@ -176,7 +177,7 @@ bool Store::checkQuantity(const string &name, const int &quantity)
         return true;
     }
 
-    if (quantity > this->items.at(name).size())
+    if (quantity > int(this->items.at(name).size()))
     {
         return false;
     }
@@ -197,13 +198,13 @@ void Store::handleCustomerBuy()
          << endl;
 
     bool isValid = false;
-
+    int numItemBuy;
+    int quantity;
     vector<shared_ptr<Item>> itemBuys;
+
     while (!isValid)
     {
 
-        int numItemBuy;
-        int quantity;
         bool itemBuyValid = false;
 
         while (!itemBuyValid)
@@ -219,9 +220,9 @@ void Store::handleCustomerBuy()
                 return;
             }
 
-            if (numItemBuy > allItemsSell.size())
+            if (numItemBuy > int(allItemsSell.size()))
             {
-                cout << "Tidak ada barang denga nomor tersebut !!!" << endl;
+                cout << "Tidak ada barang dengan nomor tersebut !!!" << endl;
             }
             else
             {
@@ -244,9 +245,12 @@ void Store::handleCustomerBuy()
             {
                 cout << "Stock tidak cukupp!!!" << endl;
             }
+            // else if (!Game::getCurrentPlayer()->getInventory().isInventoryEnough(quantity))
+            // {
+            //     cout << "Penyimpanan tidak mencukupi!!!" << endl;
+            // }
             else
             {
-
                 quantityValid = true;
             }
         }
@@ -259,57 +263,61 @@ void Store::handleCustomerBuy()
             Game::getCurrentPlayer()->buy(itemBuyChoose, quantity);
 
             vector<shared_ptr<Item>> items(this->takeItem(allItemsSell.at(numItemBuy - 1), quantity - 1));
-            itemBuys.insert(itemBuys.end(), itemBuys.begin(), items.end());
 
-            cout << "Selamat Anda berhasil membeli " << quantity << " " << itemBuys.at(0)->getName() << ". Uang Anda tersisa " << Game::getCurrentPlayer()->getGulden() << " gulden.";
+            itemBuys.insert(itemBuys.end(), items.begin(), items.end());
+
+            cout << "Selamat Anda berhasil membeli " << quantity << " " << Utils::toTitleCase(itemBuys.at(0)->getName()) << ". Uang Anda tersisa " << Game::getCurrentPlayer()->getGulden() << " gulden.";
 
             isValid = true;
         }
-        catch (char *)
+        catch (const exception &e)
         {
-            cout << "error" << endl;
+            cout << e.what() << endl;
             this->addItem(itemBuyChoose);
         }
     }
 
     isValid = false;
 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     while (!isValid)
     {
 
-        cout << "Pilih slot untuk menyimpan barang yang Anda beli!" << endl
+        cout << endl
+             << "Pilih slot untuk menyimpan barang yang Anda beli!" << endl
              << endl;
-        cout << Game::getCurrentPlayer()->getInventory() << endl;
+        Game::getCurrentPlayer()->getInventory().displayStorage(true);
 
-        string chooseSlot;
-        cout << "Petak slot : ";
-        cin >> chooseSlot;
+        string chooseSlot = Utils::readLine("Petak slot : ");
+        chooseSlot = Utils::removeSpaces(chooseSlot);
+        vector<string> chooseSlotArray = Utils::splitString(chooseSlot, ',');
 
-        vector<string> chooseSlotArray;
-
-        chooseSlot.erase(remove(chooseSlot.begin(), chooseSlot.end(), ' '), chooseSlot.end());
-        string token;
-        istringstream tokenStream(chooseSlot);
-
-        while (getline(tokenStream, token, ','))
-        {
-            chooseSlotArray.push_back(token);
-        }
         try
         {
-
-            for (unsigned int i = 0; i < chooseSlotArray.size(); i++)
+            if (int(chooseSlotArray.size()) != quantity)
             {
-                Game::getCurrentPlayer()->getInventory().put(chooseSlotArray.at(i), itemBuys.at(i));
+                throw WrongSlotsSizeException();
             }
 
-            cout << itemBuys.at(0)->getName() << " berhasil disimpan dalam penyimpanan!!" << endl;
+            vector<shared_ptr<Item>> itemBuysClone = itemBuys;
+            for (unsigned int i = 0; i < chooseSlotArray.size(); i++)
+            {
+                Game::getCurrentPlayer()->getInventory().put(chooseSlotArray.at(i), itemBuysClone.at(i));
+                quantity--;
+                itemBuys.erase(itemBuys.begin());
+            }
+
+            cout << Utils::toTitleCase(allItemsSell.at(numItemBuy - 1)) << " berhasil disimpan dalam penyimpanan!!" << endl;
 
             isValid = true;
         }
-        catch (char *)
+        catch (const exception &e)
         {
-            cout << "error";
+            
+            cout << e.what() << endl;
+            cout << "Silahkan ulangi dan berikan masukan yang tepat!!" << endl << endl;
+            cout << "Barang tersisa yang belum dimasukkan ke dalam penyimpanan : " << quantity << endl;
         }
     }
 }
@@ -326,16 +334,17 @@ void Store::handleCustomerSell()
 
     Game::getCurrentPlayer()->getInventory().displayStorage(true);
 
-    cout << endl
-         << "Silahkan pilih petak yang ingin Anda jual!" << endl;
     bool isValid = false;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     while (!isValid)
     {
         try
         {
-            // cout << "Petak (Ketik q untuk keluar) : ";
 
+            cout << endl
+                 << "Silahkan pilih petak yang ingin Anda jual!" << endl;
             string chooseSlot = Utils::readLine("Petak (Ketik q untuk keluar) : ");
 
             if (chooseSlot.compare("q") == 0)
@@ -349,14 +358,9 @@ void Store::handleCustomerSell()
             }
 
             string slots = Utils::removeSpaces(chooseSlot);
-            // cout << slots << endl;
             vector<string> chooseSlotArray = Utils::splitString(slots, ',');
 
-            // cout << "slot: " << chooseSlotArray.size() << endl;
-
             pair<vector<shared_ptr<Item>>, int> items = Game::getCurrentPlayer()->sell(chooseSlotArray);
-
-            // cout << items.first.size() << " " << endl;
 
             this->addItem(items.first);
 
@@ -368,10 +372,8 @@ void Store::handleCustomerSell()
         catch (const exception &e)
         {
             cout << e.what() << endl;
-        }
-        catch (const char *c)
-        {
-            cout << c << endl;
+            cout << "Silahkan ulangi dan berikan masukan yang tepat!!" << endl << endl;
+
         }
     }
 }

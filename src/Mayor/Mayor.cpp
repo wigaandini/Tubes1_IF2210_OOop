@@ -84,7 +84,8 @@ void Mayor::buildBuilding()
         {
             cout << "Bangunan yang ingin dibangun (Ketik q untuk keluar): ";
             cin >> buildingName;
-            if(buildingName == "q"){
+            if (buildingName == "q")
+            {
                 break;
             }
             auto itr = find_if(Game::getRecipe().begin(), Game::getRecipe().end(), [buildingName](pair<string, RecipeConfig> building)
@@ -135,7 +136,8 @@ void Mayor::buildBuilding()
             cout << Game::getRecipe() << endl;
         }
     }
-    if(isValid){
+    if (isValid)
+    {
         cout << buildingName << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
         inventory.putRandom(make_shared<Building>(buildingName));
     }
@@ -207,25 +209,28 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
 {
     pair<vector<shared_ptr<Item>>, int> items;
     items.second = 0;
-    for (string slot : slots)
+
+    try
     {
 
-        if (this->inventory.isEmpty(slot))
+        for (string slot : slots)
         {
-            throw "Empty slot"; // empty slot
+
+            const shared_ptr<Item> &item = this->inventory.take(slot);
+            if (item != nullptr)
+            {
+                items.second += item->getPrice();
+                items.first.push_back(item);
+            }
         }
     }
-
-    for (string slot : slots)
+    catch (const SlotEmptyException &e)
     {
-
-        const shared_ptr<Item> &item = this->inventory.take(slot);
-        if(item != nullptr){
-            this->gulden += item->getPrice();
-            items.second += item->getPrice();
-            items.first.push_back(item);
+        for (unsigned int  i = 0 ; i < items.first.size(); i++){
+            this->inventory.put(slots[i], items.first[i]);
         }
+        throw e;
     }
-
+    this->gulden += items.second;
     return items;
 }

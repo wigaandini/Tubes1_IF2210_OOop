@@ -66,11 +66,15 @@ public:
     {
         return emptySlot == row * col;
     };
-    bool isEmpty(const string & slot)
+    bool isEmpty(const string &slot)
     {
-        int row;
-        int col;
-        this->parseInput(slot, row, col);
+        int rowIdx;
+        int colIdx;
+        this->parseInput(slot, rowIdx, colIdx);
+        if (rowIdx <= 0 || rowIdx > row || colIdx < 0 || colIdx >= col)
+        {
+            throw IndexOutOfBoundException(slot);
+        }
         if (this->buffer[row - 1][col] == nullptr)
         {
             return true;
@@ -101,9 +105,9 @@ public:
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x > row || colIdx < 0 || colIdx >= col)
         {
-            throw IndexOutOfBoundException();
+            throw IndexOutOfBoundException(slot);
         }
         if (buffer[x - 1][colIdx] == nullptr)
         {
@@ -112,7 +116,7 @@ public:
         }
         else
         {
-            throw SlotOccupiedException();
+            throw SlotOccupiedException(slot);
         }
     };
     shared_ptr<T> take(string slot)
@@ -125,18 +129,18 @@ public:
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x > row || colIdx < 0 || colIdx >= col)
         {
-            throw IndexOutOfBoundException();
+            throw IndexOutOfBoundException(slot);
         }
-        if (buffer[x-1][colIdx] == nullptr)
+        if (!buffer[x - 1][colIdx])
         {
-            throw SlotEmptyException();
+            throw SlotEmptyException(slot);
         }
-        T val = *(buffer[x-1][colIdx]);
+        shared_ptr<T> val = buffer[x - 1][colIdx];
         buffer[x - 1][colIdx] = nullptr;
         emptySlot++;
-        return make_shared<T>(val);
+        return val;
     };
     void remove(string slot)
     {
@@ -149,13 +153,13 @@ public:
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x > row || colIdx < 0 || colIdx >= col)
         {
-            throw IndexOutOfBoundException();
+            throw IndexOutOfBoundException(slot);
         }
         if (buffer[x - 1][colIdx] == nullptr)
         {
-            throw SlotEmptyException();
+            throw SlotEmptyException(slot);
         }
         buffer[x - 1][colIdx] = nullptr;
         emptySlot++;
@@ -166,13 +170,13 @@ public:
         char y;
         parseInput(slot, x, y);
         int colIdx = y - 'A';
-        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (x <= 0 || x > row || colIdx < 0 || colIdx >= col)
         {
-            throw IndexOutOfBoundException();
+            throw IndexOutOfBoundException(slot);
         }
         if (buffer[x - 1][colIdx] == nullptr)
         {
-            throw SlotEmptyException();
+            throw SlotEmptyException(slot);
         }
         return (buffer[x - 1][colIdx]);
     };

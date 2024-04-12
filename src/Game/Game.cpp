@@ -181,7 +181,8 @@ void Game::start()
             {
 
                 string input;
-                cout << "> ";
+                cout << endl
+                     << "> ";
                 cin >> input;
                 if (input == "NEXT")
                 {
@@ -201,18 +202,25 @@ void Game::start()
                     cout << "Tidak ada command tersebut!!" << endl
                          << endl;
                 }
+
+                auto winnner = checkWinner();
+
+                if (winnner != nullptr)
+                {
+                    cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl
+                         << endl;
+                    isGameOver = true;
+                    break;
+                }
             }
-
-            auto winnner = checkWinner();
-
-            if (winnner != nullptr)
+            if (!isGameOver)
             {
-                cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl;
-                isGameOver = true;
                 break;
             }
         }
     }
+
+    cout << "Terima kasih karena telah bermain game kami, silahkan datang kembali di lain waktu." << endl;
 }
 
 void Game::setPlayers(vector<shared_ptr<Player>> &tempplayers)

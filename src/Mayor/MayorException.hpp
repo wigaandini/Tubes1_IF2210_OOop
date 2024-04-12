@@ -16,16 +16,16 @@ public:
     {
         unsigned int i = 1;
         message = "Kamu tidak punya sumber daya yang cukup! Masih memerlukan ";
-        for (auto& material: notEnoughMaterial){
+        for (auto &material : notEnoughMaterial)
+        {
             message += to_string(material.second) + " " + material.first + (i == notEnoughMaterial.size() ? "!" : ", ");
             i++;
         }
-
     }
-    string what()
+    const char *what() const noexcept override
     {
-        
-        return message;
+
+        return message.c_str();
     }
 };
 
@@ -33,11 +33,9 @@ class NoRecipeException : public exception
 {
 
 public:
-    
-    string what()
+    const char *what() const noexcept override
     {
-        string message = "Kamu tidak punya resep bangunan tersebut!";
-        return message;
+        return "Kamu tidak punya resep bangunan tersebut!";
     }
 };
 #endif

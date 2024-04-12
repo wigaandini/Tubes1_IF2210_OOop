@@ -20,7 +20,8 @@ int Inventory::countItemStock(const string &name)
     {
         for (int j = 0; j < this->col; j++)
         {
-            if(this->buffer[i][j] != nullptr){
+            if (this->buffer[i][j] != nullptr)
+            {
                 if (this->buffer[i][j]->getName() == name)
                 {
                     count++;
@@ -41,7 +42,8 @@ void Inventory::useItem(const string &name, int quantity)
         {
             for (int j = 0; j < this->col && !itemRemoved; j++)
             {
-                if(this->buffer[i][j] != nullptr){
+                if (this->buffer[i][j] != nullptr)
+                {
                     if (this->buffer[i][j]->getName() == name)
                     {
                         this->remove(i, j);
@@ -72,6 +74,15 @@ void Inventory::displayStorage(bool printInfo)
     {
         cout << "Total slot kosong: " << this->emptySlot << endl;
     }
+}
+
+bool Inventory::isInventoryEnough(const int &quantity)
+{
+    if (quantity > this->emptySlot){
+        return false;
+    }
+
+    return true;
 }
 
 bool Inventory::checkInventoryEdible()
@@ -121,7 +132,8 @@ bool Inventory::checkInventoryPlant()
 
 void Inventory::putRandom(const shared_ptr<Item> item)
 {
-    if(emptySlot == 0){
+    if (emptySlot == 0)
+    {
         throw GridFullException();
     }
     for (int i = 0; i < row; i++)

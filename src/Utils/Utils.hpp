@@ -11,6 +11,7 @@ public:
     static vector<string> splitString(const string &, const char &);
     static string removeSpaces(const string &);
     static string readLine(const string &);
+    static string toTitleCase(const string &);
 };
 
 #endif

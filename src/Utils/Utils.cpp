@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <limits>
 #include <iostream>
+#include <cctype>
 
 vector<string> Utils::splitString(const string &input, const char &delimiter)
 {
@@ -28,7 +29,7 @@ string Utils::removeSpaces(const string &input)
 string Utils::readLine(const string &prompt)
 {
     string line;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (!prompt.empty())
     {
@@ -41,7 +42,35 @@ string Utils::readLine(const string &prompt)
     {
         cin.clear();
     }
-    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return line;
+}
+
+string Utils::toTitleCase(const string &input)
+{
+    string result;
+    bool capitalize = true;
+
+    for (char ch : input)
+    {
+        if (isspace(ch))
+        {
+            capitalize = true;
+            result += ch;
+        }
+        else
+        {
+            if (capitalize)
+            {
+                result += toupper(ch);
+                capitalize = false;
+            }
+            else
+            {
+                result += tolower(ch);
+            }
+        }
+    }
+
+    return result;
 }
