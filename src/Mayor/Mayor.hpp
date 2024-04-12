@@ -19,14 +19,8 @@ public:
     ~Mayor();
     string getType();
     void taxCollection();
-    // int getWealth();
     void buildBuilding();
-    // void canBuild(string);
     void addPlayer();
-    // void taxCollection();
-    // void buildBuilding();
-    // bool checkGuldenEnough(int);
-    // void addPlayer();
     pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
     void buy(shared_ptr<Item> &, int);
     int tax();
