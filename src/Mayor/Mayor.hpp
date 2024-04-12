@@ -4,14 +4,12 @@
 #include "../Player/Player.hpp"
 #include "../Item/Building.hpp"
 #include "../configClass/RecipeConfig.hpp"
-
+#include "../Utils/Utils.hpp"
 #include <vector>
 #include <map>
 
 class Mayor : public Player
 {
-private:
-    string toLower(string);
 
 public:
     Mayor();
@@ -23,6 +21,5 @@ public:
     void addPlayer();
     pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
     void buy(shared_ptr<Item> &, int);
-    int tax();
 };
 #endif

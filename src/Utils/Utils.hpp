@@ -12,6 +12,7 @@ public:
     static string removeSpaces(const string &);
     static string readLine(const string &);
     static string toTitleCase(const string &);
+    static string toLower(string);
 };
 
 #endif

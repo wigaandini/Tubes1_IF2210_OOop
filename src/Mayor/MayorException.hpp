@@ -4,6 +4,7 @@
 #include <iostream>
 #include <exception>
 #include <map>
+#include <string>
 using namespace std;
 
 class NotEnoughMaterialException : public exception

@@ -45,6 +45,15 @@ string Utils::readLine(const string &prompt)
 
     return line;
 }
+string Utils::toLower(string s)
+{
+    string snew;
+    for (char c : s)
+    {
+        snew += tolower(c);
+    }
+    return snew;
+}
 
 string Utils::toTitleCase(const string &input)
 {
