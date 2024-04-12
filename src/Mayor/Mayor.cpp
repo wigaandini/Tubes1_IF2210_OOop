@@ -184,11 +184,6 @@ void Mayor::addPlayer()
     }
 }
 
-int Mayor::tax()
-{
-    return 0;
-}
-
 void Mayor::buy(shared_ptr<Item> &item, int quantity)
 {
     if (item->getPrice() * quantity > this->gulden)
@@ -218,7 +213,7 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
 
         if (this->inventory.isEmpty(slot))
         {
-            throw ""; // empty slot
+            throw "Empty slot"; // empty slot
         }
     }
 

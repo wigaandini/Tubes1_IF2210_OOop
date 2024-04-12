@@ -6,8 +6,8 @@
 #include "../Item/Carnivore.hpp"
 #include "../Item/Omnivore.hpp"
 #include "../Game/Game.hpp"
-#include <sstream>
-#include <string>
+#include "../Utils/Utils.hpp"
+#include <limits>
 // #include "../Customer/Customer.hpp"
 
 Store::Store()
@@ -277,51 +277,52 @@ void Store::handleCustomerSell()
     }
     cout << "Berikut merupakan penyimpanan Anda" << endl;
 
-    cout << Game::getCurrentPlayer()->getInventory() << endl;
+    Game::getCurrentPlayer()->getInventory().displayStorage(true);
 
-    cout << "Silahkan pilih petak yang ingin Anda jual!" << endl;
+    cout << endl <<  "Silahkan pilih petak yang ingin Anda jual!" << endl;
     bool isValid = false;
 
     while (!isValid)
     {
         try
         {
-            cout << "Petak (Ketik q untuk keluar) : ";
+            // cout << "Petak (Ketik q untuk keluar) : ";
 
-            string chooseSlot;
+            string chooseSlot = Utils::readLine("Petak (Ketik q untuk keluar) : ");
 
-            cin >> chooseSlot;
-
-            if (chooseSlot.compare("q"))
+            if (chooseSlot.compare("q") == 0)
             {
                 cout << "Terimakasih atas kujungan Anda" << endl;
                 return;
             }
-            vector<string> chooseSlotArray;
-
-            chooseSlot.erase(remove(chooseSlot.begin(), chooseSlot.end(), ' '), chooseSlot.end());
-            string token;
-            istringstream tokenStream(chooseSlot);
-
-            while (getline(tokenStream, token, ','))
-            {
-                chooseSlotArray.push_back(token);
+            if (chooseSlot.empty()){
+                throw "Masukan tidak ada silahkan ulangi lagi!!";
             }
 
-            pair<vector<shared_ptr<Item>>, int> items(Game::getCurrentPlayer()->sell(chooseSlotArray));
+            string slots = Utils::removeSpaces(chooseSlot);
+            // cout << slots << endl;
+            vector<string> chooseSlotArray = Utils::splitString(slots, ',');
+
+            // cout << "slot: " << chooseSlotArray.size() << endl;
+
+            pair<vector<shared_ptr<Item>>, int> items = Game::getCurrentPlayer()->sell(chooseSlotArray);
+
+            // cout << items.first.size() << " " << endl;
 
             this->addItem(items.first);
 
-            cout << "Barang Anda berhasil dijual! Uang Anda bertambah " << items.second << " gulden!" << endl;
+            cout << "Barang Anda berhasil dijual! Uang Anda bertambah " << items.second << " gulden!" << endl << endl;
 
             isValid = true;
         }
-        catch (const char *)
+        catch (const exception& e)
         {
+            cout << e.what() << endl;
+        } catch (const char* c) {
+            cout << c << endl;
         }
     }
 
-    cout << "Barang Anda berhasil dijual! Uang Anda bertambah 12 gulden!" << endl;
 }
 
 ostream &operator<<(ostream &os, const Store &store)

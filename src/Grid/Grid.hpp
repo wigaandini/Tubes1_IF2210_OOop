@@ -51,18 +51,6 @@ public:
             }
         }
     };
-
-    Grid(const Grid& other){
-        row = other.row;
-        col = other.col;
-        emptySlot = other.emptySlot;
-        for(int i =0; i < row; i++){
-            for(int j = 0; j < col; j++){
-                buffer[i][j] = other.buffer[i][j];
-            }
-        }
-        defaultValue = other.defaultValue;
-    }
     ~Grid(){
 
     };
@@ -83,7 +71,7 @@ public:
         int row;
         int col;
         this->parseInput(slot, row, col);
-        if (this->buffer[row][col] == nullptr)
+        if (this->buffer[row - 1][col] == nullptr)
         {
             return true;
         }
@@ -141,7 +129,7 @@ public:
         {
             throw IndexOutOfBoundException();
         }
-        auto &val = buffer[x - 1][colIdx];
+        auto val = buffer[x - 1][colIdx];
         if (val == nullptr)
         {
             throw SlotEmptyException();

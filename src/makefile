@@ -30,6 +30,7 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp) \
        $(wildcard $(SRC_DIR)/Player/*.cpp) \
        $(wildcard $(SRC_DIR)/Ranch/*.cpp) \
        $(wildcard $(SRC_DIR)/Resident/*.cpp) \
+       $(wildcard $(SRC_DIR)/Utils/*.cpp) \
        $(wildcard $(SRC_DIR)/Store/*.cpp)
 
 # Create a list of object files from the source files
