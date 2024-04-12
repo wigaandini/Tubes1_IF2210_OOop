@@ -33,8 +33,6 @@ void Store::setUnlimitedAnimalSell()
 {
     transform(Game::getAnimalConfig().begin(), Game::getAnimalConfig().end(), back_inserter(this->unlimitedAnimalSell), [](auto &el)
               { return el.first; });
-
-    
 }
 void Store::setUnlimitedPlantSell()
 {
@@ -67,9 +65,9 @@ void Store::addItem(vector<shared_ptr<Item>> &items)
 vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
 {
 
-    if ((int)this->items[name].size() < num)
+    if (!checkQuantity(name, num))
     {
-        throw ""; // stock tidak cukup
+        throw "Stock tidak cukup"; // stock tidak cukup
     }
 
     vector<shared_ptr<Item>> items;
@@ -171,6 +169,21 @@ bool Store::checkIsLivingBeings(const string &name)
 //     }
 // }
 
+bool Store::checkQuantity(const string &name, const int &quantity)
+{
+    if (checkIsLivingBeings(name))
+    {
+        return true;
+    }
+
+    if (quantity > this->items.at(name).size())
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void Store::handleCustomerBuy()
 {
     vector<string> allItemsSell(this->itemsCanSell());
@@ -191,24 +204,58 @@ void Store::handleCustomerBuy()
 
         int numItemBuy;
         int quantity;
-        cout << "Barang yang ingin dibeli (tulis -1 untuk keluar): ";
-        cin >> numItemBuy;
+        bool itemBuyValid = false;
 
-        if (numItemBuy == -1)
+        while (!itemBuyValid)
         {
 
-            cout << "Terima kasih atas kunjungan Anda" << endl;
-            return;
+            cout << "Barang yang ingin dibeli (tulis -1 untuk keluar): ";
+            cin >> numItemBuy;
+
+            if (numItemBuy == -1)
+            {
+
+                cout << "Terima kasih atas kunjungan Anda" << endl;
+                return;
+            }
+
+            if (numItemBuy > allItemsSell.size())
+            {
+                cout << "Tidak ada barang denga nomor tersebut !!!" << endl;
+            }
+            else
+            {
+                itemBuyValid = true;
+            }
         }
-        cout << "Kuantitas : ";
-        cin >> quantity;
+        bool quantityValid = false;
 
-        // shared_ptr<Customer> customer = dynamic_pointer_cast<Customer>(Game::getCurrentPlayer());
+        while (!quantityValid)
+        {
 
-        shared_ptr<Item> itemBuyChoose = this->takeItem(allItemsSell.at(numItemBuy - 1), 1).at(0);
-        itemBuys.push_back(itemBuyChoose);
+            cout << "Kuantitas : ";
+            cin >> quantity;
+
+            if (quantity <= 0)
+            {
+                cout << "Kuantitas harus lebih besar sama dengan 0!!" << endl;
+            }
+            else if (!checkQuantity(allItemsSell.at(numItemBuy - 1), quantity))
+            {
+                cout << "Stock tidak cukupp!!!" << endl;
+            }
+            else
+            {
+
+                quantityValid = true;
+            }
+        }
+        shared_ptr<Item> itemBuyChoose;
         try
         {
+            itemBuyChoose = this->takeItem(allItemsSell.at(numItemBuy - 1), 1).at(0);
+            itemBuys.push_back(itemBuyChoose);
+
             Game::getCurrentPlayer()->buy(itemBuyChoose, quantity);
 
             vector<shared_ptr<Item>> items(this->takeItem(allItemsSell.at(numItemBuy - 1), quantity - 1));
@@ -279,7 +326,8 @@ void Store::handleCustomerSell()
 
     Game::getCurrentPlayer()->getInventory().displayStorage(true);
 
-    cout << endl <<  "Silahkan pilih petak yang ingin Anda jual!" << endl;
+    cout << endl
+         << "Silahkan pilih petak yang ingin Anda jual!" << endl;
     bool isValid = false;
 
     while (!isValid)
@@ -295,7 +343,8 @@ void Store::handleCustomerSell()
                 cout << "Terimakasih atas kujungan Anda" << endl;
                 return;
             }
-            if (chooseSlot.empty()){
+            if (chooseSlot.empty())
+            {
                 throw "Masukan tidak ada silahkan ulangi lagi!!";
             }
 
@@ -311,18 +360,20 @@ void Store::handleCustomerSell()
 
             this->addItem(items.first);
 
-            cout << "Barang Anda berhasil dijual! Uang Anda bertambah " << items.second << " gulden!" << endl << endl;
+            cout << "Barang Anda berhasil dijual! Uang Anda bertambah " << items.second << " gulden!" << endl
+                 << endl;
 
             isValid = true;
         }
-        catch (const exception& e)
+        catch (const exception &e)
         {
             cout << e.what() << endl;
-        } catch (const char* c) {
+        }
+        catch (const char *c)
+        {
             cout << c << endl;
         }
     }
-
 }
 
 ostream &operator<<(ostream &os, const Store &store)

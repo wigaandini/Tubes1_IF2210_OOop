@@ -24,6 +24,7 @@ class Store{
         Store();
         void setUnlimitedAnimalSell();
         void setUnlimitedPlantSell();
+        bool checkQuantity(const string&, const int&);
         map<string, vector<shared_ptr<Item>>> getItems() const;
         vector<shared_ptr<Item>> takeItem(const string& name, const int&);
         void addItem(shared_ptr<Item> item);
