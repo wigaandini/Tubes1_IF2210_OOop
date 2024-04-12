@@ -140,23 +140,23 @@ void Mayor::addPlayer()
         string playerName;
         cout << "Masukkan jenis pemain: ";
         cin >> playerType;
-        if(Utils::toLower(playerType) != "peternak" && Utils::toLower(playerType) != "petani"){
+        if(playerType != "Peternak" && playerType != "Petani"){
             cout << "Jenis permain tersebut tidak ditemukan!" << endl;
             return;
         }
-        playerType = Utils::toLower(playerType);
+        playerType = playerType;
         cout << "Masukkan nama pemain: ";
         cin >> playerName;
         auto itr = find_if(Game::getPlayers().begin(), Game::getPlayers().end(), [&playerName, this](auto player)
-                           { return Utils::toLower(player->getName()) == Utils::toLower(playerName); });
+                           { return player->getName() == playerName; });
         if (itr == Game::getPlayers().end())
         {
             shared_ptr<Player> newPlayer;
-            if (playerType == "peternak")
+            if (playerType == "Peternak")
             {
                 newPlayer = make_shared<Breeder>(playerName, 40, 50);
             }
-            else if (playerType == "petani")
+            else if (playerType == "Petani")
             {
                 newPlayer = make_shared<Farmer>(playerName, 40, 50);
             }

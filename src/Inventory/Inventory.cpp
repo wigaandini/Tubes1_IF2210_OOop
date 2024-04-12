@@ -85,7 +85,7 @@ bool Inventory::checkInventoryEdible()
             if (this->buffer[i][j] != nullptr)
             {
                 if (dynamic_pointer_cast<Product>(buffer[i][j]) && (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT || Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)){
-                    cout << buffer[i][j]->getName() << endl;
+                    // cout << buffer[i][j]->getName() << endl;
                     return true;
                 }
             }
