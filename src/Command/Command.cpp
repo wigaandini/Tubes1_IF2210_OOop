@@ -5,6 +5,7 @@
 #include "../Game/Game.hpp"
 #include <algorithm>
 #include "CommandException.hpp"
+#include <fstream>
 
 Command::Command()
 {
@@ -79,6 +80,34 @@ void Command::handleCommand(const string &command)
     }
     else if (command == "SIMPAN")
     {
+        string filepath = "";
+        cout << "Masukkan lokasi berkas state: ";
+        cin >> filepath;
+
+        ofstream outFile(filepath);
+        if (!outFile.is_open()) {
+            cerr << "Error: Gagal membuka file untuk menambahkan data." << endl;
+            return;
+        }
+
+        auto players = Game::getPlayers();
+        outFile << players.size() << endl;
+
+        for (const auto& player : players) {
+            if (auto breeder = dynamic_pointer_cast<Breeder>(player)) {
+                breeder->saveFile(filepath);
+            } else if (auto farmer = dynamic_pointer_cast<Farmer>(player)) {
+                farmer->saveFile(filepath);
+            } else if (auto mayor = dynamic_pointer_cast<Mayor>(player)) {
+                mayor->saveFile(filepath);
+            }
+            outFile << endl;
+        }
+
+        Game::getStore().saveFile(filepath);
+
+        cout << "Data berhasil disimpan ke " << filepath << endl;
+        outFile.close();
     }
     else if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer()))
     {

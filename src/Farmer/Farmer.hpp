@@ -23,6 +23,7 @@ class Farmer: public Resident{
         // void buy(shared_ptr<Item>&, int);
         void harvest();
         int tax();
+        void saveFile(const string& filename); 
 };
 
 #endif
