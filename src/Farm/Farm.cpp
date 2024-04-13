@@ -130,7 +130,7 @@ map<string, int> Farm::countPlant()
             {
                 if (this->buffer[i][j]->checkReadyToHarvest())
                 {
-                    string plantName = this->buffer[i][j]->getCode();
+                    string plantName = this->buffer[i][j]->getName();
                     if (plantCount.find(plantName) == plantCount.end())
                     {
                         plantCount[plantName] = 1;

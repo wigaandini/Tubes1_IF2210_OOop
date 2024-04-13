@@ -243,7 +243,6 @@ void Breeder::feedAnimal()
                              << endl;
                     }
                 }
-
             }
             catch (const exception &e)
             {
@@ -318,13 +317,16 @@ void Breeder::harvest()
         int number = 1;
         vector<int> total;
         vector<string> kode;
+        vector<int> sizeResult;
 
         for (const auto &entry : plantReady)
         {
-            cout << "    " << number << ". " << entry.first << " (" << entry.second << " petak siap panen)" << endl;
+            cout << "    " << number << ". " << Game::getAnimalConfig()[entry.first].code << " (" << entry.second << " petak siap panen)" << endl;
             number++;
-            kode.push_back(entry.first);
+            kode.push_back(Game::getAnimalConfig()[entry.first].code);
             total.push_back(entry.second);
+            sizeResult.push_back(int(Animal::getHarvestResult()[entry.first].size()));
+
         }
 
         int answer1, answer2;
@@ -332,11 +334,21 @@ void Breeder::harvest()
         while (!sukses1)
         {
             cout << endl
-                 << "Nomor Hewan yang ingin dipanen: ";
+                 << "Nomor hewan yang ingin dipanen (ketik -1 untuk keluar) : ";
             cin >> answer1;
+
+            if (answer1 == -1)
+            {
+                cout << "Tidak jadi panen!!" << endl;
+                return;
+            }
             if (answer1 > 0 && answer1 < number)
             {
                 sukses1 = true;
+            }
+            else
+            {
+                cout << "Masukan salah silahkah masukan kembali!!!" << endl;
             }
         }
 
@@ -344,12 +356,12 @@ void Breeder::harvest()
         while (!sukses2)
         {
             cout << endl
-                 << "Berapa petak yang ingin dipanen: ";
+                 << "Berapa petak yang ingin dipanen : ";
             cin >> answer2;
 
             if (answer2 <= total[answer1 - 1])
             {
-                if (answer2 > this->inventory.countEmpty())
+                if (answer2 * sizeResult[answer1 - 1] > this->inventory.countEmpty())
                 {
                     cout << endl
                          << "Jumlah penyimpanan tidak cukup!" << endl;
@@ -359,6 +371,10 @@ void Breeder::harvest()
                 {
                     sukses2 = true;
                 }
+            }
+            else
+            {
+                cout << "Jumlah yang bisa dipanen hanya " << total[answer1 - 1] << "!!!" << endl;
             }
         }
 
@@ -370,16 +386,23 @@ void Breeder::harvest()
             bool sukses3 = false;
             while (!sukses3)
             {
-                cout << "Petak ke-" << i << ": ";
-                cin >> slot;
-                if (this->ranch.see(slot)->getName() != kode[answer1 - 1])
+                try
                 {
-                    cout << "Petak tidak sesuai. Silahkan input kembali!" << endl;
+                    cout << "Petak ke-" << i + 1 << " : ";
+                    cin >> slot;
+                    if (this->ranch.see(slot)->getCode() != kode[answer1 - 1])
+                    {
+                        cout << "Petak tidak sesuai. Silahkan input kembali!" << endl;
+                    }
+                    else
+                    {
+                        petak.push_back(slot);
+                        sukses3 = true;
+                    }
                 }
-                else
+                catch (const exception &e)
                 {
-                    petak.push_back(slot);
-                    sukses3 = true;
+                    cout << e.what() << endl;
                 }
             }
 
