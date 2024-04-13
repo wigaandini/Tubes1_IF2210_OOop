@@ -83,7 +83,6 @@ void Command::handleCommand(const string &command)
         string filepath = "";
         cout << "Masukkan lokasi berkas state: ";
         cin >> filepath;
-        filepath = "../" + filepath;
 
         ofstream outFile(filepath);
         if (!outFile.is_open()) {

@@ -134,7 +134,7 @@ void Game::start()
                 {
                     cout << "Masukan nama file (ketik q untuk keluar): ";
                     cin >> filename;
-                    string fileAddr = "../config/" + filename;
+                    string fileAddr = "./config/" + filename;
                     this->configHandler.loadStateConfig(fileAddr);
 
                     if (filename == "q")
@@ -291,11 +291,11 @@ void Game::handleLoadConfig()
     try
     {
 
-        this->configHandler.loadAnimalConfig("../config/animal.txt");
-        this->configHandler.loadPlantConfig("../config/plant.txt");
-        this->configHandler.loadMainConfig("../config/misc.txt");
-        this->configHandler.loadProductConfig("../config/product.txt");
-        this->configHandler.loadRecipeConfig("../config/recipe.txt");
+        this->configHandler.loadAnimalConfig("./config/animal.txt");
+        this->configHandler.loadPlantConfig("./config/plant.txt");
+        this->configHandler.loadMainConfig("./config/misc.txt");
+        this->configHandler.loadProductConfig("./config/product.txt");
+        this->configHandler.loadRecipeConfig("./config/recipe.txt");
         store.setUnlimitedAnimalSell();
         store.setUnlimitedPlantSell();
     }

@@ -5,10 +5,10 @@ CXX = g++
 BASE_CXXFLAGS = -Wall
 
 # Build directory for object files
-OBJ_DIR = build
+OBJ_DIR = bin
 
 # Source directory
-SRC_DIR = .
+SRC_DIR = src
 
 # Target executable name
 TARGET = $(OBJ_DIR)/main
@@ -57,7 +57,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean build files
+# Clean bin files
 clean:
 	@find $(OBJ_DIR) -type f -name '*.o' -delete
 	@rm -f $(TARGET)
