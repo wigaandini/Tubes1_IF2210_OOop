@@ -6,19 +6,22 @@
 #include <exception>
 #include <fstream>
 
-Breeder::Breeder(): Resident() {
+Breeder::Breeder() : Resident()
+{
     type = "Peternak";
 }
-        
-Breeder::Breeder(string username, float weight, int gulden):Resident(username,weight,gulden) {
+
+Breeder::Breeder(string username, float weight, int gulden) : Resident(username, weight, gulden)
+{
     type = "Peternak";
 }
-        
-Breeder::~Breeder(){
 
+Breeder::~Breeder()
+{
 }
 
-string Breeder::getType(){
+string Breeder::getType()
+{
     return type;
 }
 
@@ -74,7 +77,7 @@ void Breeder::cattle()
              << "Petak tanah:";
         string answer2;
         cin >> answer2;
-        while (!this->ranch.isSlotEmpty(answer2))
+        while (!this->ranch.isEmpty(answer2))
         {
             cout << "SLot yang dipilih sudah diisi" << endl;
             cout << endl
@@ -87,7 +90,6 @@ void Breeder::cattle()
         if (auto _ = dynamic_pointer_cast<Carnivore>(this->inventory.see(answer)))
         {
             this->ranch.put(answer2, dynamic_pointer_cast<Carnivore>(this->inventory.see(answer)));
-
         }
         else if (auto _ = dynamic_pointer_cast<Herbivore>(this->inventory.see(answer)))
         {
@@ -361,18 +363,25 @@ void Breeder::harvest()
     }
 }
 
-int Breeder::getWealth(){
+int Breeder::getWealth()
+{
     int wealth = gulden;
-    for(int i = 0; i < this->inventory.getRow(); i++){
-        for(int j = 0; j < this->inventory.getCol(); j++){
-            if(this->inventory.see(i,j) != nullptr){
+    for (int i = 0; i < this->inventory.getRow(); i++)
+    {
+        for (int j = 0; j < this->inventory.getCol(); j++)
+        {
+            if (this->inventory.see(i, j) != nullptr)
+            {
                 wealth += this->inventory.see(i, j)->getPrice();
             }
         }
     }
-    for(int i = 0; i < this->ranch.getRow(); i++){
-        for(int j = 0; j < this->ranch.getCol(); j++){
-            if(this->ranch.see(i,j) != nullptr){
+    for (int i = 0; i < this->ranch.getRow(); i++)
+    {
+        for (int j = 0; j < this->ranch.getCol(); j++)
+        {
+            if (this->ranch.see(i, j) != nullptr)
+            {
                 wealth += this->ranch.see(i, j)->getPrice();
             }
         }
@@ -380,27 +389,39 @@ int Breeder::getWealth(){
     return wealth;
 }
 
-
-
-int Breeder::tax(){
+int Breeder::tax()
+{
     int kkp = getWealth() - KTKP_PETERNAK;
-    if(kkp <= 0){
+    if (kkp <= 0)
+    {
         return 0;
-    } else{
-        if(kkp <= 6){
-            return 0.05*kkp;
-        } else if(kkp <= 25 && kkp > 6){
-            return 0.15*kkp;
-        } else if(kkp <= 50 && kkp > 25){
-            return 0.25*kkp;
-        } else if(kkp <= 500 && kkp > 50){
-            return 0.30*kkp;
-        } else{
-            return 0.35*kkp;
+    }
+    else
+    {
+        if (kkp <= 6)
+        {
+            return 0.05 * kkp;
+        }
+        else if (kkp <= 25 && kkp > 6)
+        {
+            return 0.15 * kkp;
+        }
+        else if (kkp <= 50 && kkp > 25)
+        {
+            return 0.25 * kkp;
+        }
+        else if (kkp <= 500 && kkp > 50)
+        {
+            return 0.30 * kkp;
+        }
+        else
+        {
+            return 0.35 * kkp;
         }
     }
 }
 
-Ranch& Breeder::getRanch(){
+Ranch &Breeder::getRanch()
+{
     return this->ranch;
 }

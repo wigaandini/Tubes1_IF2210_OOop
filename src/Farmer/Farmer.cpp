@@ -1,5 +1,7 @@
 #include "Farmer.hpp"
 #include "../Game/Game.hpp"
+#include "../Utils/Utils.hpp"
+#include "../Grid/Grid.hpp"
 
 Farmer::Farmer() : Resident()
 {
@@ -24,76 +26,109 @@ void Farmer::plant()
     if (this->inventory.isEmpty())
     {
         cout << endl
-             << "Inventory anda kosong" << endl;
+             << "Inventory anda kosong!!" << endl;
     }
     else if (!this->inventory.checkInventoryPlant())
     {
         cout << endl
-             << "Inventory anda tidak ada tanaman" << endl;
+             << "Inventory anda tidak ada tanaman!!" << endl;
     }
-    else if (!this->farm.isEmpty())
+    else if (this->farm.isFull())
     {
         cout << endl
-             << "Ladang anda penuh" << endl;
+             << "Ladang anda penuh!!" << endl;
     }
     else
     {
-        this->inventory.displayStorage(false);
         bool success = false;
         while (!success)
         {
+            this->inventory.displayStorage(false);
+
             cout << endl
-                 << "Slot: ";
+                 << "Slot (ketik q untuk keluar) : ";
             string slot;
             cin >> slot;
-            if (this->inventory.see(slot)->getItemId() == -1)
+
+            if (slot == "q")
             {
-                cout << endl
-                     << "Kamu mengambil harapan kosong dari penyimpanan." << endl
-                     << "Silahkan masukan slot yang berisi tanaman." << endl;
+                cout << "Tidak jadi melakukan tanam!!" << endl;
+                return;
             }
-            else
+
+            try
             {
                 if (Game::getPlantConfig().find(this->inventory.see(slot)->getName()) != Game::getPlantConfig().end())
                 {
-                    string s = Game::getPlantConfig()[this->inventory.see(slot)->getName()].name;
+                    string plantName = this->inventory.see(slot)->getName();
                     cout << endl
-                         << "Kamu memilih " << s << "." << endl;
+                         << "Kamu memilih " << Utils::toTitleCase(plantName) << "." << endl;
                     cout << endl
                          << "Pilih petak tanah yang akan ditanami" << endl;
-                    shared_ptr<Item> itemRef = (this->inventory.take(slot));
+                    shared_ptr<Item> itemRef = this->inventory.take(slot);
                     shared_ptr<Plant> plantRef = dynamic_pointer_cast<Plant>(itemRef);
 
-                    this->farm.displayStorage(false);
                     bool done = false;
                     while (!done)
                     {
-                        cout << endl
-                             << "Petak: ";
-                        string petak;
-                        cin >> petak;
-                        if (this->farm.see(petak)->getItemId() != -1)
+                        try
                         {
+                            this->farm.displayStorage(false);
+
                             cout << endl
-                                 << "Petak sudah terisi." << endl
-                                 << "Silahkan masukan petak yang kosong." << endl;
+                                 << "Petak tanah (ketik q untuk kembali) : ";
+                            string petak;
+                            cin >> petak;
+
+                            if (petak == "q")
+                            {
+                                this->inventory.put(slot, itemRef);
+                                done = true;
+                                break;
+                            }
+
+                            if (!this->farm.isEmpty(petak))
+                            {
+                                cout << endl
+                                     << "Petak sudah terisi." << endl
+                                     << "Silahkan masukan petak yang kosong." << endl;
+                            }
+                            else
+                            {
+                                this->farm.put(petak, plantRef);
+                                cout << endl
+                                     << "Cangkul, cangkul, cangkul yang dalam~!" << endl
+                                     << "Orange tree berhasil ditanam!" << endl;
+                                done = true;
+                            }
+                            success = true;
                         }
-                        else
+                        catch (const exception &e)
                         {
-                            this->farm.put(petak, plantRef);
                             cout << endl
-                                 << "Cangkul, cangkul, cangkul yang dalam~!" << endl
-                                 << "Orange tree berhasil ditanam!" << endl;
-                            done = true;
+                                 << e.what() << endl
+                                 << endl;
                         }
                     }
-                    success = true;
                 }
                 else
                 {
                     cout << "Apa yang kamu lakukan?!! Kamu mencoba untuk menanam itu?!!" << endl
                          << "Silahkan masukan slot yang berisi tanaman." << endl;
                 }
+            }
+            catch (const SlotEmptyException &e)
+            {
+                cout << endl
+                     << "Kamu mengambil harapan kosong dari penyimpanan." << endl
+                     << "Silahkan masukan slot yang berisi tanaman." << endl
+                     << endl;
+            }
+            catch (const exception &e)
+            {
+                cout << endl
+                     << e.what() << endl
+                     << endl;
             }
         }
     }
@@ -259,7 +294,8 @@ int Farmer::getWealth()
     {
         for (int j = 0; j < this->inventory.getCol(); j++)
         {
-            if(this->inventory.see(i,j) != nullptr){
+            if (this->inventory.see(i, j) != nullptr)
+            {
                 wealth += this->inventory.see(i, j)->getPrice();
             }
         }
@@ -268,7 +304,8 @@ int Farmer::getWealth()
     {
         for (int j = 0; j < this->farm.getCol(); j++)
         {
-            if(this->farm.see(i,j) != nullptr){
+            if (this->farm.see(i, j) != nullptr)
+            {
                 wealth += this->farm.see(i, j)->getPrice();
             }
         }

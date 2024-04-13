@@ -17,12 +17,18 @@
 #include "../Item/Animal.hpp"
 #include "../Item/Product.hpp"
 #include "../Item/Building.hpp"
+#include "LoadException.hpp"
 using namespace std;
 
 void LoadConfig::loadAnimalConfig(string filename)
 {
     map<string, AnimalConfig> configs;
     ifstream file(filename);
+
+    if (!file.is_open())
+    {
+        throw FileNotFoundException(filename);
+    }
     string line;
     while (getline(file, line))
     {
@@ -31,6 +37,7 @@ void LoadConfig::loadAnimalConfig(string filename)
         string name, code;
         string typeStr;
         AnimalType type = AnimalType::CARNIVORE;
+
         if (iss >> id >> code >> name >> typeStr >> weightToHarvest >> price)
         {
             if (typeStr == "HERBIVORE")
@@ -43,6 +50,10 @@ void LoadConfig::loadAnimalConfig(string filename)
             AnimalConfig config(id, name, type, price, code, weightToHarvest);
             configs[name] = config;
         }
+        else
+        {
+            throw WrongFormatException(filename);
+        }
     }
 
     Game::setAnimalConfig(configs);
@@ -52,6 +63,11 @@ void LoadConfig::loadPlantConfig(string filename)
 {
     map<string, PlantConfig> configs;
     ifstream file(filename);
+
+    if (!file.is_open())
+    {
+        throw FileNotFoundException(filename);
+    }
     string line;
     while (getline(file, line))
     {
@@ -60,6 +76,7 @@ void LoadConfig::loadPlantConfig(string filename)
         string name, code;
         string typeStr;
         PlantType type = PlantType::MATERIAL_PLANT;
+
         if (iss >> id >> code >> name >> typeStr >> durationToHarvest >> price)
         {
             if (typeStr == "MATERIAL_PLANT")
@@ -70,6 +87,10 @@ void LoadConfig::loadPlantConfig(string filename)
             PlantConfig config(id, name, type, code, durationToHarvest, price);
             configs[name] = config;
         }
+        else
+        {
+            throw WrongFormatException(filename);
+        }
     }
 
     Game::setPlantConfig(configs);
@@ -79,6 +100,11 @@ void LoadConfig::loadProductConfig(string filename)
 {
     map<string, ProductConfig> configs;
     ifstream file(filename);
+
+    if (!file.is_open())
+    {
+        throw FileNotFoundException(filename);
+    }
     string line;
     while (getline(file, line))
     {
@@ -87,6 +113,7 @@ void LoadConfig::loadProductConfig(string filename)
         string name, code, origin;
         string typeStr;
         ProductType type = ProductType::PRODUCT_ANIMAL;
+
         if (iss >> id >> code >> name >> typeStr >> origin >> addedWeight >> price)
         {
             if (typeStr == "PRODUCT_MATERIAL_PLANT")
@@ -98,6 +125,10 @@ void LoadConfig::loadProductConfig(string filename)
             ProductConfig config(id, name, type, code, origin, addedWeight, price);
             configs[name] = config;
         }
+        else
+        {
+            throw WrongFormatException(filename);
+        }
     }
 
     Game::setProductConfig(configs);
@@ -107,15 +138,40 @@ void LoadConfig::loadMainConfig(string filename)
 {
     MainConfig config;
     ifstream file(filename);
+
+    if (!file.is_open())
+    {
+        throw FileNotFoundException(filename);
+    }
+
     int guldenForWin, weightPlayerToWin;
     int inventorySize[2];
     int farmSize[2];
     int ranchSize[2];
 
-    file >> guldenForWin >> weightPlayerToWin;
-    file >> inventorySize[0] >> inventorySize[1];
-    file >> farmSize[0] >> farmSize[1];
-    file >> ranchSize[0] >> ranchSize[1];
+    if (!(file >> guldenForWin >> weightPlayerToWin))
+    {
+        throw WrongFormatException(filename);
+    }
+    // file >> guldenForWin >> weightPlayerToWin;
+
+    if (!(file >> inventorySize[0] >> inventorySize[1]))
+    {
+        throw WrongFormatException(filename);
+    }
+    // file >> inventorySize[0] >> inventorySize[1];
+
+    if (!(file >> farmSize[0] >> farmSize[1]))
+    {
+        throw WrongFormatException(filename);
+    }
+    // file >> farmSize[0] >> farmSize[1];
+
+    if (!(file >> ranchSize[0] >> ranchSize[1]))
+    {
+        throw WrongFormatException(filename);
+    }
+    // file >> ranchSize[0] >> ranchSize[1];
 
     // cout << ranchSize[0] << ranchSize[1] << endl;
     config = MainConfig(guldenForWin, weightPlayerToWin, inventorySize, farmSize, ranchSize);
@@ -136,6 +192,12 @@ void LoadConfig::loadRecipeConfig(string filename)
 {
     map<string, RecipeConfig> recipes;
     ifstream file(filename);
+
+    if (!file.is_open())
+    {
+        throw FileNotFoundException(filename);
+    }
+
     string line;
     while (getline(file, line))
     {
@@ -144,17 +206,21 @@ void LoadConfig::loadRecipeConfig(string filename)
         string code, name;
         map<string, int> materials;
 
-        iss >> id >> code >> name >> price;
+        if (!(iss >> id >> code >> name >> price))
+        {
+            throw WrongFormatException(filename);
+        }
+
+        // iss >> id >> code >> name >> price;
 
         string materialName;
         int quantity;
-        // Loop through the rest of the line to read materials and quantities.
+
         while (iss >> materialName >> quantity)
         {
             materials[materialName] = quantity;
         }
 
-        // Create a new RecipeConfig object and add it to the map.
         recipes[name] = RecipeConfig(id, name, code, price, materials);
     }
 
@@ -169,6 +235,11 @@ void LoadConfig::loadStateConfig(string filename)
 {
     ifstream file(filename);
 
+    if (!file.is_open())
+    {
+        throw FileNotFoundException(filename);
+    }
+
     int numPlayers;
     file >> numPlayers;
     file.ignore();
@@ -178,17 +249,32 @@ void LoadConfig::loadStateConfig(string filename)
         string playerName, role;
         int weight, gulden;
         int totalItem;
-        file >> playerName >> role >> weight >> gulden;
+
+        if (!(file >> playerName >> role >> weight >> gulden))
+        {
+            throw WrongFormatException(filename);
+        }
+
+        // file >> playerName >> role >> weight >> gulden;
         file.ignore();
 
         if (role == "Walikota")
         {
             auto player = make_shared<Mayor>(playerName, weight, gulden);
-            file >> totalItem;
+            if (!(file >> totalItem))
+            {
+                throw WrongFormatException(filename);
+            }
+            // file >> totalItem;
             string itemName;
             for (int j = 0; j < totalItem; j++)
             {
-                file >> itemName;
+                // file >> itemName;
+
+                if (!(file >> itemName))
+                {
+                    throw WrongFormatException(filename);
+                }
 
                 if (Game::getAnimalConfig().find(itemName) != Game::getAnimalConfig().end())
                 {
@@ -224,11 +310,19 @@ void LoadConfig::loadStateConfig(string filename)
         else if (role == "Peternak")
         {
             auto player = make_shared<Breeder>(playerName, weight, gulden);
-            file >> totalItem;
+            // file >> totalItem;
+            if (!(file >> totalItem))
+            {
+                throw WrongFormatException(filename);
+            }
             string itemName;
             for (int j = 0; j < totalItem; j++)
             {
-                file >> itemName;
+                // file >> itemName;
+                if (!(file >> itemName))
+                {
+                    throw WrongFormatException(filename);
+                }
 
                 if (Game::getAnimalConfig().find(itemName) != Game::getAnimalConfig().end())
                 {
@@ -259,13 +353,21 @@ void LoadConfig::loadStateConfig(string filename)
                 }
             }
 
-            file >> totalItem;
+            // file >> totalItem;
+            if (!(file >> totalItem))
+            {
+                throw WrongFormatException(filename);
+            }
             // cout << totalItem << endl;
             string slot;
             int berat;
             for (int j = 0; j < totalItem; j++)
             {
-                file >> slot >> itemName >> berat;
+                // file >> slot >> itemName >> berat;
+                if (!(file >> slot >> itemName >> berat))
+                {
+                    throw WrongFormatException(filename);
+                }
 
                 if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                 {
@@ -288,11 +390,19 @@ void LoadConfig::loadStateConfig(string filename)
         else if (role == "Petani")
         {
             auto player = make_shared<Farmer>(playerName, weight, gulden);
-            file >> totalItem;
+            // file >> totalItem;
+            if (!(file >> totalItem))
+            {
+                throw WrongFormatException(filename);
+            }
             string itemName;
             for (int j = 0; j < totalItem; j++)
             {
-                file >> itemName;
+                // file >> itemName;
+                if (!(file >> itemName))
+                {
+                    throw WrongFormatException(filename);
+                }
 
                 if (Game::getAnimalConfig().find(itemName) != Game::getAnimalConfig().end())
                 {
@@ -323,12 +433,20 @@ void LoadConfig::loadStateConfig(string filename)
                 }
             }
 
-            file >> totalItem;
+            // file >> totalItem;
+            if (!(file >> totalItem))
+            {
+                throw WrongFormatException(filename);
+            }
             string slot;
             int umur;
             for (int j = 0; j < totalItem; j++)
             {
-                file >> slot >> itemName >> umur;
+                // file >> slot >> itemName >> umur;
+                if (!(file >> slot >> itemName >> umur))
+                {
+                    throw WrongFormatException(filename);
+                }
 
                 player->getFarm().put(slot, make_shared<Plant>(umur, itemName));
             }
@@ -343,11 +461,19 @@ void LoadConfig::loadStateConfig(string filename)
     int storeAmount;
     string storeItemName;
     int amount;
-    file >> storeAmount;
+    // file >> storeAmount;
+    if (!(file >> storeAmount))
+    {
+        throw WrongFormatException(filename);
+    }
 
     for (int j = 0; j < storeAmount; j++)
     {
-        file >> storeItemName >> amount;
+        // file >> storeItemName >> amount;
+        if (!(file >> storeItemName >> amount))
+        {
+            throw WrongFormatException(filename);
+        }
 
         for (int k = 0; k < amount; k++)
         {

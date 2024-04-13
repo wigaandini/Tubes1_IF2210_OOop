@@ -47,6 +47,7 @@ public:
     void handleSave();
     void handleLoadConfig();
     void handleNext(int);
+    void displayWinner(shared_ptr<Player>&);
     shared_ptr<Player> checkWinner();
 };
 

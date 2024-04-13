@@ -41,15 +41,16 @@ void Farm::displayStorage(bool printInfo)
         cout << setw(2) << setfill(' ') << (i + 1) << "   |";
         for (int j = 0; j < this->col; ++j)
         {
-            string name = this->buffer[i][j]->getCode();
             cout << " " << setw(2) << setfill(' ');
-            if (this->buffer[i][j]->getPlantId() == -1)
+            if (this->buffer[i][j] == nullptr)
             {
                 cout << "   ";
                 cout << " |";
             }
             else if (!this->buffer[i][j]->checkReadyToHarvest())
             {
+                string name = this->buffer[i][j]->getCode();
+
                 for (char ch : name)
                 {
                     print_red(ch);
@@ -58,6 +59,8 @@ void Farm::displayStorage(bool printInfo)
             }
             else if (this->buffer[i][j]->checkReadyToHarvest())
             {
+                string name = this->buffer[i][j]->getCode();
+
                 for (char ch : name)
                 {
                     print_green(ch);
@@ -81,7 +84,7 @@ void Farm::displayStorage(bool printInfo)
         {
             for (int j = 0; j < this->col; j++)
             {
-                if (this->buffer[i][j]->getPlantId() != -1)
+                if (this->buffer[i][j] != nullptr)
                 {
                     cout << "- " << this->buffer[i][j]->getCode() << ": " << this->buffer[i][j]->getName() << endl;
                 }

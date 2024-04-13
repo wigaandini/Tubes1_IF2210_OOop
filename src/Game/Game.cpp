@@ -97,7 +97,16 @@ void Game::start()
     cout << "WELCOME TO THE GAME" << endl
          << endl;
 
-    handleLoadConfig();
+    try
+    {
+        handleLoadConfig();
+    }
+    catch (const exception &e)
+    {
+        cout << e.what() << endl;
+        cout << "Silahhkan periksa kembali file config Anda dan silahkan untuk memulai Game kembali dari awal" << endl;
+        return;
+    }
 
     cout << "LOAD CONFIG..." << endl;
     cout << "LOAD CONFIG..." << endl;
@@ -111,14 +120,44 @@ void Game::start()
     {
 
         string answerState = "";
+        string filename = "";
         cout << "Apakah Anda ingin memulai dengan membaca state? (Y/N) ";
         cin >> answerState;
 
         if (answerState == "Y")
         {
+            bool filenameValid = false;
+            while (!filenameValid)
+            {
+                try
+                {
+                    cout << "Masukan nama file (ketik q untuk keluar): ";
+                    cin >> filename;
+                    string fileAddr = "../config/" + filename;
+                    this->configHandler.loadStateConfig(fileAddr);
 
-            this->configHandler.loadStateConfig("../config/state.txt");
+                    if (filename == "q")
+                    {
+                        cout << "Keluar dari permainan!!" << endl;
+                        return;
+                    }
+
+                    filenameValid = true;
+                }
+                catch (const exception &e)
+                {
+                    cout << "Terdapat masalah saat pembacaan file state!!" << endl;
+                    cout << e.what() << endl;
+                }
+            }
             isAnswerValid = true;
+            cout << endl
+                 << "LOAD STATE..." << endl;
+            cout << "LOAD STATE..." << endl;
+            cout << "LOAD STATE..." << endl
+                 << endl;
+
+            cout << "Finish Load State!!" << endl << endl;
         }
         else if (answerState == "N")
         {
@@ -131,6 +170,7 @@ void Game::start()
             players.push_back(walikota);
 
             isAnswerValid = true;
+            cout << "Finish Preparing The Game!!" << endl;
         }
         else
         {
@@ -138,29 +178,30 @@ void Game::start()
         }
     }
 
-    cout << "Players in the game:" << endl;
-    for (auto player : players)
-    {
-        cout << player->getName() << endl;
+    // cout << "Players in the game:" << endl;
+    // for (auto player : players)
+    // {
+    //     cout << player->getName() << endl;
 
-        cout << player->getInventory() << endl;
+    //     cout << player->getInventory() << endl;
 
-        shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
-        if (breeder != nullptr)
-        {
-            cout << breeder->getRanch() << endl;
-            continue;
-        }
+    //     shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
+    //     if (breeder != nullptr)
+    //     {
+    //         cout << breeder->getRanch() << endl;
+    //         continue;
+    //     }
 
-        shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
-        if (farmer != nullptr)
-        {
-            cout << farmer->getFarm() << endl;
-        }
-    }
+    //     shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
+    //     if (farmer != nullptr)
+    //     {
+    //         cout << farmer->getFarm() << endl;
+    //     }
+    // }
 
-    cout << "Items in the store:" << endl;
-    cout << store << endl;
+    // cout << "Items in the store:" << endl;
+    // cout << store << endl;
+
     bool isGameOver = false;
 
     cout << "Selamat Bermain!!" << endl
@@ -188,8 +229,7 @@ void Game::start()
 
                 if (winnner != nullptr)
                 {
-                    cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl
-                         << endl;
+                    displayWinner(winnner);
                     isGameOver = true;
                     break;
                 }
@@ -210,8 +250,9 @@ void Game::start()
                 {
                     cout << "Tidak ada command tersebut!!" << endl
                          << endl;
-                }
 
+                    commandHandler.printCommand(Game::getCurrentPlayer());
+                }
             }
             if (isGameOver)
             {
@@ -221,6 +262,15 @@ void Game::start()
     }
 
     cout << "Terima kasih karena telah bermain game kami, silahkan datang kembali di lain waktu." << endl;
+}
+
+void Game::displayWinner(shared_ptr<Player> &player)
+{
+    cout << setfill('*') << setw(50) << "" << endl;
+    cout << setfill(' ') << setw(25) << right << "CONGRATULATIONS!" << endl;
+    cout << setfill(' ') << setw(27) << right << player->getName() << endl;
+    cout << setfill(' ') << setw(25) << right << "YOU WON!" << endl;
+    cout << setfill('*') << setw(50) << "" << endl;
 }
 
 void Game::setPlayers(vector<shared_ptr<Player>> &tempplayers)
@@ -244,6 +294,7 @@ void Game::handleLoadConfig()
     catch (exception &e)
     {
         cout << "Terdapat masalah dalam load config!!" << endl;
+        throw;
     }
 }
 

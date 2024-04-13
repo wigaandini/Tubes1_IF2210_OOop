@@ -62,6 +62,12 @@ public:
     {
         return this->col;
     };
+
+    bool isFull()
+    {
+        return emptySlot == 0;
+    }
+
     bool isEmpty()
     {
         return emptySlot == row * col;
@@ -87,7 +93,8 @@ public:
         return emptySlot;
     };
 
-    bool isSlotEmpty(string slot){
+    bool isSlotEmpty(string slot)
+    {
         int x;
         char y;
         parseInput(slot, x, y);
