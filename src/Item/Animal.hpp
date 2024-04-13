@@ -24,7 +24,7 @@ public:
     int getAnimalId() const;
     int getWeight() const;
     int getWeightToHarvest() const;
-    vector<Product> collect();
+    vector<string> collect();
     bool checkReadyToHarvest();
     static map<string, vector<string>>& getHarvestResult();
 

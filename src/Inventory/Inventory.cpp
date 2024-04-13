@@ -93,9 +93,11 @@ bool Inventory::checkInventoryEdible()
         {
             if (this->buffer[i][j] != nullptr)
             {
-                if (dynamic_pointer_cast<Product>(buffer[i][j]) && (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT || Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)){
-                    // cout << buffer[i][j]->getName() << endl;
-                    return true;
+                if(Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end()){
+                    if (dynamic_pointer_cast<Product>(buffer[i][j]) && (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT || Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)){
+                        // cout << buffer[i][j]->getName() << endl;
+                        return true;
+                    }
                 }
             }
         }
@@ -111,10 +113,21 @@ bool Inventory::checkInventoryAnimal()
         {
             if (this->buffer[i][j] != nullptr)
             {
-                if (Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE)
-                {
-                    return true;
+                if(Game::getAnimalConfig().find(this->buffer[i][j]->getName()) != Game::getAnimalConfig().end()){
+                    cout << this->buffer[i][j]->getName() << endl;
+                    if(Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE){
+                        cout << "herbivore " << endl;
+                    }else if(Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE ){
+                        cout << "carnivore " << endl;
+                    }else if(Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE){
+                        cout << "Omnivore " << endl;
+                    }
+                    if (Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE)
+                    {
+                        return true;
+                    }
                 }
+                
             }
         }
     }
@@ -129,9 +142,11 @@ bool Inventory::checkInventoryPlant()
         {
             if (this->buffer[i][j] != nullptr)
             {
-                if (Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::FRUIT_PLANT)
-                {
-                    return true;
+                if(Game::getPlantConfig().find(this->buffer[i][j]->getName()) != Game::getPlantConfig().end()){
+                    if (Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::FRUIT_PLANT)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -165,13 +180,15 @@ bool Inventory::checkInventoryFruit()
     {
         for (int j = 0; j < this->col; j++)
         {
-            if (this->buffer[i][j] != nullptr)
-            {
-                if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT)
-                {
-                    return true;
+            if(this->buffer[i][j]!= nullptr){
+                if(Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end()){
+                    if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT)
+                    {
+                        return true;
+                    }
                 }
             }
+            
         }
     }
     return false;
@@ -183,11 +200,12 @@ bool Inventory::checkInventoryMeat()
     {
         for (int j = 0; j < this->col; j++)
         {
-            if (this->buffer[i][j] != nullptr)
-            {
-                if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)
-                {
-                    return true;
+            if(this->buffer[i][j]!= nullptr){
+                if(Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end()){
+                    if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)
+                    {
+                        return true;
+                    }
                 }
             }
         }

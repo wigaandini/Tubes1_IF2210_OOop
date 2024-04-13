@@ -58,14 +58,9 @@ int Animal::getWeightToHarvest() const
     return this->weighToHarvest;
 }
 
-vector<Product> Animal::collect()
+vector<string> Animal::collect()
 {
-    vector<Product> tempP;
-    for (unsigned int i = 0; i < harvestResult[this->name].size(); i++)
-    {
-        tempP.push_back(Product(harvestResult[this->name][i]));
-    }
-    return tempP;
+    return harvestResult[this->name];
 }
 
 bool Animal::checkReadyToHarvest()
