@@ -413,3 +413,20 @@ map<string, vector<shared_ptr<Item>>> Store::getItems() const
 Store::~Store()
 {
 }
+
+void Store::saveFile(const string& filepath){
+    ofstream file(filepath, ios::app);
+
+    map<string, int> itemCounts;
+    for (const auto& pair : items) {
+        itemCounts[pair.first] = pair.second.size();
+    }
+
+    file << itemCounts.size() << endl;
+
+    for (const auto& pair : itemCounts) {
+        file << pair.first << " " << pair.second << endl;
+    }
+
+    file.close();
+}

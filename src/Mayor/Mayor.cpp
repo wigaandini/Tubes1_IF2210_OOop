@@ -230,3 +230,21 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
     this->gulden += items.second;
     return items;
 }
+
+void Mayor::saveFile(const string& filepath){
+    ofstream file(filepath, ios::app);
+    
+    file << username << " Walikota " << weight << " " << gulden << endl;
+
+    Inventory &inventoryItems = Resident::Player::getInventory();
+    file << inventoryItems.countInventoryItem() << endl;
+    for (int i = 0; i < inventoryItems.getRow(); i++) {
+        for (int j = 0; j < inventoryItems.getCol(); j++) {
+            if (inventoryItems.see(i, j) != nullptr) {
+                file << inventoryItems.see(i, j)->getName() << endl;
+            }
+        }
+    }
+
+    file.close();
+}

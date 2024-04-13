@@ -350,3 +350,39 @@ Farm &Farmer::getFarm()
 {
     return this->farm;
 }
+
+void Farmer::saveFile(const string& filepath){
+    ofstream file(filepath, ios::app);
+    
+    file << username << " Petani " << weight << " " << gulden << endl;
+
+    Inventory &inventoryItems = Resident::Player::getInventory();
+    file << inventoryItems.countInventoryItem() << endl;
+    for (int i = 0; i < inventoryItems.getRow(); i++) {
+        for (int j = 0; j < inventoryItems.getCol(); j++) {
+            if (inventoryItems.see(i, j) != nullptr) {
+                file << inventoryItems.see(i, j)->getName() << endl;
+            }
+        }
+    }
+
+    Farm &farmItems = getFarm();
+    map<string, int> plantCount = farmItems.countPlant();
+    file << plantCount.size() << endl;
+    for (int i = 0; i < farmItems.getRow(); i++) {
+        for (int j = 0; j < farmItems.getCol(); j++) {
+            if (farmItems.see(i, j) != nullptr) {
+                string plantName = farmItems.see(i, j)->getName();
+                file << char('A' + j);
+                if (i+1 < 10) {
+                    file << '0' << i+1 << " " << plantName << " " << plantCount[plantName] << endl;
+                } 
+                else {
+                    file << i+1 << " " << plantName << " " << plantCount[plantName] << endl;
+                }
+            }
+        }
+    }
+
+    file.close();
+}

@@ -21,5 +21,6 @@ public:
     void addPlayer();
     pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
     void buy(shared_ptr<Item> &, int);
+    void saveFile(const string &filename);
 };
 #endif

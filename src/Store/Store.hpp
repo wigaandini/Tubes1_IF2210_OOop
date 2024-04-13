@@ -35,6 +35,8 @@ class Store{
         void handleCustomerSell();
 
         ~Store();
+
+        void saveFile(const string& filename);
 };
 
 #endif

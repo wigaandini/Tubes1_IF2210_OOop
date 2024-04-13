@@ -470,3 +470,44 @@ Ranch &Breeder::getRanch()
 {
     return this->ranch;
 }
+
+void Breeder::saveFile(const string& filepath) {
+    ofstream file(filepath, ios::app);
+
+    if (!file.is_open()) {
+        cerr << "Error: Unable to open file." << endl;
+        return;
+    }
+    
+    file << username << " Peternak " << weight << " " << gulden << endl;
+
+    Inventory& inventoryItems = Resident::Player::getInventory();
+    file << inventoryItems.countInventoryItem() << endl;
+    for (int i = 0; i < inventoryItems.getRow(); i++) {
+        for (int j = 0; j < inventoryItems.getCol(); j++) {
+            if (inventoryItems.see(i, j) != nullptr) {
+                file << inventoryItems.see(i, j)->getName() << endl;
+            }
+        }
+    }
+
+    Ranch& ranchItems = getRanch();
+    map<string, int> animalCount = ranchItems.countAnimal();
+    file << animalCount.size() << endl;
+    for (int i = 0; i < ranchItems.getRow(); i++) {
+        for (int j = 0; j < ranchItems.getCol(); j++) {
+            if (ranchItems.see(i, j) != nullptr) {
+                string animalName = ranchItems.see(i, j)->getName();
+                file << char('A' + j);
+                if (i+1 < 10) {
+                    file << '0' << i+1 << " " << animalName << " " << animalCount[animalName] << endl;
+                } 
+                else {
+                    file << i+1 << " " << animalName << " " << animalCount[animalName] << endl;
+                }
+            }
+        }
+    }
+
+    file.close();
+}
