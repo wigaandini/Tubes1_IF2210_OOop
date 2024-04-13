@@ -184,6 +184,15 @@ void Game::start()
                 cout << endl
                      << "> ";
                 cin >> input;
+                auto winnner = checkWinner();
+
+                if (winnner != nullptr)
+                {
+                    cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl
+                         << endl;
+                    isGameOver = true;
+                    break;
+                }
                 if (input == "NEXT")
                 {
                     if (Game::getCurrentPlayer()->getName() == players[i]->getName())
@@ -203,17 +212,8 @@ void Game::start()
                          << endl;
                 }
 
-                auto winnner = checkWinner();
-
-                if (winnner != nullptr)
-                {
-                    cout << "Selamat pemain " << winnner->getName() << " telah memenangkan permainan!!" << endl
-                         << endl;
-                    isGameOver = true;
-                    break;
-                }
             }
-            if (!isGameOver)
+            if (isGameOver)
             {
                 break;
             }
