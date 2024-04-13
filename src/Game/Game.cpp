@@ -5,6 +5,7 @@
 #include "../Player/Player.hpp"
 #include "../Breeder/Breeder.hpp"
 #include "../Farmer/Farmer.hpp"
+#include "../Command/CommandException.hpp"
 
 map<string, AnimalConfig> Game::animalConfig;
 map<string, PlantConfig> Game::plantConfig;
@@ -157,7 +158,8 @@ void Game::start()
             cout << "LOAD STATE..." << endl
                  << endl;
 
-            cout << "Finish Load State!!" << endl << endl;
+            cout << "Finish Load State!!" << endl
+                 << endl;
         }
         else if (answerState == "N")
         {
@@ -220,38 +222,44 @@ void Game::start()
 
             while (!isNext)
             {
-
-                string input;
-                cout << endl
-                     << "> ";
-                cin >> input;
-                auto winnner = checkWinner();
-
-                if (winnner != nullptr)
+                try
                 {
-                    displayWinner(winnner);
-                    isGameOver = true;
-                    break;
-                }
-                if (input == "NEXT")
-                {
-                    if (Game::getCurrentPlayer()->getName() == players[i]->getName())
+                    string input;
+                    cout << endl
+                         << "> ";
+                    cin >> input;
+                    auto winnner = checkWinner();
+
+                    if (winnner != nullptr)
                     {
-                        i++;
+                        displayWinner(winnner);
+                        isGameOver = true;
+                        break;
                     }
-                    handleNext(i);
-                    break;
+                    if (input == "NEXT")
+                    {
+                        if (Game::getCurrentPlayer()->getName() == players[i]->getName())
+                        {
+                            i++;
+                        }
+                        handleNext(i);
+                        break;
+                    }
+                    else
+                    {
+                        this->commandHandler.handleCommand(input);
+                    }
                 }
-                else if (this->commandHandler.checkCommand(input))
+                catch (const NoCommandException &e)
                 {
-                    this->commandHandler.handleCommand(input);
-                }
-                else
-                {
-                    cout << "Tidak ada command tersebut!!" << endl
+                    cout << e.what() << endl
                          << endl;
-
                     commandHandler.printCommand(Game::getCurrentPlayer());
+                }
+                catch (const exception &e)
+                {
+                    cout << e.what() << endl
+                         << endl;
                 }
             }
             if (isGameOver)

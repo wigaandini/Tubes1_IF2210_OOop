@@ -43,6 +43,7 @@ void Farmer::plant()
         bool success = false;
         while (!success)
         {
+            cout << "Pilih tanaman dari penyimpanan" << endl;
             this->inventory.displayStorage(false);
 
             cout << endl
@@ -266,7 +267,7 @@ void Farmer::harvest()
             unsigned int k = 0;
             while (k < tempP.size())
             {
-                this->inventory.putRandom(make_shared<Product>(tempP[k]));
+                this->inventory + make_shared<Product>(tempP[k]);
                 k++;
             }
         }

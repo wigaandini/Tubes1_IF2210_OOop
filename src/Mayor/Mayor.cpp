@@ -131,7 +131,7 @@ void Mayor::buildBuilding()
     if (isValid)
     {
         cout << buildingName << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
-        inventory.putRandom(make_shared<Building>(buildingName));
+        inventory + make_shared<Building>(buildingName);
     }
 }
 

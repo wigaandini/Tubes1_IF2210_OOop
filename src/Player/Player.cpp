@@ -29,64 +29,64 @@ Player::~Player()
 
 void Player::eat()
 {
-    try
-    {
 
-        if (this->inventory.isEmpty())
-        {
-            throw GridEmptyException();
-        }
-        else if (!this->inventory.checkInventoryEdible())
-        {
-            cout << "Inventory anda tidak ada yang dapat dimakan" << endl;
-        }
-        else
-        {
-            cout << "Pilih makanan dari penyimpanan" << endl;
-            this->inventory.displayStorage(false);
-            bool success = false;
-            while (!success)
-            {
-                cout << endl
-                     << "Slot: ";
-                string slot;
-                cin >> slot;
-                if (this->inventory.see(slot)->getItemId() == -1)
-                {
-                }
-                else
-                {
-                    if (dynamic_pointer_cast<Product>(this->inventory.see(slot)) && (Game::getProductConfig()[this->inventory.see(slot)->getName()].type == ProductType::PRODUCT_FRUIT_PLANT || Game::getProductConfig()[this->inventory.see(slot)->getName()].type == ProductType::PRODUCT_ANIMAL))
-                    {
-                        int x = Game::getProductConfig()[this->inventory.take(slot)->getName()].addedWeight;
-                        cout << endl
-                             << "Dengan lahapnya, kamu memakanan hidangan itu" << endl
-                             << "Alhasil, berat badan kamu naik menjadi " << this->weight + x << endl;
-                        weight += x;
-                        success = true;
-                    }
-                    else
-                    {
-                        cout << endl
-                             << "Apa yang kamu lakukan?!! Kamu mencoba untuk memakan itu?!!" << endl
-                             << "Silahkan masukan slot yang berisi makanan." << endl;
-                    }
-                }
-            }
-        }
-    }
-    catch (GridEmptyException &e)
+    if (this->inventory.isEmpty())
     {
         cout << "Inventory anda kosong" << endl;
     }
-    catch (SlotEmptyException &e)
+    else if (!this->inventory.checkInventoryEdible())
     {
-        cout << endl
-             << "Kamu mengambil harapan kosong dari penyimpanan." << endl
-             << "Silahkan masukan slot yang berisi makanan." << endl;
+        cout << "Inventory anda tidak ada yang dapat dimakan" << endl;
     }
-    catch (exception& e){
-        cout << e.what() << endl;
+    else
+    {
+
+        bool success = false;
+        while (!success)
+        {
+            try
+            {
+                cout << "Pilih makanan dari penyimpanan" << endl;
+                this->inventory.displayStorage(false);
+                cout << endl
+                     << "Slot (ketik q untuk keluar): ";
+                string slot;
+                cin >> slot;
+
+                if (slot == "q"){
+                    cout << "Tidak jadi makan!!!" << endl;
+                    return;
+                }
+
+                if (dynamic_pointer_cast<Product>(this->inventory.see(slot)) && (Game::getProductConfig()[this->inventory.see(slot)->getName()].type == ProductType::PRODUCT_FRUIT_PLANT || Game::getProductConfig()[this->inventory.see(slot)->getName()].type == ProductType::PRODUCT_ANIMAL))
+                {
+                    int weight = Game::getProductConfig()[this->inventory.take(slot)->getName()].addedWeight;
+                    cout << endl
+                         << "Dengan lahapnya, kamu memakanan hidangan itu" << endl
+                         << "Alhasil, berat badan kamu naik menjadi " << this->weight + weight << endl;
+                    this->weight += weight;
+                    success = true;
+                }
+                else
+                {
+                    cout << endl
+                         << "Apa yang kamu lakukan?!! Kamu mencoba untuk memakan itu?!!" << endl
+                         << "Silahkan masukan slot yang berisi makanan." << endl;
+                }
+            }
+            catch (SlotEmptyException &e)
+            {
+                cout << endl
+                     << "Kamu mengambil harapan kosong dari penyimpanan." << endl
+                     << "Silahkan masukan slot yang berisi makanan." << endl
+                     << endl;
+            }
+            catch (exception &e)
+            {
+                cout << e.what() << endl
+                     << endl;
+            }
+        }
     }
 }
 
@@ -132,7 +132,7 @@ pair<vector<shared_ptr<Item>>, int> Player::sell(vector<string> &slots)
         {
             this->inventory.put(slots[i], items.first[i]);
         }
-        throw ;
+        throw;
     }
 
     this->gulden += items.second;

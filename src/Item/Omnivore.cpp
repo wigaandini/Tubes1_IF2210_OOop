@@ -10,11 +10,14 @@ Omnivore::Omnivore(string name):Animal(0,name){
 }
 
 
-void Omnivore::eat(Product &product)
+void Omnivore::eat(const shared_ptr<Product>&product)
 {
-    if (product.getProductType() != ProductType::PRODUCT_ANIMAL && product.getProductType() != ProductType::PRODUCT_FRUIT_PLANT  )
+    if (product == nullptr) {
+        throw NullProductException();
+    }
+    if (product->getProductType() != ProductType::PRODUCT_ANIMAL && product->getProductType() != ProductType::PRODUCT_FRUIT_PLANT  )
     {
-        throw "";
+        throw OmnivoreEatException();
     }
     else
     {

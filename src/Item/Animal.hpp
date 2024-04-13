@@ -4,6 +4,9 @@
 #include "Product.hpp"
 #include <string>
 #include <vector>
+#include <memory>
+#include "AnimalException.hpp"
+using namespace std;
 
 class Animal : public Item{
 private:
@@ -28,7 +31,7 @@ public:
     bool checkReadyToHarvest();
     static map<string, vector<string>>& getHarvestResult();
 
-    virtual void eat(const Product& food);
+    virtual void eat(const shared_ptr<Product>& food);
 
 };
 

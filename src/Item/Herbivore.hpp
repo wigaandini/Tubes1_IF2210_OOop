@@ -6,7 +6,7 @@ class Herbivore : public Animal{
     public :
         Herbivore(string name, int weight);
         Herbivore(string name);
-        void eat(Product& product);
+        void eat(const shared_ptr<Product>& product);
         virtual ~Herbivore();
         
 };

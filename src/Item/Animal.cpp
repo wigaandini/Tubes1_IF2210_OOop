@@ -77,7 +77,7 @@ map<string, vector<string>>& Animal::getHarvestResult(){
     return harvestResult;
 }
 
-void Animal::eat(const Product& food){
-    this->setWeight(this->getWeight() + food.getAddedWeight());
+void Animal::eat(const shared_ptr<Product>& food){
+    this->setWeight(this->getWeight() + food->getAddedWeight());
 }
 

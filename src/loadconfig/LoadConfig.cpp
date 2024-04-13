@@ -280,28 +280,28 @@ void LoadConfig::loadStateConfig(string filename)
                 {
                     if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Carnivore>(itemName));
+                        player->getInventory() + (make_shared<Carnivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Herbivore>(itemName));
+                        player->getInventory() + (make_shared<Herbivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Omnivore>(itemName));
+                        player->getInventory() + (make_shared<Omnivore>(itemName));
                     }
                 }
                 else if (Game::getPlantConfig().find(itemName) != Game::getPlantConfig().end())
                 {
-                    player->getInventory().putRandom(make_shared<Plant>(itemName));
+                    player->getInventory() + (make_shared<Plant>(itemName));
                 }
                 else if (Game::getProductConfig().find(itemName) != Game::getProductConfig().end())
                 {
-                    player->getInventory().putRandom(make_shared<Product>(itemName));
+                    player->getInventory() + (make_shared<Product>(itemName));
                 }
                 else if (Game::getRecipe().find(itemName) != Game::getRecipe().end())
                 {
-                    player->getInventory().putRandom(make_shared<Building>(itemName));
+                    player->getInventory() + (make_shared<Building>(itemName));
                 }
             }
 
@@ -328,28 +328,28 @@ void LoadConfig::loadStateConfig(string filename)
                 {
                     if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Carnivore>(itemName));
+                        player->getInventory() + (make_shared<Carnivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Herbivore>(itemName));
+                        player->getInventory() + (make_shared<Herbivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Omnivore>(itemName));
+                        player->getInventory() + (make_shared<Omnivore>(itemName));
                     }
                 }
                 else if (Game::getPlantConfig().find(itemName) != Game::getPlantConfig().end())
                 {
-                    player->getInventory().putRandom(make_shared<Plant>(itemName));
+                    player->getInventory() + (make_shared<Plant>(itemName));
                 }
                 else if (Game::getProductConfig().find(itemName) != Game::getProductConfig().end())
                 {
-                    player->getInventory().putRandom(make_shared<Product>(itemName));
+                    player->getInventory() + (make_shared<Product>(itemName));
                 }
                 else if (Game::getRecipe().find(itemName) != Game::getRecipe().end())
                 {
-                    player->getInventory().putRandom(make_shared<Building>(itemName));
+                    player->getInventory() + (make_shared<Building>(itemName));
                 }
             }
 
@@ -408,28 +408,28 @@ void LoadConfig::loadStateConfig(string filename)
                 {
                     if (Game::getAnimalConfig()[itemName].type == AnimalType::CARNIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Carnivore>(itemName));
+                        player->getInventory() + (make_shared<Carnivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::HERBIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Herbivore>(itemName));
+                        player->getInventory() + (make_shared<Herbivore>(itemName));
                     }
                     else if (Game::getAnimalConfig()[itemName].type == AnimalType::OMNIVORE)
                     {
-                        player->getInventory().putRandom(make_shared<Omnivore>(itemName));
+                        player->getInventory() + (make_shared<Omnivore>(itemName));
                     }
                 }
                 else if (Game::getPlantConfig().find(itemName) != Game::getPlantConfig().end())
                 {
-                    player->getInventory().putRandom(make_shared<Plant>(itemName));
+                    player->getInventory() + (make_shared<Plant>(itemName));
                 }
                 else if (Game::getProductConfig().find(itemName) != Game::getProductConfig().end())
                 {
-                    player->getInventory().putRandom(make_shared<Product>(itemName));
+                    player->getInventory() + (make_shared<Product>(itemName));
                 }
                 else if (Game::getRecipe().find(itemName) != Game::getRecipe().end())
                 {
-                    player->getInventory().putRandom(make_shared<Building>(itemName));
+                    player->getInventory() + (make_shared<Building>(itemName));
                 }
             }
 

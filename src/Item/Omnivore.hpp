@@ -7,7 +7,7 @@ class Omnivore : public Animal{
     public :
         Omnivore(string name, int weight);
         Omnivore(string name);
-        void eat(Product& product);
+        void eat(const shared_ptr<Product>& product);
         ~Omnivore();
         
 };

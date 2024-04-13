@@ -93,20 +93,40 @@ public:
         return emptySlot;
     };
 
-    bool isSlotEmpty(string slot)
+    void operator+(const shared_ptr<T> item)
     {
-        int x;
-        char y;
-        parseInput(slot, x, y);
-        int colIdx = y - 'A';
-        if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
+        if (isFull())
         {
-            throw IndexOutOfBoundException();
+            throw GridFullException();
         }
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (this->buffer[i][j] == nullptr)
+                {
+                    this->buffer[i][j] = item;
+                    emptySlot--;
+                    return;
+                }
+            }
+        }
+    };
 
-        return (buffer[x - 1][colIdx] == nullptr);
-    }
-    shared_ptr<T> &see(int i, int j)
+    // bool isSlotEmpty(string slot)
+    // {
+    //     int x;
+    //     char y;
+    //     parseInput(slot, x, y);
+    //     int colIdx = y - 'A';
+    //     if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
+    //     {
+    //         throw IndexOutOfBoundException();
+    //     }
+
+    //     return (buffer[x - 1][colIdx] == nullptr);
+    // }
+    shared_ptr<T>& see(int i, int j)
     {
         return buffer[i][j];
     };
@@ -250,7 +270,5 @@ public:
         return os;
     };
 };
-
-// #include "Grid_impl.hpp"
 
 #endif
