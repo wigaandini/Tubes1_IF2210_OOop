@@ -31,7 +31,7 @@ void Farmer::plant()
         cout << endl
              << "Inventory anda tidak ada tanaman" << endl;
     }
-    else if (!this->farm.isEmpty())
+    else if (this->farm.countEmpty() == 0)
     {
         cout << endl
              << "Ladang anda penuh" << endl;
@@ -72,7 +72,7 @@ void Farmer::plant()
                              << "Petak: ";
                         string petak;
                         cin >> petak;
-                        if (this->farm.see(petak)->getItemId() != -1)
+                        if (!this->farm.isSlotEmpty(petak))
                         {
                             cout << endl
                                  << "Petak sudah terisi." << endl
@@ -83,7 +83,7 @@ void Farmer::plant()
                             this->farm.put(petak, plantRef);
                             cout << endl
                                  << "Cangkul, cangkul, cangkul yang dalam~!" << endl
-                                 << "Orange tree berhasil ditanam!" << endl;
+                                 << plantRef->getName() <<  " berhasil ditanam!" << endl;
                             done = true;
                         }
                     }
@@ -214,7 +214,7 @@ void Farmer::harvest()
             bool sukses3 = false;
             while (!sukses3)
             {
-                cout << "Petak ke-" << i << ": ";
+                cout << "Petak ke-" << i+1 << ": ";
                 cin >> slot;
                 if (this->farm.see(slot)->getCode() != kode[answer1 - 1])
                 {

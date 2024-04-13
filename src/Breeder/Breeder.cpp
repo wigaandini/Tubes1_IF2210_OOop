@@ -76,7 +76,7 @@ void Breeder::cattle()
         cin >> answer2;
         while (!this->ranch.isSlotEmpty(answer2))
         {
-            cout << "SLot yang dipilih sudah diisi" << endl;
+            cout << "Slot yang dipilih sudah diisi" << endl;
             cout << endl
                  << "Petak tanah:";
             cin >> answer2;
