@@ -45,7 +45,7 @@ debug: CXXFLAGS = $(BASE_CXXFLAGS) -g
 debug: $(TARGET)
 
 # Run the main file
-run: all
+run: clean all
 	./$(TARGET)
 
 # Link object files into a binary
