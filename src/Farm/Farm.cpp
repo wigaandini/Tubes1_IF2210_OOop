@@ -42,30 +42,35 @@ void Farm::displayStorage(bool printInfo)
         for (int j = 0; j < this->col; ++j)
         {
             cout << " " << setw(2) << setfill(' ');
-            if (this->buffer[i][j] == nullptr)
+            if (this->buffer[i][j] != nullptr)
+            {
+                string name = this->buffer[i][j]->getCode();
+                if (this->buffer[i][j]->getPlantId() == -1)
+                {
+                    cout << "   ";
+                    cout << " |";
+                }
+                else if (!this->buffer[i][j]->checkReadyToHarvest())
+                {
+                    for (char ch : name)
+                    {
+                        print_red(ch);
+                    }
+                    cout << "|";
+                }
+                else if (this->buffer[i][j]->checkReadyToHarvest())
+                {
+                    for (char ch : name)
+                    {
+                        print_green(ch);
+                    }
+                    cout << "|";
+                }
+            }
+            else
             {
                 cout << "   ";
                 cout << " |";
-            }
-            else if (!this->buffer[i][j]->checkReadyToHarvest())
-            {
-                string name = this->buffer[i][j]->getCode();
-
-                for (char ch : name)
-                {
-                    print_red(ch);
-                }
-                cout << "|";
-            }
-            else if (this->buffer[i][j]->checkReadyToHarvest())
-            {
-                string name = this->buffer[i][j]->getCode();
-
-                for (char ch : name)
-                {
-                    print_green(ch);
-                }
-                cout << "|";
             }
         }
         cout << endl;
@@ -86,7 +91,10 @@ void Farm::displayStorage(bool printInfo)
             {
                 if (this->buffer[i][j] != nullptr)
                 {
-                    cout << "- " << this->buffer[i][j]->getCode() << ": " << this->buffer[i][j]->getName() << endl;
+                    if (this->buffer[i][j]->getPlantId() != -1)
+                    {
+                        cout << "- " << this->buffer[i][j]->getCode() << ": " << this->buffer[i][j]->getName() << endl;
+                    }
                 }
             }
         }
@@ -99,9 +107,12 @@ bool Farm::checkPlantReadyToHarvest()
     {
         for (int j = 0; j < this->col; j++)
         {
-            if (this->buffer[i][j]->checkReadyToHarvest())
+            if (this->buffer[i][j] != nullptr)
             {
-                return true;
+                if (this->buffer[i][j]->checkReadyToHarvest())
+                {
+                    return true;
+                }
             }
         }
     }
@@ -115,16 +126,19 @@ map<string, int> Farm::countPlant()
     {
         for (int j = 0; j < this->col; j++)
         {
-            if (this->buffer[i][j]->checkReadyToHarvest())
+            if (this->buffer[i][j] != nullptr)
             {
-                string plantName = this->buffer[i][j]->getCode();
-                if (plantCount.find(plantName) == plantCount.end())
+                if (this->buffer[i][j]->checkReadyToHarvest())
                 {
-                    plantCount[plantName] = 1;
-                }
-                else
-                {
-                    plantCount[plantName]++;
+                    string plantName = this->buffer[i][j]->getCode();
+                    if (plantCount.find(plantName) == plantCount.end())
+                    {
+                        plantCount[plantName] = 1;
+                    }
+                    else
+                    {
+                        plantCount[plantName]++;
+                    }
                 }
             }
         }

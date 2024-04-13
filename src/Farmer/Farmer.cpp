@@ -249,7 +249,7 @@ void Farmer::harvest()
             bool sukses3 = false;
             while (!sukses3)
             {
-                cout << "Petak ke-" << i << ": ";
+                cout << "Petak ke-" << i+1 << ": ";
                 cin >> slot;
                 if (this->farm.see(slot)->getCode() != kode[answer1 - 1])
                 {

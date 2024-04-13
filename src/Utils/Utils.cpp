@@ -57,10 +57,23 @@ string Utils::toLower(string s)
 
 string Utils::toTitleCase(const string &input)
 {
+    string temp;
     string result;
     bool capitalize = true;
 
     for (char ch : input)
+    {
+        if (ch == '_')
+        {
+            temp += ' ';
+        }
+        else
+        {
+            temp += ch;
+        }
+    }
+
+    for (char ch : temp)
     {
         if (isspace(ch))
         {
