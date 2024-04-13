@@ -103,8 +103,7 @@ void Command::handleCommand(const string &command)
         }
         else if (command == "CETAK_LADANG")
         {
-            Farm &farm = farmer->getFarm();
-            cout << farm;
+            farmer->getFarm().displayStorage(true);
         }
         else if (command == "PANEN")
         {
@@ -119,8 +118,7 @@ void Command::handleCommand(const string &command)
         }
         else if (command == "CETAK_PETERNAKAN")
         {
-            Ranch &ranch = breeder->getRanch();
-            cout << ranch;
+            breeder->getRanch().displayStorage(true);
         }
         else if (command == "KASIH_MAKAN")
         {
