@@ -98,4 +98,16 @@ public:
     }
 };
 
+class InvalidSlotFormatException : public exception
+{
+public:
+    InvalidSlotFormatException() : exception() {}
+
+    ~InvalidSlotFormatException() {}
+    const char *what() const noexcept override
+    {
+        return "Masukan slot yang diberikan tidak sesuai dengan format!!!";
+    }
+};
+
 #endif

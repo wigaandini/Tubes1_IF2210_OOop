@@ -18,14 +18,37 @@ protected:
     T defaultValue;
     void parseInput(string s, int &intt, char &charr) const
     {
-        charr = s[0];
-        intt = stoi(s.substr(1));
+        if (s.length() < 2 || !std::isupper(s[0]))
+        {
+            throw InvalidSlotFormatException();
+        }
+        try
+        {
+
+            charr = s[0];
+            intt = stoi(s.substr(1));
+        }
+        catch (const exception &e)
+        {
+            throw InvalidSlotFormatException();
+        }
     };
     void parseInput(string s, int &row, int &col) const
     {
-        char colTemp = s[0];
-        row = stoi(s.substr(1));
-        col = colTemp - 'A';
+        if (s.length() < 2 || !std::isupper(s[0]))
+        {
+            throw InvalidSlotFormatException();
+        }
+        try
+        {
+            char colTemp = s[0];
+            row = stoi(s.substr(1));
+            col = colTemp - 'A';
+        }
+        catch (const exception &e)
+        {
+            throw InvalidSlotFormatException();
+        }
     };
 
 public:
@@ -126,7 +149,7 @@ public:
 
     //     return (buffer[x - 1][colIdx] == nullptr);
     // }
-    shared_ptr<T>& see(int i, int j)
+    shared_ptr<T> &see(int i, int j)
     {
         return buffer[i][j];
     };
