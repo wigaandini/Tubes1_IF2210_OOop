@@ -104,12 +104,7 @@ public:
         {
             throw IndexOutOfBoundException(slot);
         }
-        if (this->buffer[row - 1][col] == nullptr)
-        {
-            return true;
-        }
-
-        return false;
+        return (this->buffer[rowIdx - 1][colIdx] == nullptr);
     };
     int countEmpty() const
     {
