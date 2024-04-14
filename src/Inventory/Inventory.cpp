@@ -114,14 +114,7 @@ bool Inventory::checkInventoryAnimal()
             if (this->buffer[i][j] != nullptr)
             {
                 if(Game::getAnimalConfig().find(this->buffer[i][j]->getName()) != Game::getAnimalConfig().end()){
-                    // cout << this->buffer[i][j]->getName() << endl;
-                    // if(Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE){
-                    //     cout << "herbivore " << endl;
-                    // }else if(Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE ){
-                    //     cout << "carnivore " << endl;
-                    // }else if(Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE){
-                    //     cout << "Omnivore " << endl;
-                    // }
+            
                     if (Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE)
                     {
                         return true;

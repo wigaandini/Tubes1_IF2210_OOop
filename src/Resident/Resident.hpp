@@ -12,6 +12,11 @@ public:
     virtual int tax() = 0;
     virtual void harvest() = 0;
     virtual int getWealth() = 0;
+
+    template <class T, class U>
+    void harvest(T& source){
+        
+    };
 };
 
 #endif

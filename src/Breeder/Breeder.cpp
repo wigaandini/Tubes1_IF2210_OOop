@@ -303,7 +303,7 @@ void Breeder::harvest()
         cout << endl
              << "Peternakan anda kosong" << endl;
     }
-    else if (!this->ranch.checkAnimalReadyToHarvest())
+    else if (!this->ranch.checkReadyToHarvest())
     {
         cout << endl
              << "Peternakan anda tidak ada yang siap dipanen" << endl;
@@ -313,7 +313,7 @@ void Breeder::harvest()
         this->ranch.displayStorage(true);
         cout << endl
              << "Pilih hewan siap panen yang kamu miliki" << endl;
-        map<string, int> plantReady = this->ranch.countAnimal();
+        map<string, int> plantReady = this->ranch.countItemsReadyToHarvest();
         int number = 1;
         vector<int> total;
         vector<string> kode;
@@ -519,7 +519,7 @@ void Breeder::saveFile(const string &filepath)
     }
 
     Ranch &ranchItems = getRanch();
-    map<string, int> animalCount = ranchItems.countAnimal();
+    map<string, int> animalCount = ranchItems.countItemsReadyToHarvest();
     file << animalCount.size() << endl;
     for (int i = 0; i < ranchItems.getRow(); i++)
     {

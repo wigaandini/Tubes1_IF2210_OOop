@@ -184,7 +184,7 @@ void Farmer::harvest()
         cout << endl
              << "Ladang anda kosong" << endl;
     }
-    else if (!this->farm.checkPlantReadyToHarvest())
+    else if (!this->farm.checkReadyToHarvest())
     {
         cout << endl
              << "Ladang anda tidak ada yang siap dipanen" << endl;
@@ -194,7 +194,7 @@ void Farmer::harvest()
         this->farm.displayStorage(true);
         cout << endl
              << "Pilih tanaman siap panen yang kamu miliki" << endl;
-        map<string, int> plantReady = this->farm.countPlant();
+        map<string, int> plantReady = this->farm.countItemsReadyToHarvest();
         int number = 1;
         vector<int> total;
         vector<string> kode;
@@ -392,7 +392,7 @@ void Farmer::saveFile(const string& filepath){
     }
 
     Farm &farmItems = getFarm();
-    map<string, int> plantCount = farmItems.countPlant();
+    map<string, int> plantCount = farmItems.countItemsReadyToHarvest();
     file << plantCount.size() << endl;
     for (int i = 0; i < farmItems.getRow(); i++) {
         for (int j = 0; j < farmItems.getCol(); j++) {

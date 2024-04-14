@@ -77,6 +77,9 @@ public:
     ~Grid(){
 
     };
+    vector<vector<shared_ptr<T>>>& getBuffer() {
+        return this->buffer;
+    };
     int getRow() const
     {
         return this->row;
