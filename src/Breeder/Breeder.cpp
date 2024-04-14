@@ -522,23 +522,22 @@ void Breeder::saveFile(const string &filepath)
     }
 
     Ranch &ranchItems = getRanch();
-    map<string, int> animalCount = ranchItems.countItemsReadyToHarvest();
-    file << animalCount.size() << endl;
-    for (int i = 0; i < ranchItems.getRow(); i++)
+    file << ranchItems.countOccupied() << endl;
+    for (int j = 0; j < ranchItems.getCol(); j++)
     {
-        for (int j = 0; j < ranchItems.getCol(); j++)
+        for (int i = 0; i < ranchItems.getRow(); i++)
         {
             if (ranchItems.see(i, j) != nullptr)
             {
-                string animalName = ranchItems.see(i, j)->getName();
+                shared_ptr<Animal> animal = ranchItems.see(i, j);
                 file << char('A' + j);
                 if (i + 1 < 10)
                 {
-                    file << '0' << i + 1 << " " << animalName << " " << animalCount[animalName] << endl;
+                    file << '0' << i + 1 << " " << animal->getName() << " " << animal->getWeight() << endl;
                 }
                 else
                 {
-                    file << i + 1 << " " << animalName << " " << animalCount[animalName] << endl;
+                    file << i + 1 << " " << animal->getName() << " " << animal->getWeight() << endl;
                 }
             }
         }

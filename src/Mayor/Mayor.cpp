@@ -233,7 +233,6 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
 
 void Mayor::saveFile(const string& filepath){
     ofstream file(filepath, ios::app);
-    
     file << username << " Walikota " << weight << " " << gulden << endl;
 
     Inventory &inventoryItems = Resident::Player::getInventory();

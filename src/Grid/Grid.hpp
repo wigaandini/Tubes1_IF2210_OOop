@@ -113,7 +113,9 @@ public:
     {
         return emptySlot;
     };
-
+    int countOccupied() const{
+        return row*col - emptySlot;
+    }
     void operator+(const shared_ptr<T>& item)
     {
         if (isFull())
