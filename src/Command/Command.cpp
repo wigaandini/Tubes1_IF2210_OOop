@@ -101,7 +101,6 @@ void Command::handleCommand(const string &command)
             } else if (auto mayor = dynamic_pointer_cast<Mayor>(player)) {
                 mayor->saveFile(filepath);
             }
-            outFile << endl;
         }
 
         Game::getStore().saveFile(filepath);
