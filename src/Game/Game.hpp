@@ -2,7 +2,7 @@
 #define _GAME_HPP_
 
 
-#include "../loadconfig/LoadConfig.hpp"
+#include "../loadhandler/LoadHandler.hpp"
 #include "../Command/Command.hpp"
 #include "../Player/Player.hpp"
 #include <memory>
@@ -19,7 +19,7 @@ private:
     static MainConfig mainConfig;
     static vector<shared_ptr<Player>> players;
     static shared_ptr<Player> currentPlayer;
-    LoadConfig configHandler;
+    LoadHandler loadHandler;
     Command commandHandler;
 
     static Store store;
@@ -42,13 +42,14 @@ public:
     static void setMainConfig(const MainConfig &);
     static void setPlayers(vector<shared_ptr<Player>> &);
     static void setCurrentPlayer(int);
-    LoadConfig &getLoadConfig();
     void start();
-    void handleSave();
+    static void handleSave();
+    void handleLoadState();
+    void initializeGame();
     void handleLoadConfig();
-    void handleNext(int);
+    static void handleNext(int);
     void displayWinner(shared_ptr<Player>&);
-    shared_ptr<Player> checkWinner();
+    static shared_ptr<Player> checkWinner();
 };
 
 #endif

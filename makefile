@@ -24,7 +24,7 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp) \
        $(wildcard $(SRC_DIR)/Grid/*.cpp) \
        $(wildcard $(SRC_DIR)/Inventory/*.cpp) \
        $(wildcard $(SRC_DIR)/Item/*.cpp) \
-       $(wildcard $(SRC_DIR)/loadconfig/*.cpp) \
+       $(wildcard $(SRC_DIR)/loadhandler/*.cpp) \
        $(wildcard $(SRC_DIR)/Mayor/*.cpp) \
        $(wildcard $(SRC_DIR)/PColor/*.c) \
        $(wildcard $(SRC_DIR)/Player/*.cpp) \

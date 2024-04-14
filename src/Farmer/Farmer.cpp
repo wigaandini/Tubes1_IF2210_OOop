@@ -215,7 +215,15 @@ void Farmer::harvest()
         {
             cout << endl
                  << "Nomor tanaman yang ingin dipanen (ketik -1 untuk keluar) : ";
-            cin >> answer1;
+            try
+            {
+                cin >> answer1;
+            }
+            catch (const exception &e)
+            {
+                cout << "Masukan harus angka!!" << endl;
+                continue;
+            }
 
             if (answer1 == -1)
             {
@@ -240,7 +248,7 @@ void Farmer::harvest()
                  << "Berapa petak yang ingin dipanen : ";
             cin >> answer2;
 
-            if (answer2  <= total[answer1 - 1])
+            if (answer2 <= total[answer1 - 1])
             {
                 if (answer2 * sizeResult[answer1 - 1] > this->inventory.countEmpty())
                 {
@@ -376,23 +384,27 @@ Farm &Farmer::getFarm()
     return this->farm;
 }
 
-void Farmer::saveFile(const string& filepath){
+void Farmer::saveFile(const string &filepath)
+{
     ofstream file(filepath, ios::app);
-    
+
     file << username << " Petani " << weight << " " << gulden << endl;
 
     Inventory &inventoryItems = Resident::Player::getInventory();
     file << inventoryItems.countInventoryItem() << endl;
-    for (int i = 0; i < inventoryItems.getRow(); i++) {
-        for (int j = 0; j < inventoryItems.getCol(); j++) {
-            if (inventoryItems.see(i, j) != nullptr) {
+    for (int i = 0; i < inventoryItems.getRow(); i++)
+    {
+        for (int j = 0; j < inventoryItems.getCol(); j++)
+        {
+            if (inventoryItems.see(i, j) != nullptr)
+            {
                 file << inventoryItems.see(i, j)->getName() << endl;
             }
         }
     }
 
     Farm &farmItems = getFarm();
-    file <<farmItems.countOccupied() << endl;
+    file << farmItems.countOccupied() << endl;
     for (int j = 0; j < farmItems.getCol(); j++)
     {
         for (int i = 0; i < farmItems.getRow(); i++)

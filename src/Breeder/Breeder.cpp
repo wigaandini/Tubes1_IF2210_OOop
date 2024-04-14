@@ -334,7 +334,13 @@ void Breeder::harvest()
         {
             cout << endl
                  << "Nomor hewan yang ingin dipanen (ketik -1 untuk keluar) : ";
-            cin >> answer1;
+            try
+            {
+                cin >> answer1;
+            } catch (const exception& e) {
+                cout << "Masukan harus angka!!" << endl;
+                continue; 
+            }
 
             if (answer1 == -1)
             {

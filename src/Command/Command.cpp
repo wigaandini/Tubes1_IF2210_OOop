@@ -46,19 +46,19 @@ pair<vector<string>, string> Command::allCommandFor(shared_ptr<Player> &player)
     return data;
 }
 
-bool Command::checkCommand(const string &command)
-{
-    vector<string> commands(allCommandFor(Game::getCurrentPlayer()).first);
+// bool Command::checkCommand(const string &command)
+// {
+//     vector<string> commands(allCommandFor(Game::getCurrentPlayer()).first);
 
-    auto it = find(commands.begin(), commands.end(), command);
+//     auto it = find(commands.begin(), commands.end(), command);
 
-    if (it == commands.end())
-    {
-        return false;
-    }
+//     if (it == commands.end())
+//     {
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 void Command::handleCommand(const string &command)
 {
@@ -80,33 +80,7 @@ void Command::handleCommand(const string &command)
     }
     else if (command == "SIMPAN")
     {
-        string filepath = "";
-        cout << "Masukkan lokasi berkas state: ";
-        cin >> filepath;
-
-        ofstream outFile(filepath);
-        if (!outFile.is_open()) {
-            cerr << "Error: Gagal membuka file untuk menambahkan data." << endl;
-            return;
-        }
-
-        auto players = Game::getPlayers();
-        outFile << players.size() << endl;
-
-        for (const auto& player : players) {
-            if (auto breeder = dynamic_pointer_cast<Breeder>(player)) {
-                breeder->saveFile(filepath);
-            } else if (auto farmer = dynamic_pointer_cast<Farmer>(player)) {
-                farmer->saveFile(filepath);
-            } else if (auto mayor = dynamic_pointer_cast<Mayor>(player)) {
-                mayor->saveFile(filepath);
-            }
-        }
-
-        Game::getStore().saveFile(filepath);
-
-        cout << "Data berhasil disimpan ke " << filepath << endl;
-        outFile.close();
+        Game::handleSave();
     }
     else if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer()))
     {

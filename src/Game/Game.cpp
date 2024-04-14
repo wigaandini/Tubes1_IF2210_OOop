@@ -100,109 +100,17 @@ void Game::start()
 
     try
     {
-        handleLoadConfig();
+        this->handleLoadConfig();
     }
     catch (const exception &e)
     {
         cout << e.what() << endl;
+        cout << "Terdapat masalah dalam load config!!" << endl;
         cout << "Silahhkan periksa kembali file config Anda dan silahkan untuk memulai Game kembali dari awal" << endl;
         return;
     }
 
-    cout << "LOAD CONFIG..." << endl;
-    cout << "LOAD CONFIG..." << endl;
-    cout << "LOAD CONFIG..." << endl
-         << endl;
-
-    cout << "Finish Load Config" << endl;
-
-    bool isAnswerValid = false;
-    while (!isAnswerValid)
-    {
-
-        string answerState = "";
-        string filename = "";
-        cout << "Apakah Anda ingin memulai dengan membaca state? (Y/N) ";
-        cin >> answerState;
-
-        if (answerState == "Y")
-        {
-            bool filenameValid = false;
-            while (!filenameValid)
-            {
-                try
-                {
-                    cout << "Masukan nama file (ketik q untuk keluar): ";
-                    cin >> filename;
-                    string fileAddr = "./config/" + filename;
-                    this->configHandler.loadStateConfig(fileAddr);
-
-                    if (filename == "q")
-                    {
-                        cout << "Keluar dari permainan!!" << endl;
-                        return;
-                    }
-
-                    filenameValid = true;
-                }
-                catch (const exception &e)
-                {
-                    cout << "Terdapat masalah saat pembacaan file state!!" << endl;
-                    cout << e.what() << endl;
-                }
-            }
-            isAnswerValid = true;
-            cout << endl
-                 << "LOAD STATE..." << endl;
-            cout << "LOAD STATE..." << endl;
-            cout << "LOAD STATE..." << endl
-                 << endl;
-
-            cout << "Finish Load State!!" << endl
-                 << endl;
-        }
-        else if (answerState == "N")
-        {
-            auto petani1 = make_shared<Farmer>("Petani1", 40, 50);
-            auto peternak1 = make_shared<Breeder>("Peternak1", 40, 50);
-            auto walikota = make_shared<Mayor>("Walikota", 40, 50);
-
-            players.push_back(petani1);
-            players.push_back(peternak1);
-            players.push_back(walikota);
-
-            isAnswerValid = true;
-            cout << "Finish Preparing The Game!!" << endl;
-        }
-        else
-        {
-            cout << "Masukan salah silahkan ulangi kembali!!" << endl;
-        }
-    }
-
-    // cout << "Players in the game:" << endl;
-    // for (auto player : players)
-    // {
-    //     cout << player->getName() << endl;
-
-    //     cout << player->getInventory() << endl;
-
-    //     shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
-    //     if (breeder != nullptr)
-    //     {
-    //         cout << breeder->getRanch() << endl;
-    //         continue;
-    //     }
-
-    //     shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
-    //     if (farmer != nullptr)
-    //     {
-    //         cout << farmer->getFarm() << endl;
-    //     }
-    // }
-
-    // cout << "Items in the store:" << endl;
-    // cout << store << endl;
+    this->initializeGame();
 
     bool isGameOver = false;
 
@@ -288,27 +196,24 @@ void Game::setPlayers(vector<shared_ptr<Player>> &tempplayers)
 
 void Game::handleLoadConfig()
 {
-    try
-    {
+    cout << "LOAD CONFIG..." << endl;
+    cout << "LOAD CONFIG..." << endl;
+    cout << "LOAD CONFIG..." << endl
+         << endl;
 
-        this->configHandler.loadAnimalConfig("./config/animal.txt");
-        this->configHandler.loadPlantConfig("./config/plant.txt");
-        this->configHandler.loadMainConfig("./config/misc.txt");
-        this->configHandler.loadProductConfig("./config/product.txt");
-        this->configHandler.loadRecipeConfig("./config/recipe.txt");
-        store.setUnlimitedAnimalSell();
-        store.setUnlimitedPlantSell();
-    }
-    catch (exception &e)
-    {
-        cout << "Terdapat masalah dalam load config!!" << endl;
-        throw;
-    }
+    this->loadHandler.loadAnimalConfig("./config/animal.txt");
+    this->loadHandler.loadPlantConfig("./config/plant.txt");
+    this->loadHandler.loadMainConfig("./config/misc.txt");
+    this->loadHandler.loadProductConfig("./config/product.txt");
+    this->loadHandler.loadRecipeConfig("./config/recipe.txt");
+    store.setUnlimitedAnimalSell();
+    store.setUnlimitedPlantSell();
+
+    cout << "Finish Load Config" << endl;
 }
 
 void Game::handleNext(int index)
 {
-    // cout << index << endl;
     setCurrentPlayer(index);
     for (auto &player : players)
     {
@@ -333,3 +238,138 @@ shared_ptr<Player> Game::checkWinner()
 
     return nullptr;
 }
+
+void Game::handleSave()
+{
+    string filepath = "";
+    cout << "Masukkan lokasi berkas state: ";
+    cin >> filepath;
+
+    ofstream outFile(filepath);
+    if (!outFile.is_open())
+    {
+        cerr << "Error: Gagal membuka file untuk menambahkan data." << endl;
+        return;
+    }
+
+    auto players = Game::getPlayers();
+    outFile << players.size() << endl;
+
+    for (const auto &player : players)
+    {
+        if (auto breeder = dynamic_pointer_cast<Breeder>(player))
+        {
+            breeder->saveFile(filepath);
+        }
+        else if (auto farmer = dynamic_pointer_cast<Farmer>(player))
+        {
+            farmer->saveFile(filepath);
+        }
+        else if (auto mayor = dynamic_pointer_cast<Mayor>(player))
+        {
+            mayor->saveFile(filepath);
+        }
+    }
+
+    Game::getStore().saveFile(filepath);
+
+    cout << "Data berhasil disimpan ke " << filepath << endl;
+    outFile.close();
+}
+
+void Game::initializeGame()
+{
+    bool isAnswerValid = false;
+    while (!isAnswerValid)
+    {
+
+        string answerState = "";
+        cout << "Apakah Anda ingin memulai dengan membaca state? (Y/N) ";
+        cin >> answerState;
+
+        if (answerState == "Y")
+        {
+            this->handleLoadState();
+            isAnswerValid = true;
+        }
+        else if (answerState == "N")
+        {
+            auto petani1 = make_shared<Farmer>("Petani1", 40, 50);
+            auto peternak1 = make_shared<Breeder>("Peternak1", 40, 50);
+            auto walikota = make_shared<Mayor>("Walikota", 40, 50);
+
+            players.push_back(petani1);
+            players.push_back(peternak1);
+            players.push_back(walikota);
+
+            cout << "Finish Preparing The Game!!" << endl;
+            isAnswerValid = true;
+        }
+        else
+        {
+            cout << "Masukan salah silahkan ulangi kembali!!" << endl;
+        }
+    }
+}
+
+void Game::handleLoadState()
+{
+    string filename = "";
+
+    bool filenameValid = false;
+    while (!filenameValid)
+    {
+        try
+        {
+            cout << "Masukan nama file (ketik q untuk keluar): ";
+            cin >> filename;
+            string fileAddr = "./config/" + filename;
+            this->loadHandler.loadStateConfig(fileAddr);
+
+            if (filename == "q")
+            {
+                cout << "Keluar dari permainan!!" << endl;
+                return;
+            }
+
+            filenameValid = true;
+        }
+        catch (const exception &e)
+        {
+            cout << "Terdapat masalah saat pembacaan file state!!" << endl;
+            cout << e.what() << endl;
+        }
+    }
+    cout << endl
+         << "LOAD STATE..." << endl;
+    cout << "LOAD STATE..." << endl;
+    cout << "LOAD STATE..." << endl
+         << endl;
+
+    cout << "Finish Load State!!" << endl
+         << endl;
+}
+
+// cout << "Players in the game:" << endl;
+    // for (auto player : players)
+    // {
+    //     cout << player->getName() << endl;
+
+    //     cout << player->getInventory() << endl;
+
+    //     shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
+    //     if (breeder != nullptr)
+    //     {
+    //         cout << breeder->getRanch() << endl;
+    //         continue;
+    //     }
+
+    //     shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
+    //     if (farmer != nullptr)
+    //     {
+    //         cout << farmer->getFarm() << endl;
+    //     }
+    // }
+
+    // cout << "Items in the store:" << endl;
+    // cout << store << endl;
