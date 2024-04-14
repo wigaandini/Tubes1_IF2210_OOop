@@ -91,7 +91,7 @@ void Mayor::buildBuilding()
                 }
                 for (auto material : itr->second.materials)
                 {
-                    int count = this->inventory.countItemStock(material.first);
+                    int count = this->inventory.countItemStock(Item(material.first, Game::getProductConfig()[material.first].code, Game::getProductConfig()[material.first].price));
                     if (count < material.second)
                     {
                         notEnoughMaterials[material.first] = material.second - count;
@@ -108,7 +108,7 @@ void Mayor::buildBuilding()
                 for (auto material : itr->second.materials)
                 {
 
-                    this->inventory.useItem(material.first, material.second);
+                    this->inventory.useItem(Item(material.first, Game::getProductConfig()[material.first].code, Game::getProductConfig()[material.first].price), material.second);
                 }
             }
             else

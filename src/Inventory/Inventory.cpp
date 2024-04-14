@@ -13,7 +13,7 @@ Inventory::~Inventory()
 {
 }
 
-int Inventory::countItemStock(const string &name)
+int Inventory::countItemStock(const Item &item)
 {
     int count = 0;
     for (int i = 0; i < this->row; i++)
@@ -22,7 +22,7 @@ int Inventory::countItemStock(const string &name)
         {
             if (this->buffer[i][j] != nullptr)
             {
-                if (this->buffer[i][j]->getName() == name)
+                if (*(this->buffer[i][j]) == item)
                 {
                     count++;
                 }
@@ -33,7 +33,7 @@ int Inventory::countItemStock(const string &name)
     return count;
 }
 
-void Inventory::useItem(const string &name, int quantity)
+void Inventory::useItem(const Item &item, int quantity)
 {
     for (int k = 0; k < quantity; k++)
     {
@@ -44,7 +44,7 @@ void Inventory::useItem(const string &name, int quantity)
             {
                 if (this->buffer[i][j] != nullptr)
                 {
-                    if (this->buffer[i][j]->getName() == name)
+                    if (*(this->buffer[i][j]) == item)
                     {
                         this->remove(i, j);
                         itemRemoved = true;

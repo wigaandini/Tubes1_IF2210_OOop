@@ -14,8 +14,8 @@ public:
     bool checkInventoryEdible();
     bool checkInventoryAnimal();
     bool checkInventoryPlant();
-    int countItemStock(const string& name);
-    void useItem(const string&, int);
+    int countItemStock(const Item&);
+    void useItem(const Item&, int);
     bool isInventoryEnough(const int&);
     void putRandom(const shared_ptr<Item> );
 
