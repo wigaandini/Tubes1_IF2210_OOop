@@ -288,11 +288,11 @@ void Farmer::harvest()
                 }
             }
 
-            vector<Product> tempP = this->farm.take(slot)->collect();
+            vector<shared_ptr<Product>> tempP = this->farm.take(slot)->collect();
             unsigned int k = 0;
             while (k < tempP.size())
             {
-                this->inventory + make_shared<Product>(tempP[k]);
+                this->inventory + tempP[k];
                 k++;
             }
         }
