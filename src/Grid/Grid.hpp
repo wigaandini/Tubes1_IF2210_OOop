@@ -133,19 +133,7 @@ public:
         }
     };
 
-    // bool isSlotEmpty(string slot)
-    // {
-    //     int x;
-    //     char y;
-    //     parseInput(slot, x, y);
-    //     int colIdx = y - 'A';
-    //     if (x <= 0 || x >= row || colIdx < 0 || colIdx >= col)
-    //     {
-    //         throw IndexOutOfBoundException();
-    //     }
 
-    //     return (buffer[x - 1][colIdx] == nullptr);
-    // }
     shared_ptr<T> &see(int i, int j)
     {
         return buffer[i][j];

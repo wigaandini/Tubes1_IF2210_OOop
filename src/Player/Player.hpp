@@ -29,6 +29,7 @@ public:
     virtual pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
     int &getGulden();
     void setGulden(int);
+    bool operator==(const Player&);
     void eat();
 };
 #endif

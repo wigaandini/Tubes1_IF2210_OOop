@@ -53,7 +53,8 @@ void Player::eat()
                 string slot;
                 cin >> slot;
 
-                if (slot == "q"){
+                if (slot == "q")
+                {
                     cout << "Tidak jadi makan!!!" << endl;
                     return;
                 }
@@ -88,6 +89,11 @@ void Player::eat()
             }
         }
     }
+}
+
+bool Player::operator==(const Player &other)
+{
+    return this->username == other.username && this->playerId == other.playerId;
 }
 
 void Player::buy(shared_ptr<Item> &item, int quantity)

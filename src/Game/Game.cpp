@@ -146,7 +146,7 @@ void Game::start()
                     }
                     if (input == "NEXT")
                     {
-                        if (Game::getCurrentPlayer()->getName() == players[i]->getName())
+                        if (*(Game::getCurrentPlayer()) == *(players[i]))
                         {
                             i++;
                         }
