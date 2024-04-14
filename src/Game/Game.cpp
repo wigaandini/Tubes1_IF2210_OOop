@@ -245,6 +245,16 @@ void Game::handleSave()
     cout << "Masukkan lokasi berkas state: ";
     cin >> filepath;
 
+    const char* folderpath = filepath.substr(0, filepath.find_last_of("/\\")).c_str();
+    DIR* dir = opendir(folderpath);
+    if (dir) {
+        closedir(dir);
+    } 
+    else {
+        cerr << "Error: Lokasi berkas tidak valid." << endl;
+        return;
+    }
+
     ofstream outFile(filepath);
     if (!outFile.is_open())
     {
@@ -273,7 +283,7 @@ void Game::handleSave()
 
     Game::getStore().saveFile(filepath);
 
-    cout << "Data berhasil disimpan ke " << filepath << endl;
+    cout << "State berhasil disimpan ke " << filepath << endl;
     outFile.close();
 }
 

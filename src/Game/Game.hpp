@@ -6,6 +6,9 @@
 #include "../Command/Command.hpp"
 #include "../Player/Player.hpp"
 #include <memory>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 using namespace std;
 
