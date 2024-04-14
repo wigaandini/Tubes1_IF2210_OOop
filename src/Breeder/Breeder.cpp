@@ -326,7 +326,6 @@ void Breeder::harvest()
             kode.push_back(Game::getAnimalConfig()[entry.first].code);
             total.push_back(entry.second);
             sizeResult.push_back(int(Animal::getHarvestResult()[entry.first].size()));
-
         }
 
         int answer1, answer2;
@@ -494,39 +493,49 @@ Ranch &Breeder::getRanch()
     return this->ranch;
 }
 
-void Breeder::saveFile(const string& filepath) {
+void Breeder::saveFile(const string &filepath)
+{
     ofstream file(filepath, ios::app);
 
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cerr << "Error: Unable to open file." << endl;
         return;
     }
-    
+
     file << username << " Peternak " << weight << " " << gulden << endl;
 
-    Inventory& inventoryItems = Resident::Player::getInventory();
+    Inventory &inventoryItems = Resident::Player::getInventory();
     file << inventoryItems.countInventoryItem() << endl;
-    for (int i = 0; i < inventoryItems.getRow(); i++) {
-        for (int j = 0; j < inventoryItems.getCol(); j++) {
-            if (inventoryItems.see(i, j) != nullptr) {
+    for (int i = 0; i < inventoryItems.getRow(); i++)
+    {
+        for (int j = 0; j < inventoryItems.getCol(); j++)
+        {
+            if (inventoryItems.see(i, j) != nullptr)
+            {
                 file << inventoryItems.see(i, j)->getName() << endl;
             }
         }
     }
 
-    Ranch& ranchItems = getRanch();
+    Ranch &ranchItems = getRanch();
     map<string, int> animalCount = ranchItems.countAnimal();
     file << animalCount.size() << endl;
-    for (int i = 0; i < ranchItems.getRow(); i++) {
-        for (int j = 0; j < ranchItems.getCol(); j++) {
-            if (ranchItems.see(i, j) != nullptr) {
+    for (int i = 0; i < ranchItems.getRow(); i++)
+    {
+        for (int j = 0; j < ranchItems.getCol(); j++)
+        {
+            if (ranchItems.see(i, j) != nullptr)
+            {
                 string animalName = ranchItems.see(i, j)->getName();
                 file << char('A' + j);
-                if (i+1 < 10) {
-                    file << '0' << i+1 << " " << animalName << " " << animalCount[animalName] << endl;
-                } 
-                else {
-                    file << i+1 << " " << animalName << " " << animalCount[animalName] << endl;
+                if (i + 1 < 10)
+                {
+                    file << '0' << i + 1 << " " << animalName << " " << animalCount[animalName] << endl;
+                }
+                else
+                {
+                    file << i + 1 << " " << animalName << " " << animalCount[animalName] << endl;
                 }
             }
         }

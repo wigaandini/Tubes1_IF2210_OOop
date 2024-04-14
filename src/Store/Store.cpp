@@ -5,6 +5,7 @@
 #include "../Item/Herbivore.hpp"
 #include "../Item/Carnivore.hpp"
 #include "../Item/Omnivore.hpp"
+#include "../Item/Plant.hpp"
 #include "../Game/Game.hpp"
 #include "../Utils/Utils.hpp"
 #include "StoreException.hpp"
@@ -97,11 +98,15 @@ vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
 
                 items.push_back(animal);
             }
-            else
+            else if (name == "DUCK" || name == "CHICKEN")
             {
                 auto animal = make_shared<Omnivore>(name);
 
                 items.push_back(animal);
+            } else {
+                auto plant = make_shared<Plant>(name);
+
+                items.push_back(plant);
             }
         }
     }
