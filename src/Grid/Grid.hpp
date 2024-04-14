@@ -114,7 +114,7 @@ public:
         return emptySlot;
     };
 
-    void operator+(const shared_ptr<T> item)
+    void operator+(const shared_ptr<T>& item)
     {
         if (isFull())
         {

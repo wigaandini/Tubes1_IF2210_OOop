@@ -22,6 +22,7 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp) \
        $(wildcard $(SRC_DIR)/Farmer/*.cpp) \
        $(wildcard $(SRC_DIR)/Game/*.cpp) \
        $(wildcard $(SRC_DIR)/Grid/*.cpp) \
+       $(wildcard $(SRC_DIR)/SpecializedGrid/*.cpp) \
        $(wildcard $(SRC_DIR)/Inventory/*.cpp) \
        $(wildcard $(SRC_DIR)/Item/*.cpp) \
        $(wildcard $(SRC_DIR)/loadconfig/*.cpp) \

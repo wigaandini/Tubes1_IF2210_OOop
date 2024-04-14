@@ -78,7 +78,8 @@ void Inventory::displayStorage(bool printInfo)
 
 bool Inventory::isInventoryEnough(const int &quantity)
 {
-    if (quantity > this->emptySlot){
+    if (quantity > this->emptySlot)
+    {
         return false;
     }
 
@@ -87,64 +88,73 @@ bool Inventory::isInventoryEnough(const int &quantity)
 
 bool Inventory::checkInventoryEdible()
 {
-    for (int i = 0; i < this->row; i++)
-    {
-        for (int j = 0; j < this->col; j++)
-        {
-            if (this->buffer[i][j] != nullptr)
-            {
-                if(Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end()){
-                    if (dynamic_pointer_cast<Product>(buffer[i][j]) && (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT || Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)){
-                        // cout << buffer[i][j]->getName() << endl;
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-    return false;
+    // for (int i = 0; i < this->row; i++)
+    // {
+    //     for (int j = 0; j < this->col; j++)
+    //     {
+    //         if (this->buffer[i][j] != nullptr)
+    //         {
+    //             if(Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end()){
+    //                 if (dynamic_pointer_cast<Product>(buffer[i][j]) && (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT || Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)){
+    //                     // cout << buffer[i][j]->getName() << endl;
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    return checkInventoryItemType<ProductConfig>(
+        [](const ProductConfig &config)
+        { return config.type == ProductType::PRODUCT_FRUIT_PLANT || config.type == ProductType::PRODUCT_ANIMAL; },
+        Game::getProductConfig());
 }
 
 bool Inventory::checkInventoryAnimal()
 {
-    for (int i = 0; i < this->row; i++)
-    {
-        for (int j = 0; j < this->col; j++)
-        {
-            if (this->buffer[i][j] != nullptr)
-            {
-                if(Game::getAnimalConfig().find(this->buffer[i][j]->getName()) != Game::getAnimalConfig().end()){
-            
-                    if (Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE)
-                    {
-                        return true;
-                    }
-                }
-                
-            }
-        }
-    }
-    return false;
+    // for (int i = 0; i < this->row; i++)
+    // {
+    //     for (int j = 0; j < this->col; j++)
+    //     {
+    //         if (this->buffer[i][j] != nullptr)
+    //         {
+    //             if(Game::getAnimalConfig().find(this->buffer[i][j]->getName()) != Game::getAnimalConfig().end()){
+
+    //                 if (Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::HERBIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::CARNIVORE || Game::getAnimalConfig()[this->buffer[i][j]->getName()].type == AnimalType::OMNIVORE)
+    //                 {
+    //                     return true;
+    //                 }
+    //             }
+
+    //         }
+    //     }
+    // }
+    return checkInventoryItemType<AnimalConfig>(
+        [](const AnimalConfig &config)
+        { return config.type == AnimalType::HERBIVORE || config.type == AnimalType::CARNIVORE || config.type == AnimalType::OMNIVORE; },
+        Game::getAnimalConfig());
 }
 
 bool Inventory::checkInventoryPlant()
 {
-    for (int i = 0; i < this->row; i++)
-    {
-        for (int j = 0; j < this->col; j++)
-        {
-            if (this->buffer[i][j] != nullptr)
-            {
-                if(Game::getPlantConfig().find(this->buffer[i][j]->getName()) != Game::getPlantConfig().end()){
-                    if (Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::FRUIT_PLANT)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-    return false;
+    // for (int i = 0; i < this->row; i++)
+    // {
+    //     for (int j = 0; j < this->col; j++)
+    //     {
+    //         if (this->buffer[i][j] != nullptr)
+    //         {
+    //             if(Game::getPlantConfig().find(this->buffer[i][j]->getName()) != Game::getPlantConfig().end()){
+    //                 if (Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::MATERIAL_PLANT || Game::getPlantConfig()[this->buffer[i][j]->getName()].type == PlantType::FRUIT_PLANT)
+    //                 {
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    return checkInventoryItemType<PlantConfig>(
+        [](const PlantConfig &config)
+        { return config.type == PlantType::MATERIAL_PLANT || config.type == PlantType::FRUIT_PLANT; },
+        Game::getPlantConfig());
 }
 
 void Inventory::putRandom(const shared_ptr<Item> item)
@@ -169,41 +179,50 @@ void Inventory::putRandom(const shared_ptr<Item> item)
 
 bool Inventory::checkInventoryFruit()
 {
-    for (int i = 0; i < this->row; i++)
-    {
-        for (int j = 0; j < this->col; j++)
-        {
-            if(this->buffer[i][j]!= nullptr){
-                if(Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end()){
-                    if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT)
-                    {
-                        return true;
-                    }
-                }
-            }
-            
-        }
-    }
-    return false;
+    // for (int i = 0; i < this->row; i++)
+    // {
+    //     for (int j = 0; j < this->col; j++)
+    //     {
+    //         if (this->buffer[i][j] != nullptr)
+    //         {
+    //             if (Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end())
+    //             {
+    //                 if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_FRUIT_PLANT)
+    //                 {
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    return checkInventoryItemType<ProductConfig>(
+        [](const ProductConfig &config)
+        { return config.type == ProductType::PRODUCT_FRUIT_PLANT; },
+        Game::getProductConfig());
 }
 
 bool Inventory::checkInventoryMeat()
 {
-    for (int i = 0; i < this->row; i++)
-    {
-        for (int j = 0; j < this->col; j++)
-        {
-            if(this->buffer[i][j]!= nullptr){
-                if(Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end()){
-                    if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-    return false;
+    // for (int i = 0; i < this->row; i++)
+    // {
+    //     for (int j = 0; j < this->col; j++)
+    //     {
+    //         if (this->buffer[i][j] != nullptr)
+    //         {
+    //             if (Game::getProductConfig().find(this->buffer[i][j]->getName()) != Game::getProductConfig().end())
+    //             {
+    //                 if (Game::getProductConfig()[this->buffer[i][j]->getName()].type == ProductType::PRODUCT_ANIMAL)
+    //                 {
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    return checkInventoryItemType<ProductConfig>(
+        [](const ProductConfig &config)
+        { return config.type == ProductType::PRODUCT_ANIMAL; },
+        Game::getProductConfig());
 }
 
 int Inventory::countInventoryItem()

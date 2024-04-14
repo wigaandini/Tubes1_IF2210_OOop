@@ -13,16 +13,16 @@ class SpecializedGrid : public Grid<T>
 {
 
 public:
-    SpecializedGrid(int r, int c) : Grid(r, c){};
+    SpecializedGrid(int r, int c) : Grid<T>(r, c){};
     void displayStorage(const string &title)
     {
-        string title = "[ " + title + " ]";
+        string printTitle = "[ " + title + " ]";
         int columnWidthWithBorders = 6;
         int totalGridWidth = this->col * columnWidthWithBorders;
-        int equalsLength = (totalGridWidth - title.length()) / 2;
+        int equalsLength = (totalGridWidth - printTitle.length()) / 2;
         string equalsSide(equalsLength, '=');
-        cout << "     " << equalsSide << title << equalsSide;
-        if ((totalGridWidth - title.length()) % 2 != 0)
+        cout << "     " << equalsSide << printTitle << equalsSide;
+        if ((totalGridWidth - printTitle.length()) % 2 != 0)
         {
             cout << "=";
         }
@@ -106,9 +106,9 @@ public:
         {
             for (int j = 0; j < this->col; j++)
             {
-                if (buffer[i][j] != nullptr && buffer[i][j]->checkReadyToHarvest())
+                if (this->buffer[i][j] != nullptr && this->buffer[i][j]->checkReadyToHarvest())
                 {
-                    string itemName = buffer[i][j]->getName();
+                    string itemName = this->buffer[i][j]->getName();
                     itemCount[itemName]++;
                 }
             }

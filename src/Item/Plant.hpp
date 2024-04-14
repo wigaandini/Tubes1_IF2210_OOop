@@ -5,8 +5,10 @@
 #include "Product.hpp"
 #include <string>
 #include <vector>
+#include <memory>
 
-class Plant : public Item{
+class Plant : public Item
+{
 private:
     PlantType type;
     int plantId;
@@ -14,7 +16,6 @@ private:
     int age;
     // vector<Product> result;
     static map<string, vector<string>> harvestResult;
-
 
 public:
     Plant();
@@ -31,10 +32,9 @@ public:
     int getAge() const;
     Plant &operator++();
     Plant operator++(int);
-    vector<Product> collect();
+    vector<shared_ptr<Product>> collect();
     bool checkReadyToHarvest();
-    static map<string, vector<string>>& getHarvestResult();
-
+    static map<string, vector<string>> &getHarvestResult();
 };
 
 #endif

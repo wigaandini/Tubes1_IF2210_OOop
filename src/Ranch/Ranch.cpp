@@ -87,6 +87,6 @@ void Ranch::displayStorage(bool printInfo)
 
 int Ranch::countAnimalType()
 {
-    map<string, int> animalCount = countAnimal();
+    map<string, int> animalCount = countItemsReadyToHarvest();
     return animalCount.size();
 }
