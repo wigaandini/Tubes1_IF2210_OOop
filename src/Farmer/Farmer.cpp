@@ -347,7 +347,7 @@ int Farmer::getWealth()
     return wealth;
 }
 
-int Farmer::tax()
+int Farmer::calculateTax()
 {
     int kkp = getWealth() - KTKP_PETANI;
     if (kkp <= 0)

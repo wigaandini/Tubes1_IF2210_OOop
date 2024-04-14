@@ -9,7 +9,7 @@ public:
     Resident();
     Resident(string, int, int);
     ~Resident();
-    virtual int tax() = 0;
+    virtual int calculateTax() = 0;
     virtual void harvest() = 0;
     virtual int getWealth() = 0;
 };

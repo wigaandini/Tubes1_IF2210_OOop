@@ -55,7 +55,7 @@ void Mayor::taxCollection()
     {
         shared_ptr<Resident> &resident = residents[i];
         cout << "    " << i + 1 << ". " << residents[i]->getName() << " - " << residents[i]->getType() << ": ";
-        tax = (resident->getGulden() >= resident->tax()) ? resident->tax() : resident->getGulden(); // Bayar pajak semampunya
+        tax = (resident->getGulden() >= resident->calculateTax()) ? resident->calculateTax() : resident->getGulden(); // Bayar pajak semampunya
         cout << tax << " gulden" << endl;
         resident->setGulden(resident->getGulden() - tax);
         sumTax += tax;

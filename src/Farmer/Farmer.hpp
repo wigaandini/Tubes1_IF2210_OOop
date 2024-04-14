@@ -22,7 +22,7 @@ class Farmer: public Resident{
         // vector<shared_ptr<Item>> sell(vector<string>&);
         // void buy(shared_ptr<Item>&, int);
         void harvest();
-        int tax();
+        int calculateTax();
         void saveFile(const string& filename); 
 };
 

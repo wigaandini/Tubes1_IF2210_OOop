@@ -462,7 +462,7 @@ int Breeder::getWealth()
     return wealth;
 }
 
-int Breeder::tax()
+int Breeder::calculateTax()
 {
     int kkp = getWealth() - KTKP_PETERNAK;
     if (kkp <= 0)

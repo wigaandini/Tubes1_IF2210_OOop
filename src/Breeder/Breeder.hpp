@@ -23,7 +23,7 @@ class Breeder: public Resident{
         // vector<shared_ptr<Item>> sell(vector<string>&);
         // void buy(shared_ptr<Item>&, int);
         void harvest();
-        int tax();
+        int calculateTax();
         Ranch& getRanch();
         void saveFile(const string& filename);
 };
