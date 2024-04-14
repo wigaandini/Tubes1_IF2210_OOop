@@ -392,18 +392,22 @@ void Farmer::saveFile(const string& filepath){
     }
 
     Farm &farmItems = getFarm();
-    map<string, int> plantCount = farmItems.countPlant();
-    file << plantCount.size() << endl;
-    for (int i = 0; i < farmItems.getRow(); i++) {
-        for (int j = 0; j < farmItems.getCol(); j++) {
-            if (farmItems.see(i, j) != nullptr) {
-                string plantName = farmItems.see(i, j)->getName();
+    file <<farmItems.countOccupied() << endl;
+    for (int j = 0; j < farmItems.getCol(); j++)
+    {
+        for (int i = 0; i < farmItems.getRow(); i++)
+        {
+            if (farmItems.see(i, j) != nullptr)
+            {
+                shared_ptr<Plant> plant = farmItems.see(i, j);
                 file << char('A' + j);
-                if (i+1 < 10) {
-                    file << '0' << i+1 << " " << plantName << " " << plantCount[plantName] << endl;
-                } 
-                else {
-                    file << i+1 << " " << plantName << " " << plantCount[plantName] << endl;
+                if (i + 1 < 10)
+                {
+                    file << '0' << i + 1 << " " << plant->getName() << " " << plant->getAge() << endl;
+                }
+                else
+                {
+                    file << i + 1 << " " << plant->getName() << " " << plant->getAge() << endl;
                 }
             }
         }
