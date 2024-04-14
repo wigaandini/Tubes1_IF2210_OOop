@@ -2,10 +2,7 @@
 #define __PLANT_HPP_
 
 #include "Item.hpp"
-#include "Product.hpp"
-#include <string>
-#include <vector>
-#include <memory>
+#include "../Harvester/Harvester.hpp"
 
 class Plant : public Item
 {
@@ -15,6 +12,8 @@ private:
     int durationToHarvest;
     int age;
     // vector<Product> result;
+    Harvester harvester;
+
     static map<string, vector<string>> harvestResult;
 
 public:

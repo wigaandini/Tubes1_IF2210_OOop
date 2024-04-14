@@ -1,11 +1,8 @@
 #ifndef __ANIMAL_HPP_
 #define __ANIMAL_HPP_
 
-#include "Product.hpp"
-#include <string>
-#include <vector>
-#include <memory>
 #include "AnimalException.hpp"
+#include "../Harvester/Harvester.hpp"
 using namespace std;
 
 class Animal : public Item{
@@ -14,6 +11,7 @@ private:
     int weight;
     int weighToHarvest;
     // vector<Product> result;
+    Harvester harvester;
     static map<string, vector<string>> harvestResult;
 
 public:

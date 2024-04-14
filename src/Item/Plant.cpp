@@ -2,103 +2,118 @@
 #include "../Game/Game.hpp"
 
 map<string, vector<string>> Plant::harvestResult = {
-    {"TEAK_TREE",{"TEAK_WOOD"}},
-    {"SANDALWOOD_TREE",{"SANDALWOOD_WOOD"}},
-    {"ALOE_TREE",{"ALOE_WOOD"}},
-    {"IRONWOOD_TREE",{"IRONWOOD_WOOD"}},
-    {"APPLE_TREE",{"APPLE"}},
-    {"ORANGE_TREE",{"ORANGE"}},
-    {"BANANA_TREE",{"BANANA"}},
-    {"GUAVA_TREE",{"GUAVA"}},
+    {"TEAK_TREE", {"TEAK_WOOD"}},
+    {"SANDALWOOD_TREE", {"SANDALWOOD_WOOD"}},
+    {"ALOE_TREE", {"ALOE_WOOD"}},
+    {"IRONWOOD_TREE", {"IRONWOOD_WOOD"}},
+    {"APPLE_TREE", {"APPLE"}},
+    {"ORANGE_TREE", {"ORANGE"}},
+    {"BANANA_TREE", {"BANANA"}},
+    {"GUAVA_TREE", {"GUAVA"}},
 };
 
 // class Plant
-Plant::Plant() : Item(){
+Plant::Plant() : Item()
+{
     this->plantId = -1;
     this->durationToHarvest = 0;
     this->age = 0;
 }
 
-
-
-Plant::Plant(int age, string name) : Item(name, Game::getPlantConfig()[name].code, Game::getPlantConfig()[name].price){
+Plant::Plant(int age, string name) : Item(name, Game::getPlantConfig()[name].code, Game::getPlantConfig()[name].price)
+{
     this->type = Game::getPlantConfig()[name].type;
     this->plantId = Game::getPlantConfig()[name].id;
     this->durationToHarvest = Game::getPlantConfig()[name].durationToHarvest;
     this->age = age;
 }
 
-Plant::Plant(string name) : Item(name, Game::getPlantConfig()[name].code, Game::getPlantConfig()[name].price){
+Plant::Plant(string name) : Item(name, Game::getPlantConfig()[name].code, Game::getPlantConfig()[name].price)
+{
     this->type = Game::getPlantConfig()[name].type;
     this->plantId = Game::getPlantConfig()[name].id;
     this->durationToHarvest = Game::getPlantConfig()[name].durationToHarvest;
     this->age = 0;
 }
 
-Plant::~Plant(){
-    
+Plant::~Plant()
+{
 }
 
-void Plant::setPlantType(PlantType type){
+void Plant::setPlantType(PlantType type)
+{
     this->type = type;
 }
 
-void Plant::setPlantId(int plantId){
+void Plant::setPlantId(int plantId)
+{
     this->plantId = plantId;
 }
 
-void Plant::setDurationToHarvest(int durationToHarvest){
+void Plant::setDurationToHarvest(int durationToHarvest)
+{
     this->durationToHarvest = durationToHarvest;
 }
 
-void Plant::setAge(int age){
+void Plant::setAge(int age)
+{
     this->age = age;
 }
 
-PlantType Plant::getPlantType() const{
+PlantType Plant::getPlantType() const
+{
     return this->type;
 }
 
-int Plant::getPlantId() const{
+int Plant::getPlantId() const
+{
     return this->plantId;
 }
 
-int Plant::getDurationToHarvest() const{
+int Plant::getDurationToHarvest() const
+{
     return this->durationToHarvest;
 }
 
-int Plant::getAge() const{
+int Plant::getAge() const
+{
     return this->age;
 }
 
-Plant& Plant::operator++(){
+Plant &Plant::operator++()
+{
     ++this->age;
     return *this;
 }
 
-Plant Plant::operator++(int ){
+Plant Plant::operator++(int)
+{
     Plant temp = *this;
     ++this->age;
     return temp;
 }
 
-vector<shared_ptr<Product>> Plant::collect(){
-    vector<shared_ptr<Product>> tempP;
-    for(unsigned int i = 0; i < harvestResult[this->name].size(); i++){
-        tempP.push_back(make_shared<Product>(harvestResult[this->name][i]));
-        
-    }
+vector<shared_ptr<Product>> Plant::collect()
+{
+    // vector<shared_ptr<Product>> tempP;
+    // for (unsigned int i = 0; i < harvestResult[this->name].size(); i++)
+    // {
+    //     tempP.push_back(make_shared<Product>(harvestResult[this->name][i]));
+    // }
 
-    return tempP;
+    return this->harvester.collect(this->harvestResult, this->name);
 }
 
-bool Plant::checkReadyToHarvest(){
-    if (this->age >= this->durationToHarvest){
+bool Plant::checkReadyToHarvest()
+{
+    if (this->age >= this->durationToHarvest)
+    {
         return true;
     }
     return false;
 }
 
-map<string, vector<string>>& Plant::getHarvestResult(){
+map<string, vector<string>> &Plant::getHarvestResult()
+{
     return harvestResult;
 }
