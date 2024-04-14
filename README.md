@@ -22,7 +22,7 @@ This program is a simple simulation designed to help Roro manage her kingdom. Bo
 ## Requirements Program
 |   NO   |  Required Program                    |                                         Reference Link                                         |
 | :----: | :----------------------------------: | :--------------------------------------------------------------------------------------------: |
-|   1    |  C++ Compiler                        | [On Windows](https://www.freecodecamp.org/news/how-to-install-c-and-cpp-compiler-on-windows/), [On Linux](https://www.codespeedy.com/how-to-install-cpp-on-linux/) |
+|   1    |  C++ Compiler                        | [On Windows](https://www.freecodecamp.org/news/how-to-install-c-and-cpp-compiler-on-windows/) <br> [On Linux](https://www.codespeedy.com/how-to-install-cpp-on-linux/) |
 |   2    |  Windows Subsystem for Linux (WSL)   | [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)                                  |
 |   3    |  Ubuntu 22.04.3 LTS                  | [Ubuntu](https://ubuntu.com/download/desktop)                                                 |
 
