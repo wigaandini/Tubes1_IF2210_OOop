@@ -124,12 +124,13 @@ void Game::start()
         {
             cout << "Sekarang giliran pemain " << Game::getCurrentPlayer()->getName() << " untuk bermain!!" << endl;
 
-            commandHandler.printCommand(Game::getCurrentPlayer());
 
             bool isNext = false;
 
             while (!isNext)
             {
+                commandHandler.printCommand(Game::getCurrentPlayer());
+
                 try
                 {
                     auto winnner = checkWinner();
@@ -162,7 +163,6 @@ void Game::start()
                 {
                     cout << e.what() << endl
                          << endl;
-                    commandHandler.printCommand(Game::getCurrentPlayer());
                 }
                 catch (const exception &e)
                 {
@@ -365,27 +365,3 @@ void Game::handleLoadState()
     cout << "Finish Load State!!" << endl
          << endl;
 }
-
-// cout << "Players in the game:" << endl;
-// for (auto player : players)
-// {
-//     cout << player->getName() << endl;
-
-//     cout << player->getInventory() << endl;
-
-//     shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
-//     if (breeder != nullptr)
-//     {
-//         cout << breeder->getRanch() << endl;
-//         continue;
-//     }
-
-//     shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
-//     if (farmer != nullptr)
-//     {
-//         cout << farmer->getFarm() << endl;
-//     }
-// }
-
-// cout << "Items in the store:" << endl;
-// cout << store << endl;
