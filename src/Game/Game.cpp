@@ -331,10 +331,9 @@ void Game::handleLoadState()
     {
         try
         {
-            cout << "Masukan nama file (ketik q untuk keluar): ";
+            cout << "Masukan nama file, harus full path (ketik q untuk keluar): ";
             cin >> filename;
-            string fileAddr = "./config/" + filename;
-            this->loadHandler.loadStateConfig(fileAddr);
+            this->loadHandler.loadStateConfig(filename);
 
             if (filename == "q")
             {
