@@ -95,7 +95,7 @@ void Game::setCurrentPlayer(int index)
 
 void Game::start()
 {
-    cout << "WELCOME TO THE GAME" << endl
+    cout << "WELCOME TO THE GAME!" << endl
          << endl;
 
     try

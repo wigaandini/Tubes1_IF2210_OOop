@@ -21,7 +21,6 @@ private:
 public:
     Command();
     ~Command();
-    // bool checkCommand(const string&);
     void handleCommand(const string&);
     void printCommand(shared_ptr<Player>&);
 };
