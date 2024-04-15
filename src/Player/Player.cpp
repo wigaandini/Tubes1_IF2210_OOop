@@ -235,8 +235,10 @@ void Player::playSlot(){
                 int random = dist(gen);
                 slot.push_back(prize[random]);
             }
-            s.displaySlot(slot);
 
+            cout << endl;
+            s.displaySlot(slot);
+            cout << endl;
             map<std::string, int> symbolCounts;
             for (const auto& symbol : slot) {
                 ++symbolCounts[symbol];

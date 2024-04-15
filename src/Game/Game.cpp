@@ -129,6 +129,7 @@ void Game::start()
 
             while (!isNext)
             {
+                cout << endl;
                 commandHandler.printCommand(Game::getCurrentPlayer());
 
                 try
