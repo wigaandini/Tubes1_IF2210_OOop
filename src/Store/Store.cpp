@@ -316,24 +316,16 @@ void Store::handleCustomerBuy()
                 else if (answer == 2)
                 {
                     cout << endl
-                         << "Silahkan pilih angka 1 atau 2" << endl;
-                    int pilihan;
+                         << "Silahkan pilih head atau tail" << endl;
+                    string pilihan;
                     
                     bool coinChooseValid = false;
                     while (!coinChooseValid)
                     {
-                        cout << "Masukkan angka pilihan: ";
+                        cout << "Masukkan pilihan: ";
                         cin >> pilihan;
 
-                        if (cin.fail())
-                        {
-                            cin.clear();
-                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                            cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
-                            continue;
-                        }
-
-                        if (pilihan > 2 || pilihan < 1)
+                        if (pilihan != "head" && pilihan != "tail")
                         {
                             cout << "Masukan salah silahkah masukan kembali!!!" << endl;
                         }
@@ -345,22 +337,29 @@ void Store::handleCustomerBuy()
                             uniform_int_distribution<> dist(1, 2);
 
                             int random_number = dist(gen);
+                            string x;
+                            if (random_number == 1){
+                                x = "head";
+                            } else {
+                                x = "tail";
+                            }
+
                             cout << endl
                                  << "Koin dilempar" << endl;
                             cout << "ting ting ting" << endl
                                  << "ting ting ting" << endl
                                  << "ting ting ting" << endl;
 
-                            if (random_number != pilihan)
+                            if (x != pilihan)
                             {
                                 cout << endl
-                                     << "Angka pilihan salah, harga menjadi 2x lipat" << endl;
+                                     << "Pilihan anda salah, harga menjadi 2x lipat" << endl;
                                 Game::getCurrentPlayer()->buy(itemBuyChoose, quantity, 2);
                             }
                             else
                             {
                                 cout << endl
-                                     << "Angka pilihan benar, anda beruntung, harga gratis" << endl;
+                                     << "Pilihan anda benar, anda beruntung, harga gratis" << endl;
                                 Game::getCurrentPlayer()->buy(itemBuyChoose, quantity, 0);
                             }
                         }
