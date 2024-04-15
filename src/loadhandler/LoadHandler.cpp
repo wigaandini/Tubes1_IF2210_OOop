@@ -1,4 +1,4 @@
-#include "LoadConfig.hpp"
+#include "LoadHandler.hpp"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -20,7 +20,7 @@
 #include "LoadException.hpp"
 using namespace std;
 
-void LoadConfig::loadAnimalConfig(string filename)
+void LoadHandler::loadAnimalConfig(string filename)
 {
     map<string, AnimalConfig> configs;
     ifstream file(filename);
@@ -59,7 +59,7 @@ void LoadConfig::loadAnimalConfig(string filename)
     Game::setAnimalConfig(configs);
 }
 
-void LoadConfig::loadPlantConfig(string filename)
+void LoadHandler::loadPlantConfig(string filename)
 {
     map<string, PlantConfig> configs;
     ifstream file(filename);
@@ -96,7 +96,7 @@ void LoadConfig::loadPlantConfig(string filename)
     Game::setPlantConfig(configs);
 }
 
-void LoadConfig::loadProductConfig(string filename)
+void LoadHandler::loadProductConfig(string filename)
 {
     map<string, ProductConfig> configs;
     ifstream file(filename);
@@ -134,7 +134,7 @@ void LoadConfig::loadProductConfig(string filename)
     Game::setProductConfig(configs);
 }
 
-void LoadConfig::loadMainConfig(string filename)
+void LoadHandler::loadMainConfig(string filename)
 {
     MainConfig config;
     ifstream file(filename);
@@ -188,7 +188,7 @@ void LoadConfig::loadMainConfig(string filename)
     Game::getMainConfig().weightPlayerToWin = weightPlayerToWin;
 }
 
-void LoadConfig::loadRecipeConfig(string filename)
+void LoadHandler::loadRecipeConfig(string filename)
 {
     map<string, RecipeConfig> recipes;
     ifstream file(filename);
@@ -227,11 +227,11 @@ void LoadConfig::loadRecipeConfig(string filename)
     Game::setRecipe(recipes);
 }
 
-LoadConfig::LoadConfig()
+LoadHandler::LoadHandler()
 {
 }
 
-void LoadConfig::loadStateConfig(string filename)
+void LoadHandler::loadStateConfig(string filename)
 {
     ifstream file(filename);
 

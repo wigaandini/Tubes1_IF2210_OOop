@@ -345,7 +345,7 @@ int Farmer::getWealth()
     return wealth;
 }
 
-int Farmer::tax()
+int Farmer::calculateTax()
 {
     int kkp = getWealth() - KTKP_PETANI;
     if (kkp <= 0)
@@ -402,10 +402,10 @@ void Farmer::saveFile(const string &filepath)
     }
 
     Farm &farmItems = getFarm();
-    file <<farmItems.countOccupied() << endl;
-    for (int i = 0; i < farmItems.getRow(); i++)
+    file << farmItems.countOccupied() << endl;
+    for (int j = 0; j < farmItems.getCol(); j++)
     {
-        for (int j = 0; j < farmItems.getCol(); j++)
+        for (int i = 0; i < farmItems.getRow(); i++)
         {
             if (farmItems.see(i, j) != nullptr)
             {

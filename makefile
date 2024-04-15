@@ -17,7 +17,7 @@ TARGET = $(OBJ_DIR)/main
 SRCS = $(shell find $(SRC_DIR) -name '*.cpp' -or -name '*.c')
 
 # Create a list of object files from the source files
-OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
+OBJS =  $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Default make target
 all: CXXFLAGS = $(BASE_CXXFLAGS) -O2
@@ -42,5 +42,4 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 # Clean bin files
 clean:
-	@find $(OBJ_DIR) -type f -name '*.o' -delete
-	@rm -f $(TARGET)
+	@rm -rf $(OBJ_DIR)

@@ -103,7 +103,9 @@ vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
                 auto animal = make_shared<Omnivore>(name);
 
                 items.push_back(animal);
-            } else {
+            }
+            else
+            {
                 auto plant = make_shared<Plant>(name);
 
                 items.push_back(plant);
@@ -216,7 +218,15 @@ void Store::handleCustomerBuy()
         {
 
             cout << "Barang yang ingin dibeli (tulis -1 untuk keluar): ";
-            cin >> numItemBuy;
+            try
+            {
+                cin >> numItemBuy;
+            }
+            catch (const exception &e)
+            {
+                cout << "Masukan harus angka!!" << endl;
+                continue;
+            }
 
             if (numItemBuy == -1)
             {
@@ -319,9 +329,10 @@ void Store::handleCustomerBuy()
         }
         catch (const exception &e)
         {
-            
+
             cout << e.what() << endl;
-            cout << "Silahkan ulangi dan berikan masukan yang tepat!!" << endl << endl;
+            cout << "Silahkan ulangi dan berikan masukan yang tepat!!" << endl
+                 << endl;
             cout << "Barang tersisa yang belum dimasukkan ke dalam penyimpanan : " << quantity << endl;
         }
     }
@@ -377,8 +388,8 @@ void Store::handleCustomerSell()
         catch (const exception &e)
         {
             cout << e.what() << endl;
-            cout << "Silahkan ulangi dan berikan masukan yang tepat!!" << endl << endl;
-
+            cout << "Silahkan ulangi dan berikan masukan yang tepat!!" << endl
+                 << endl;
         }
     }
 }
@@ -419,17 +430,20 @@ Store::~Store()
 {
 }
 
-void Store::saveFile(const string& filepath){
+void Store::saveFile(const string &filepath)
+{
     ofstream file(filepath, ios::app);
 
     map<string, int> itemCounts;
-    for (const auto& pair : items) {
+    for (const auto &pair : items)
+    {
         itemCounts[pair.first] = pair.second.size();
     }
 
     file << itemCounts.size() << endl;
 
-    for (const auto& pair : itemCounts) {
+    for (const auto &pair : itemCounts)
+    {
         file << pair.first << " " << pair.second << endl;
     }
 

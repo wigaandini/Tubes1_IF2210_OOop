@@ -62,7 +62,7 @@ const int& Item::getPrice() const {
 }
 
 bool Item::operator==(const Item& other){
-    return itemId == other.itemId;
+    return this->name == other.name && this->code == other.code && this->price == other.price;
 }
 ostream& operator<<(ostream& os, const Item& item){
     os << item.code;

@@ -1,5 +1,5 @@
-#ifndef _LOADCONFIG_HPP_
-#define _LOADCONFIG_HPP_
+#ifndef _LOADHANDLER_HPP_
+#define _LOADHANDLER_HPP_
 
 #include "../configClass/AnimalConfig.hpp"
 #include "../configClass/PlantConfig.hpp"
@@ -8,7 +8,7 @@
 #include "../configClass/RecipeConfig.hpp"
 #include <map>
 
-class LoadConfig{
+class LoadHandler{
     public:
         void loadAnimalConfig(string filename);
         void loadPlantConfig(string filename);
@@ -16,7 +16,7 @@ class LoadConfig{
         void loadMainConfig(string filename);
         void loadRecipeConfig(string filename);
         void loadStateConfig(string filename);
-        LoadConfig();
+        LoadHandler();
 };      
 
 #endif

@@ -55,7 +55,7 @@ void Mayor::taxCollection()
     {
         shared_ptr<Resident> &resident = residents[i];
         cout << "    " << i + 1 << ". " << residents[i]->getName() << " - " << residents[i]->getType() << ": ";
-        tax = (resident->getGulden() >= resident->tax()) ? resident->tax() : resident->getGulden(); // Bayar pajak semampunya
+        tax = (resident->getGulden() >= resident->calculateTax()) ? resident->calculateTax() : resident->getGulden(); // Bayar pajak semampunya
         cout << tax << " gulden" << endl;
         resident->setGulden(resident->getGulden() - tax);
         sumTax += tax;
@@ -91,7 +91,7 @@ void Mayor::buildBuilding()
                 }
                 for (auto material : itr->second.materials)
                 {
-                    int count = this->inventory.countItemStock(material.first);
+                    int count = this->inventory.countItemStock(Item(material.first, Game::getProductConfig()[material.first].code, Game::getProductConfig()[material.first].price));
                     if (count < material.second)
                     {
                         notEnoughMaterials[material.first] = material.second - count;
@@ -108,7 +108,7 @@ void Mayor::buildBuilding()
                 for (auto material : itr->second.materials)
                 {
 
-                    this->inventory.useItem(material.first, material.second);
+                    this->inventory.useItem(Item(material.first, Game::getProductConfig()[material.first].code, Game::getProductConfig()[material.first].price), material.second);
                 }
             }
             else
@@ -143,7 +143,7 @@ void Mayor::addPlayer()
         string playerName;
         cout << "Masukkan jenis pemain: ";
         cin >> playerType;
-        if(playerType != "Peternak" && playerType != "Petani"){
+        if(playerType != "Peternak" && playerType != "Petani" && playerType != "petani" && playerType != "peternak"){
             cout << "Jenis permain tersebut tidak ditemukan!" << endl;
             return;
         }
@@ -155,11 +155,11 @@ void Mayor::addPlayer()
         if (itr == Game::getPlayers().end())
         {
             shared_ptr<Player> newPlayer;
-            if (playerType == "Peternak")
+            if (playerType == "Peternak" || playerType == "peternak")
             {
                 newPlayer = make_shared<Breeder>(playerName, 40, 50);
             }
-            else if (playerType == "Petani")
+            else if (playerType == "Petani" || playerType == "petani")
             {
                 newPlayer = make_shared<Farmer>(playerName, 40, 50);
             }

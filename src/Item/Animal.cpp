@@ -11,7 +11,6 @@ map<string, vector<string>> Animal::harvestResult = {
     {"DUCK", {"DUCK_MEAT", "DUCK_EGG"}},
 };
 
-
 // class Animal
 Animal::Animal() : Item()
 {
@@ -24,8 +23,8 @@ Animal::Animal(int weight, string name) : Item(Game::getAnimalConfig()[name].nam
 {
 }
 
-Animal::~Animal(){
-
+Animal::~Animal()
+{
 }
 
 void Animal::setAnimalId(int animalId)
@@ -77,12 +76,12 @@ bool Animal::checkReadyToHarvest()
     return false;
 }
 
-
-map<string, vector<string>>& Animal::getHarvestResult(){
+map<string, vector<string>> &Animal::getHarvestResult()
+{
     return harvestResult;
 }
 
-void Animal::eat(const shared_ptr<Product>& food){
+void Animal::eat(const shared_ptr<Product> &food)
+{
     this->setWeight(this->getWeight() + food->getAddedWeight());
 }
-
