@@ -93,7 +93,8 @@ void Player::eat()
     }
 }
 
-string Player::getType(){
+string Player::getType()
+{
     return type;
 }
 
@@ -104,7 +105,7 @@ bool Player::operator==(const Player &other)
 
 void Player::buy(shared_ptr<Item> &item, int quantity, int bonus)
 {
-    
+
     if (item->getPrice() * quantity * bonus > this->gulden)
     {
         throw NotEnoughGuldenException(); // Uang  tidak cukup
@@ -153,26 +154,6 @@ pair<vector<shared_ptr<Item>>, int> Player::sell(vector<string> &slots)
     return items;
 }
 
-// vector<shared_ptr<Item>> Player::sell(vector<string>& slots)
-// {
-//     vector<shared_ptr<Item>> items;
-//     for (string slot : slots) {
-
-//         if (this->inventory.isEmpty(slot)){
-//             throw ""; //empty slot
-//         }
-//     }
-
-//     for (string slot : slots) {
-
-//         const shared_ptr<Item>& item = this->inventory.take(slot);
-//         this->gulden += item->getPrice();
-//         items.push_back(item);
-//     }
-
-//     return items;
-// }
-
 string &Player::getName()
 {
     return username;
@@ -198,7 +179,8 @@ Inventory &Player::getInventory()
     return this->inventory;
 }
 
-void Player::playSlot(){
+void Player::playSlot()
+{
     bool isAnswerValid = false;
     while (!isAnswerValid)
     {
@@ -213,57 +195,42 @@ void Player::playSlot(){
         cout << "- Jika Anda mendapatkan 3 huruf 'A' yang sama, Anda memenangkan 10 gulden.\n";
         cout << "- Jika Anda mendapatkan 3 huruf 'B' yang sama, Anda memenangkan 20 gulden.\n";
         cout << "- Jika Anda mendapatkan 3 huruf 'C' yang sama, Anda memenangkan 30 gulden.\n";
-        cout << "=================================================\n";
-        cout << "Permainan ini memakai 1 gulden\n";
-        cout << "Apakah Anda ingin bermain mesin slot? (Y/N) ";
+        cout << "=================================================\n" << endl;
 
-        cin >> answerState;
-        
-        Slot s;
-        if (answerState == "Y")
+        bool isFinish = false;
+
+        while (!isFinish)
         {
-            isAnswerValid = true;
-            this->gulden --;
-            vector<string> prize = {"A", "B", "C"};
+            cout << "Permainan ini memakai 1 gulden\n";
+            cout << "Apakah Anda ingin bermain mesin slot? (Y/N) ";
 
-            random_device rd;
-            mt19937 gen(rd());
-            uniform_int_distribution<> dist(0, 2);
+            cin >> answerState;
 
-            for (int i = 0; i < 3; i++){ 
-                int random = dist(gen);
-                string slotGrid =  prize.at(i) + "01";
-                s.put(slotGrid, make_shared<string>(prize[random]));
+
+            Slot slotGame;
+            if (answerState == "Y")
+            {
+                isAnswerValid = true;
+                this->gulden--;
+
+                pair<int, string> res = slotGame.play();
+
+                this->gulden += res.first;
+
+                cout << res.second << endl;
             }
+            else if (answerState == "N")
+            {
 
-            cout << endl;
-            s.displaySlot();
-            cout << endl;
-            map<string, int> symbolCounts;
-            for (const auto& symbol : s.getBuffer()[0]) {
-                ++symbolCounts[*symbol];
+                break;
             }
-            if (symbolCounts["A"] == 3) {
-                cout << "Selamat! Anda mendapatkan 3 simbol 'A' dan memenangkan 10 gulden!" << endl;
-                this->gulden += 10;
-            } else if (symbolCounts["B"] == 3) {
-                cout << "Selamat! Anda mendapatkan 3 simbol 'B' dan memenangkan 20 gulden!" << endl;
-                this->gulden += 20;
-            } else if (symbolCounts["C"] == 3) {
-                cout << "Selamat! Anda mendapatkan 3 simbol 'C' dan memenangkan 30 gulden!" << endl;
-                this->gulden += 30;
-            }else  {
-                cout << "Maaf, Anda belum beruntung kali ini. Coba lagi!" << endl;
+            else
+            {
+                cout << "Masukan salah silahkan ulangi kembali!!" << endl;
             }
         }
-        else if (answerState == "N")
-        {
-            cout << endl << "Terima kasih telah mengunjungi!" << endl;
-            return;
-        }
-        else
-        {
-            cout << "Masukan salah silahkan ulangi kembali!!" << endl;
-        }
+
+        cout << endl
+             << "Terima kasih telah mengunjungi!" << endl;
     }
 }
