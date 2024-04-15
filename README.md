@@ -58,7 +58,6 @@ This project has been completed and can be executed.
 ## Project Structure
 ```bash
 
-project-root/
 │
 ├── README.md
 ├── bin/                        # Executable compiled program
