@@ -2,6 +2,7 @@
 #include "../Game/Game.hpp"
 #include "../Utils/Utils.hpp"
 #include "../Grid/Grid.hpp"
+#include <limits>
 
 Farmer::Farmer() : Resident()
 {
@@ -215,29 +216,30 @@ void Farmer::harvest()
         {
             cout << endl
                  << "Nomor tanaman yang ingin dipanen (ketik -1 untuk keluar) : ";
-            try
+            cin >> answer1;
+            if (cin.fail())
             {
-                cin >> answer1;
-            }
-            catch (const exception &e)
-            {
-                cout << "Masukan harus angka!!" << endl;
-                continue;
-            }
-
-            if (answer1 == -1)
-            {
-                cout << "Tidak jadi panen!!" << endl;
-                return;
-            }
-
-            if (answer1 > 0 && answer1 < number)
-            {
-                sukses1 = true;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
             }
             else
             {
-                cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+
+                if (answer1 == -1)
+                {
+                    cout << "Tidak jadi panen!!" << endl;
+                    return;
+                }
+
+                if (answer1 > 0 && answer1 < number)
+                {
+                    sukses1 = true;
+                }
+                else
+                {
+                    cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+                }
             }
         }
 
@@ -248,22 +250,31 @@ void Farmer::harvest()
                  << "Berapa petak yang ingin dipanen : ";
             cin >> answer2;
 
-            if (answer2 <= total[answer1 - 1])
+            if (cin.fail())
             {
-                if (answer2 * sizeResult[answer1 - 1] > this->inventory.countEmpty())
-                {
-                    cout << endl
-                         << "Jumlah penyimpanan tidak cukup!" << endl;
-                    return;
-                }
-                else
-                {
-                    sukses2 = true;
-                }
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
             }
             else
             {
-                cout << "Jumlah yang bisa dipanen hanya " << total[answer1 - 1] << "!!!" << endl;
+                if (answer2 <= total[answer1 - 1])
+                {
+                    if (answer2 * sizeResult[answer1 - 1] > this->inventory.countEmpty())
+                    {
+                        cout << endl
+                            << "Jumlah penyimpanan tidak cukup!" << endl;
+                        return;
+                    }
+                    else
+                    {
+                        sukses2 = true;
+                    }
+                }
+                else
+                {
+                    cout << "Jumlah yang bisa dipanen hanya " << total[answer1 - 1] << "!!!" << endl;
+                }
             }
         }
 
