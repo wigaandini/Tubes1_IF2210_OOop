@@ -6,7 +6,8 @@ Slot::Slot() : Grid<string>(1, 3){}
 
 Slot::~Slot(){}
 
-void Slot::displaySlot(vector<string> result) {
+void Slot::displaySlot() {
+    auto result = this->buffer[0];
     string title = "[ Slot ]";
     int columnWidthWithBorders = 6;
     int totalGridWidth = this->col * columnWidthWithBorders;
@@ -33,7 +34,7 @@ void Slot::displaySlot(vector<string> result) {
         cout << "     |";
         for (int j = 0; j < this->col; ++j)
         {   
-            cout << " " << setw(2) << setfill(' ') << result[j] << "  |";
+            cout << " " << setw(2) << setfill(' ') << *(result[j]) << "  |";
         }
         cout << "\n";
         

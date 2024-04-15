@@ -6,10 +6,11 @@
 using namespace std;
 
 class Slot : public Grid<string> {
+
 public:
     Slot();
     ~Slot();
-    void displaySlot(vector<string> result);
+    void displaySlot();
 };
 
 #endif 

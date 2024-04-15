@@ -225,7 +225,6 @@ void Player::playSlot(){
             isAnswerValid = true;
             this->gulden --;
             vector<string> prize = {"A", "B", "C"};
-            vector<string> slot;
 
             random_device rd;
             mt19937 gen(rd());
@@ -233,15 +232,16 @@ void Player::playSlot(){
 
             for (int i = 0; i < 3; i++){ 
                 int random = dist(gen);
-                slot.push_back(prize[random]);
+                string slotGrid =  prize.at(i) + "01";
+                s.put(slotGrid, make_shared<string>(prize[random]));
             }
 
             cout << endl;
-            s.displaySlot(slot);
+            s.displaySlot();
             cout << endl;
-            map<std::string, int> symbolCounts;
-            for (const auto& symbol : slot) {
-                ++symbolCounts[symbol];
+            map<string, int> symbolCounts;
+            for (const auto& symbol : s.getBuffer()[0]) {
+                ++symbolCounts[*symbol];
             }
             if (symbolCounts["A"] == 3) {
                 cout << "Selamat! Anda mendapatkan 3 simbol 'A' dan memenangkan 10 gulden!" << endl;
