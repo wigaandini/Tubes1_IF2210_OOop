@@ -81,10 +81,6 @@ void Mayor::buildBuilding()
             if (itr != Game::getRecipe().end())
             {
                 map<string, int> notEnoughMaterials;
-                if (this->gulden < Game::getRecipe()[buildingName].price)
-                {
-                    notEnoughMaterials["gulden"] = Game::getRecipe()[buildingName].price - this->gulden;
-                }
                 for (auto material : itr->second.materials)
                 {
                     int count = this->inventory.countItemStock(Item(material.first, Game::getProductConfig()[material.first].code, Game::getProductConfig()[material.first].price));
@@ -99,8 +95,6 @@ void Mayor::buildBuilding()
                     throw NotEnoughMaterialException(notEnoughMaterials);
                 }
 
-                // Kasus ketika SDA cukup untuk membangun building
-                this->gulden -= itr->second.price;
                 for (auto material : itr->second.materials)
                 {
 
@@ -152,11 +146,11 @@ void Mayor::addPlayer()
             shared_ptr<Player> newPlayer;
             if (playerType == "Peternak" || playerType == "peternak")
             {
-                newPlayer = make_shared<Breeder>(playerName, 40, 50);
+                newPlayer = make_shared<Breeder>(playerName, 0, 50);
             }
             else if (playerType == "Petani" || playerType == "petani")
             {
-                newPlayer = make_shared<Farmer>(playerName, 40, 50);
+                newPlayer = make_shared<Farmer>(playerName, 0, 50);
             }
             Game::getPlayers().push_back(newPlayer);
             gulden -= 50;
