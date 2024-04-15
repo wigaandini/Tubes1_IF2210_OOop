@@ -5,6 +5,7 @@
 #include "../Utils/Utils.hpp"
 #include <functional>
 #include <string>
+#include <limits>
 using namespace std;
 class Resident : public Player
 {
@@ -66,7 +67,8 @@ protected:
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
-                }
+                    continue;
+                } 
 
                 if (answer1 == -1)
                 {

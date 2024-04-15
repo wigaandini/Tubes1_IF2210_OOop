@@ -300,6 +300,7 @@ void Store::handleCustomerBuy()
         {
             cout << e.what() << endl;
             this->addItem(itemBuyChoose);
+            itemBuys.clear();
         }
     }
 

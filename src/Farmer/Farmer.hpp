@@ -19,8 +19,6 @@ class Farmer: public Resident{
 
         Farm& getFarm();
         void plant();
-        // vector<shared_ptr<Item>> sell(vector<string>&);
-        // void buy(shared_ptr<Item>&, int);
         void harvest();
         int calculateTax();
         void saveFile(const string& filename); 
