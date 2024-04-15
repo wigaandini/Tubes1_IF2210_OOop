@@ -247,10 +247,10 @@ void Player::playSlot(){
                 cout << "Selamat! Anda mendapatkan 3 simbol 'A' dan memenangkan 10 gulden!" << endl;
                 this->gulden += 10;
             } else if (symbolCounts["B"] == 3) {
-                cout << "Selamat! Anda mendapatkan 3 simbol 'P' dan memenangkan 20 gulden!" << endl;
+                cout << "Selamat! Anda mendapatkan 3 simbol 'B' dan memenangkan 20 gulden!" << endl;
                 this->gulden += 20;
             } else if (symbolCounts["C"] == 3) {
-                cout << "Selamat! Anda mendapatkan 3 simbol 'B' dan memenangkan 30 gulden!" << endl;
+                cout << "Selamat! Anda mendapatkan 3 simbol 'C' dan memenangkan 30 gulden!" << endl;
                 this->gulden += 30;
             }else  {
                 cout << "Maaf, Anda belum beruntung kali ini. Coba lagi!" << endl;
