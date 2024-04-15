@@ -29,7 +29,7 @@ void Product::setProductId(int productId){
     this->productId = productId;
 }
 
-void Product::setOrigin(float origin){
+void Product::setOrigin(string origin){
     this->origin = origin;
 }
 

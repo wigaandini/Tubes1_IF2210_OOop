@@ -16,7 +16,7 @@ public:
     virtual ~Product();
     void setProductType(ProductType type);
     void setProductId(int productId);
-    void setOrigin(float origin);
+    void setOrigin(string origin);
     void setAddedWeight(float addedWeight);
     ProductType getProductType() const;
     int getProductId() const;
