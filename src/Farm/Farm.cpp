@@ -1,7 +1,7 @@
 #include "Farm.hpp"
 #include "../Game/Game.hpp"
 
-Farm::Farm(int r, int c, Plant defaultValue) : SpecializedGrid<Plant>(r, c) {}
+Farm::Farm(int r, int c) : SpecializedGrid<Plant>(r, c) {}
 
 Farm::Farm() : SpecializedGrid<Plant>(Game::getMainConfig().farmSize[0], Game::getMainConfig().farmSize[1])
 {

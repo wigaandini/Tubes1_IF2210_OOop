@@ -2,6 +2,7 @@
 #include "../Game/Game.hpp"
 #include "../Item/Building.hpp"
 #include "PlayerException.hpp"
+#include <random>
 
 int Player::countIdPlayer = 1;
 
@@ -91,14 +92,19 @@ void Player::eat()
     }
 }
 
+string Player::getType(){
+    return type;
+}
+
 bool Player::operator==(const Player &other)
 {
     return this->username == other.username && this->playerId == other.playerId;
 }
 
-void Player::buy(shared_ptr<Item> &item, int quantity)
+void Player::buy(shared_ptr<Item> &item, int quantity, int bonus)
 {
-    if (item->getPrice() * quantity > this->gulden)
+    
+    if (item->getPrice() * quantity * bonus > this->gulden)
     {
         throw NotEnoughGuldenException(); // Uang  tidak cukup
     }
@@ -108,7 +114,7 @@ void Player::buy(shared_ptr<Item> &item, int quantity)
         throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
     }
 
-    this->gulden -= item->getPrice() * quantity;
+    this->gulden -= item->getPrice() * quantity * bonus;
 }
 
 pair<vector<shared_ptr<Item>>, int> Player::sell(vector<string> &slots)

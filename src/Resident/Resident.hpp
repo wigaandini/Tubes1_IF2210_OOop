@@ -4,6 +4,7 @@
 #include "../Player/Player.hpp"
 #include "../Utils/Utils.hpp"
 #include <functional>
+#include <limits>
 #include <string>
 #include <limits>
 using namespace std;

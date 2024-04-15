@@ -10,6 +10,8 @@
 #include "../Utils/Utils.hpp"
 #include "StoreException.hpp"
 #include <limits>
+#include <random>
+
 // #include "../Customer/Customer.hpp"
 
 Store::Store()
@@ -285,8 +287,91 @@ void Store::handleCustomerBuy()
         {
             itemBuyChoose = this->takeItem(allItemsSell.at(numItemBuy - 1), 1).at(0);
             itemBuys.push_back(itemBuyChoose);
+            cout << endl
+                 << "Terdapat opsi dalam pembayaran: " << endl;
+            cout << "1. Bayar dengan harga normal" << endl;
+            cout << "2. Coin Flip (Jika benar maka barang gratis, Jika salah maka harga menjadi 2x)" << endl
+                 << endl;
+            bool coinFlipValid = false;
+            int answer;
 
-            Game::getCurrentPlayer()->buy(itemBuyChoose, quantity);
+            while (!coinFlipValid)
+            {
+                cout << "Masukkan pilihan opsi pembayaran: ";
+                cin >> answer;
+
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+                    continue;
+                }
+
+                if (answer == 1)
+                {
+                    Game::getCurrentPlayer()->buy(itemBuyChoose, quantity, 1);
+                    coinFlipValid = true;
+                }
+                else if (answer == 2)
+                {
+                    cout << endl
+                         << "Silahkan pilih angka 1 atau 2" << endl;
+                    int pilihan;
+                    
+                    bool coinChooseValid = false;
+                    while (!coinChooseValid)
+                    {
+                        cout << "Masukkan angka pilihan: ";
+                        cin >> pilihan;
+
+                        if (cin.fail())
+                        {
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+                            continue;
+                        }
+
+                        if (pilihan > 2 || pilihan < 1)
+                        {
+                            cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+                        }
+                        else
+                        {
+                            coinChooseValid = true;
+                            random_device rd;
+                            mt19937 gen(rd());
+                            uniform_int_distribution<> dist(1, 2);
+
+                            int random_number = dist(gen);
+                            cout << endl
+                                 << "Koin dilempar" << endl;
+                            cout << "ting ting ting" << endl
+                                 << "ting ting ting" << endl
+                                 << "ting ting ting" << endl;
+
+                            if (random_number != pilihan)
+                            {
+                                cout << endl
+                                     << "Angka pilihan salah, harga menjadi 2x lipat" << endl;
+                                Game::getCurrentPlayer()->buy(itemBuyChoose, quantity, 2);
+                            }
+                            else
+                            {
+                                cout << endl
+                                     << "Angka pilihan benar, anda beruntung, harga gratis" << endl;
+                                Game::getCurrentPlayer()->buy(itemBuyChoose, quantity, 0);
+                            }
+                        }
+                    }
+                    coinFlipValid = true;
+                }
+                else
+                {
+                    cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+                }
+            }
 
             vector<shared_ptr<Item>> items(this->takeItem(allItemsSell.at(numItemBuy - 1), quantity - 1));
 

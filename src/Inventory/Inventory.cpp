@@ -3,7 +3,7 @@
 using namespace std;
 
 // Constructor
-Inventory::Inventory(int r, int c, Item defaultValue) : Grid<Item>(r, c, defaultValue) {}
+Inventory::Inventory(int r, int c) : Grid<Item>(r, c) {}
 
 Inventory::Inventory() : Grid(Game::getMainConfig().inventorySize[0], Game::getMainConfig().inventorySize[1])
 {

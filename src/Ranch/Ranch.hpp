@@ -7,12 +7,10 @@ using namespace std;
 
 class Ranch: public SpecializedGrid<Animal> {
 public:
-    Ranch(int r, int c, Animal defaultValue);
+    Ranch(int r, int c);
     Ranch();
     ~Ranch();
     void displayStorage(bool printInfo);
-    // bool checkAnimalReadyToHarvest();
-    // map<string, int> countAnimal();
     int countAnimalType();
 };
 

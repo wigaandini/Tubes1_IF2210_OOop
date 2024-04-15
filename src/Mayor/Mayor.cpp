@@ -3,6 +3,7 @@
 #include "../Game/Game.hpp"
 #include "../Farmer/Farmer.hpp"
 #include <algorithm>
+#include <random>
 #include "MayorException.hpp"
 #include "../Player/PlayerException.hpp"
 using namespace std;
@@ -18,11 +19,6 @@ Mayor::Mayor(string username, float weight, int gulden) : Player(username, weigh
 }
 
 Mayor::~Mayor() {}
-
-string Mayor::getType()
-{
-    return type;
-}
 
 
 void Mayor::taxCollection()
@@ -180,9 +176,9 @@ void Mayor::addPlayer()
     }
 }
 
-void Mayor::buy(shared_ptr<Item> &item, int quantity)
+void Mayor::buy(shared_ptr<Item> &item, int quantity, int bonus)
 {
-    if (item->getPrice() * quantity > this->gulden)
+    if (item->getPrice() * quantity * bonus > this->gulden)
     {
         throw NotEnoughGuldenException(); // uang  tidak cukup
     }
@@ -197,7 +193,7 @@ void Mayor::buy(shared_ptr<Item> &item, int quantity)
         throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
     }
 
-    this->gulden -= item->getPrice() * quantity;
+    this->gulden -= item->getPrice() * quantity * bonus;
 }
 
 pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)

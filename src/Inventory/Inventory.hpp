@@ -30,7 +30,7 @@ private:
     }
 
 public:
-    Inventory(int r, int c, Item defaultValue);
+    Inventory(int r, int c);
     Inventory();
     ~Inventory();
     void displayStorage(bool printInfo);

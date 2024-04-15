@@ -15,12 +15,11 @@ public:
     Mayor();
     Mayor(string username, float weight, int gulden);
     ~Mayor();
-    string getType();
     void taxCollection();
     void buildBuilding();
     void addPlayer();
     pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
-    void buy(shared_ptr<Item> &, int);
+    void buy(shared_ptr<Item> &, int, int);
     void saveFile(const string &filename);
 };
 #endif

@@ -8,12 +8,10 @@ using namespace std;
 
 class Farm : public SpecializedGrid<Plant> {
 public:
-    Farm(int r, int c, Plant defaultValue);
+    Farm(int r, int c);
     Farm();
     ~Farm();
     void displayStorage(bool printInfo);
-    // bool checkPlantReadyToHarvest();
-    // map<string, int> countPlant();
     void addPlantAge();
 };
 

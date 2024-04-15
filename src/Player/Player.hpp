@@ -22,10 +22,10 @@ public:
     Player(string username, int weight, int gulden);
     Inventory &getInventory();
     string &getName();
+    string getType();
     virtual ~Player();
     int &getWeight();
-    virtual string getType();
-    virtual void buy(shared_ptr<Item> &, int);
+    virtual void buy(shared_ptr<Item> &, int, int);
     virtual pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
     int &getGulden();
     void setGulden(int);

@@ -11,9 +11,7 @@ private:
     int plantId;
     int durationToHarvest;
     int age;
-    // vector<Product> result;
     Harvester harvester;
-
     static map<string, vector<string>> harvestResult;
 
 public:

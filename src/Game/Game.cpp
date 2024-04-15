@@ -242,8 +242,14 @@ shared_ptr<Player> Game::checkWinner()
 void Game::handleSave()
 {
     string filepath = "";
-    cout << "Masukkan lokasi berkas state: ";
+    cout << "Masukkan lokasi berkas state (ketik 'q' untuk membatalkan): ";
     cin >> filepath;
+
+    if (filepath == "q")
+    {
+        cout << "Batal menyimpan permainan!!" << endl;
+        return;
+    }
 
     const char *folderpath = filepath.substr(0, filepath.find_last_of("/\\")).c_str();
     DIR *dir = opendir(folderpath);
@@ -333,7 +339,7 @@ void Game::handleLoadState()
     {
         try
         {
-            cout << "Masukan nama file, harus full path (ketik q untuk keluar): ";
+            cout << "Masukan lokasi berkas state, harus full path (ketik q untuk keluar): ";
             cin >> filename;
             if (filename == "q")
             {

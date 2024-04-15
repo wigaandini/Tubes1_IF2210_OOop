@@ -1,7 +1,7 @@
 #include "Ranch.hpp"
 #include "../Game/Game.hpp"
 
-Ranch::Ranch(int r, int c, Animal defaultValue) : SpecializedGrid<Animal>(r, c) {}
+Ranch::Ranch(int r, int c) : SpecializedGrid<Animal>(r, c) {}
 
 Ranch::~Ranch() {}
 

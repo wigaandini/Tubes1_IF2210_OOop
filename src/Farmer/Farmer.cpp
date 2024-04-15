@@ -18,10 +18,6 @@ Farmer::~Farmer()
 {
 }
 
-string Farmer::getType()
-{
-    return type;
-}
 void Farmer::plant()
 {
     Resident::placeTo<Farm, PlantConfig, Plant>(
