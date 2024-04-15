@@ -31,6 +31,7 @@ This program is a simple simulation designed to help Roro manage her kingdom. Bo
 1. Clone this repository by typing `git clone https://github.com/wigaandini/Tubes1_IF2210_OOop` in the terminal.
 2. Change the directory using `cd Tubes1_IF2210_OOop`.
 3. Compile and run the program by typing `make run`.
+4. Note: Ensure to always prefix the file path with ./ when use command "SIMPAN" and when use load state.
 
 
 ## Project Status
