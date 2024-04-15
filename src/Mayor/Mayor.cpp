@@ -147,10 +147,9 @@ void Mayor::addPlayer()
             cout << "Jenis permain tersebut tidak ditemukan!" << endl;
             return;
         }
-        playerType = playerType;
         cout << "Masukkan nama pemain: ";
         cin >> playerName;
-        auto itr = find_if(Game::getPlayers().begin(), Game::getPlayers().end(), [&playerName, this](auto player)
+        auto itr = find_if(Game::getPlayers().begin(), Game::getPlayers().end(), [&playerName](auto player)
                            { return player->getName() == playerName; });
         if (itr == Game::getPlayers().end())
         {

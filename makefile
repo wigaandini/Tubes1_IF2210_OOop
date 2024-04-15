@@ -2,7 +2,7 @@
 CXX = g++
 
 # Base compiler flags
-BASE_CXXFLAGS = -Wall
+BASE_CXXFLAGS = -Wall -std=c++17
 
 # Build directory for object files
 OBJ_DIR = bin

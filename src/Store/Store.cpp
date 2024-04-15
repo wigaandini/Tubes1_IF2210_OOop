@@ -218,30 +218,31 @@ void Store::handleCustomerBuy()
         {
 
             cout << "Barang yang ingin dibeli (tulis -1 untuk keluar): ";
-            try
+            cin >> numItemBuy;
+            if (cin.fail())
             {
-                cin >> numItemBuy;
-            }
-            catch (const exception &e)
-            {
-                cout << "Masukan harus angka!!" << endl;
-                continue;
-            }
-
-            if (numItemBuy == -1)
-            {
-
-                cout << "Terima kasih atas kunjungan Anda" << endl;
-                return;
-            }
-
-            if (numItemBuy > int(allItemsSell.size()))
-            {
-                cout << "Tidak ada barang dengan nomor tersebut !!!" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
             }
             else
             {
-                itemBuyValid = true;
+
+                if (numItemBuy == -1)
+                {
+
+                    cout << "Terima kasih atas kunjungan Anda" << endl;
+                    return;
+                }
+
+                if (numItemBuy > int(allItemsSell.size()))
+                {
+                    cout << "Tidak ada barang dengan nomor tersebut !!!" << endl;
+                }
+                else
+                {
+                    itemBuyValid = true;
+                }
             }
         }
         bool quantityValid = false;
@@ -251,24 +252,34 @@ void Store::handleCustomerBuy()
 
             cout << "Kuantitas : ";
             cin >> quantity;
-
-            if (quantity <= 0)
+            if (cin.fail())
             {
-                cout << "Kuantitas harus lebih besar sama dengan 0!!" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
             }
-            else if (!checkQuantity(allItemsSell.at(numItemBuy - 1), quantity))
-            {
-                cout << "Stock tidak cukupp!!!" << endl;
-            }
-            // else if (!Game::getCurrentPlayer()->getInventory().isInventoryEnough(quantity))
-            // {
-            //     cout << "Penyimpanan tidak mencukupi!!!" << endl;
-            // }
             else
             {
-                quantityValid = true;
+
+                if (quantity <= 0)
+                {
+                    cout << "Kuantitas harus lebih besar sama dengan 0!!" << endl;
+                }
+                else if (!checkQuantity(allItemsSell.at(numItemBuy - 1), quantity))
+                {
+                    cout << "Stock tidak cukupp!!!" << endl;
+                }
+                // else if (!Game::getCurrentPlayer()->getInventory().isInventoryEnough(quantity))
+                // {
+                //     cout << "Penyimpanan tidak mencukupi!!!" << endl;
+                // }
+                else
+                {
+                    quantityValid = true;
+                }
             }
         }
+
         shared_ptr<Item> itemBuyChoose;
         try
         {

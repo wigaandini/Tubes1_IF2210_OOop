@@ -2,6 +2,7 @@
 #include "../Game/Game.hpp"
 #include "../Utils/Utils.hpp"
 #include "../Grid/Grid.hpp"
+#include <limits>
 
 Farmer::Farmer() : Resident()
 {
@@ -134,8 +135,10 @@ void Farmer::plant()
     //     }
     // }
 
-    Resident::placeTo<Farm, PlantConfig, Plant>(this->farm, Game::getPlantConfig(), [this](){ return this->inventory.checkInventoryPlant();}, "Ladang");
-
+    Resident::placeTo<Farm, PlantConfig, Plant>(
+        this->farm, Game::getPlantConfig(), [this]()
+        { return this->inventory.checkInventoryPlant(); },
+        "Ladang");
 }
 
 // void Farmer::buy(shared_ptr<Item> &item, int quantity)
@@ -235,6 +238,12 @@ void Farmer::harvest()
     //             cout << "Masukan salah silahkah masukan kembali!!!" << endl;
     //         }
     //     }
+    // if (cin.fail())
+    // {
+    //     cin.clear();
+    //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    //     cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+    // }
 
     //     bool sukses2 = false;
     //     while (!sukses2)
@@ -315,8 +324,7 @@ void Farmer::harvest()
     //     cout << " telah dipanen" << endl;
     // }
 
-    Resident::harvest<Farm, PlantConfig>(this->farm, Game::getPlantConfig(), Plant::getHarvestResult(),"Ladang");
-
+    Resident::harvest<Farm, PlantConfig>(this->farm, Game::getPlantConfig(), Plant::getHarvestResult(), "Ladang");
 }
 
 int Farmer::getWealth()

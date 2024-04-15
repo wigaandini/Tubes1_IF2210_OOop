@@ -5,6 +5,7 @@
 #include "../Item/Omnivore.hpp"
 #include "../Utils/Utils.hpp"
 #include <exception>
+#include <limits>
 #include <fstream>
 
 Breeder::Breeder() : Resident()
