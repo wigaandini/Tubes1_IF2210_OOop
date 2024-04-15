@@ -85,6 +85,9 @@ vector<shared_ptr<Item>> Store::takeItem(const string &name, const int &num)
             shared_ptr<Item> item = this->items[name].back();
             this->items[name].pop_back();
             items.push_back(item);
+            if (this->items[name].size() == 0){
+                this->items.erase(name);
+            }
         }
         else
         {
@@ -533,14 +536,20 @@ void Store::saveFile(const string &filepath)
     map<string, int> itemCounts;
     for (const auto &pair : items)
     {
-        itemCounts[pair.first] = pair.second.size();
+        if(pair.second.size() > 0){ 
+            itemCounts[pair.first] = pair.second.size();
+        }
+        
     }
 
     file << itemCounts.size() << endl;
 
     for (const auto &pair : itemCounts)
     {
-        file << pair.first << " " << pair.second << endl;
+        if (pair.second > 0){
+            file << pair.first << " " << pair.second << endl;
+        }
+        
     }
 
     file.close();
