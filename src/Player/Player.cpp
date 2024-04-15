@@ -91,6 +91,10 @@ void Player::eat()
     }
 }
 
+string Player::getType(){
+    return type;
+}
+
 bool Player::operator==(const Player &other)
 {
     return this->username == other.username && this->playerId == other.playerId;

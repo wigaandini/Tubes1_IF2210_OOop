@@ -19,11 +19,6 @@ Mayor::Mayor(string username, float weight, int gulden) : Player(username, weigh
 
 Mayor::~Mayor() {}
 
-string Mayor::getType()
-{
-    return type;
-}
-
 
 void Mayor::taxCollection()
 {

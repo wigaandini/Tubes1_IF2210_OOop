@@ -24,7 +24,7 @@ public:
     string &getName();
     virtual ~Player();
     int &getWeight();
-    virtual string getType() = 0;
+    string getType();
     virtual void buy(shared_ptr<Item> &, int);
     virtual pair<vector<shared_ptr<Item>>, int> sell(vector<string> &);
     int &getGulden();

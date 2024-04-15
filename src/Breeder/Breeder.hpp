@@ -16,7 +16,6 @@ class Breeder: public Resident{
         Breeder();
         Breeder(string username, float weight, int gulden);
         ~Breeder();
-        string getType();
         int getWealth();
         void cattle();
         void feedAnimal();

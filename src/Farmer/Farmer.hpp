@@ -14,7 +14,6 @@ class Farmer: public Resident{
         Farmer();
         Farmer(string username, int weight, int gulden);
         ~Farmer();
-        string getType();
         int getWealth();
 
         Farm& getFarm();

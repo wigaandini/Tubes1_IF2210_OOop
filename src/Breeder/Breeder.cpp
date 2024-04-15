@@ -22,10 +22,6 @@ Breeder::~Breeder()
 {
 }
 
-string Breeder::getType()
-{
-    return type;
-}
 
 void Breeder::cattle()
 {

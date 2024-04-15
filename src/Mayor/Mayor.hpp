@@ -15,7 +15,6 @@ public:
     Mayor();
     Mayor(string username, float weight, int gulden);
     ~Mayor();
-    string getType();
     void taxCollection();
     void buildBuilding();
     void addPlayer();

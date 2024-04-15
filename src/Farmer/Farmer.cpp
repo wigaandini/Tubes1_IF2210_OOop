@@ -18,10 +18,6 @@ Farmer::~Farmer()
 {
 }
 
-string Farmer::getType()
-{
-    return type;
-}
 void Farmer::plant()
 {
     // if (this->inventory.isEmpty())
