@@ -35,11 +35,8 @@ protected:
         {
             source.displayStorage(true);
             cout << endl
-                 << "Pilih " << (name ==
-                    "Peternakan"
-                ? "hewan"
-                : "tanaman")
-                      << " siap panen yang kamu miliki" << endl;
+                 << "Pilih " << (name == "Peternakan" ? "hewan" : "tanaman")
+                 << " siap panen yang kamu miliki" << endl;
             map<string, int> plantReady = source.countItemsReadyToHarvest();
             int number = 1;
             vector<int> total;
@@ -60,12 +57,15 @@ protected:
             while (!sukses1)
             {
                 cout << endl
-                     << "Nomor " << (name ==
-                        "Peternakan"
-                    ? "hewan"
-                    : "tanaman")
-                          << " yang ingin dipanen (ketik -1 untuk keluar) : ";
+                     << "Nomor " << (name == "Peternakan" ? "hewan" : "tanaman")
+                     << " yang ingin dipanen (ketik -1 untuk keluar) : ";
                 cin >> answer1;
+
+                if (answer1 == -1)
+                {
+                    cout << "Tidak jadi panen!!" << endl;
+                    return;
+                }
 
                 if (answer1 == -1)
                 {
@@ -145,10 +145,7 @@ protected:
                 }
             }
             cout << endl
-                 << answer2 << " petak " << (name ==
-                    "Peternakan"
-                ? "hewan "
-                : "tanaman ") << kode[answer1 - 1] << " pada petak ";
+                 << answer2 << " petak " << (name == "Peternakan" ? "hewan " : "tanaman ") << kode[answer1 - 1] << " pada petak ";
             for (int l = 0; l < answer2; l++)
             {
                 if (l != answer2 - 1)
@@ -187,11 +184,8 @@ protected:
             bool success = false;
             while (!success)
             {
-                cout << "Pilih " << (name ==
-                        "Peternakan"
-                    ? "hewan"
-                    : "tanaman")
-                          << " dari penyimpanan" << endl;
+                cout << "Pilih " << (name == "Peternakan" ? "hewan" : "tanaman")
+                     << " dari penyimpanan" << endl;
                 this->inventory.displayStorage(false);
 
                 cout << endl
@@ -201,11 +195,8 @@ protected:
 
                 if (slot == "q")
                 {
-                    cout << "Tidak jadi melakukan " << (name ==
-                            "Peternakan"
-                        ? "ternak!!"
-                        : "tanam!!")
-                              << endl;
+                    cout << "Tidak jadi melakukan " << (name == "Peternakan" ? "ternak!!" : "tanam!!")
+                         << endl;
                     return;
                 }
 
@@ -217,10 +208,7 @@ protected:
                         cout << endl
                              << "Kamu memilih " << Utils::toTitleCase(itemName) << "." << endl;
                         cout << endl
-                             << "Pilih petak tanah yang akan " << (name ==
-                                "Peternakan"
-                            ? "ditinggali"
-                            : "ditanami") << endl;
+                             << "Pilih petak tanah yang akan " << (name == "Peternakan" ? "ditinggali" : "ditanami") << endl;
                         shared_ptr<Item> itemRef = this->inventory.take(slot);
                         shared_ptr<U> ref = dynamic_pointer_cast<U>(itemRef);
 

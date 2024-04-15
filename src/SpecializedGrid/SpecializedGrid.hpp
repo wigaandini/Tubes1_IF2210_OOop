@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include "../Grid/Grid.hpp"
-#include "../PColor/pcolor.h"
+#include "../PColor/pcolor.hpp"
 
 using namespace std;
 

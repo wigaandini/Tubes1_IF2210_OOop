@@ -1,5 +1,4 @@
 #include "Ranch.hpp"
-#include "../PColor/pcolor.h"
 #include "../Game/Game.hpp"
 
 Ranch::Ranch(int r, int c, Animal defaultValue) : SpecializedGrid<Animal>(r, c) {}
