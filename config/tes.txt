@@ -1,5 +1,5 @@
 4
-Bondowoso Walikota 80 800
+Bondowoso Walikota 70 100
 5
 SANDALWOOD_WOOD
 BANANA

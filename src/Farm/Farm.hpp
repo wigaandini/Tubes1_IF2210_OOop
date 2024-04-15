@@ -12,8 +12,6 @@ public:
     Farm();
     ~Farm();
     void displayStorage(bool printInfo);
-    // bool checkPlantReadyToHarvest();
-    // map<string, int> countPlant();
     void addPlantAge();
 };
 
