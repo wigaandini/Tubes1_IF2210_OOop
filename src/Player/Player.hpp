@@ -22,6 +22,7 @@ public:
     Player(string username, int weight, int gulden);
     Inventory &getInventory();
     string &getName();
+    string getType();
     virtual ~Player();
     int &getWeight();
     virtual void buy(shared_ptr<Item> &, int);

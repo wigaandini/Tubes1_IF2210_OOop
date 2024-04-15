@@ -2,6 +2,7 @@
 #include "../Game/Game.hpp"
 #include "../Item/Building.hpp"
 #include "PlayerException.hpp"
+#include <random>
 
 int Player::countIdPlayer = 1;
 
@@ -102,17 +103,95 @@ bool Player::operator==(const Player &other)
 
 void Player::buy(shared_ptr<Item> &item, int quantity)
 {
-    if (item->getPrice() * quantity > this->gulden)
-    {
-        throw NotEnoughGuldenException(); // Uang  tidak cukup
-    }
+    cout << "Terdapat opsi dalam pembayaran: " << endl;
+    cout << "1. Bayar dengan harga normal" << endl;
+    cout << "2. Coin Flip (Jika benar maka barang gratis, Jika salah maka harga menjadi 2x)" << endl << endl;
+    bool ben = false;
+    int answer;
 
-    if (!this->inventory.isInventoryEnough(quantity))
-    {
-        throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
-    }
+    while (!ben){
+        cout << "Masukkan pilihan opsi pembayaran: ";
+        cin >> answer;
 
-    this->gulden -= item->getPrice() * quantity;
+        if (cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+            continue;
+        }
+
+        if (answer == 1){
+            ben = true;
+            if (item->getPrice() * quantity > this->gulden)
+            {
+                throw NotEnoughGuldenException(); // Uang  tidak cukup
+            }
+
+            if (!this->inventory.isInventoryEnough(quantity))
+            {
+                throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
+            }
+
+            this->gulden -= item->getPrice() * quantity;
+
+        } else if (answer == 2){
+            ben = true;
+            cout << endl << "Silahkan pilih angka 1 atau 2" << endl;
+            int pilihan;
+            int lower_bound = 1; 
+            int upper_bound = 2;    
+            bool ben2 = false;
+            while(!ben2){
+                cout << "Masukkan angka pilihan: ";
+                cin >> pilihan;
+
+                if (cin.fail()){
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+                    continue;
+                }
+
+                if (pilihan > 2 || pilihan < 1){
+                    cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+                } else {
+                    ben2 = true;
+                    // Inisialisasi generator angka acak dengan seed dari waktu saat ini
+                    random_device rd;
+                    mt19937 gen(rd());
+                    uniform_int_distribution<> dist(lower_bound, upper_bound);
+
+                    // Menghasilkan angka acak dan mencetaknya
+                    int random_number = dist(gen);
+                    cout << endl << "Koin dilempar" << endl;
+                    cout << "ting ting ting" << endl << "ting ting ting" << endl << "ting ting ting" << endl;
+
+                    if (random_number != pilihan){
+                        cout << endl << "Angka pilihan salah, harga menjadi 2x lipat" << endl;
+                        if (item->getPrice() * quantity * 2 > this->gulden)
+                        {
+                            throw NotEnoughGuldenException(); // Uang  tidak cukup
+                        }
+
+                        if (!this->inventory.isInventoryEnough(quantity))
+                        {
+                            throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
+                        }
+                        this->gulden -= item->getPrice() * quantity * 2;
+
+                    } else {
+                        cout << endl << "Angka pilihan benar, anda beruntung" << endl;
+                        if (!this->inventory.isInventoryEnough(quantity))
+                        {
+                            throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
+                        }
+                    }
+                }
+            }
+        } else {
+            cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+        }
+    }
 }
 
 pair<vector<shared_ptr<Item>>, int> Player::sell(vector<string> &slots)

@@ -3,6 +3,7 @@
 #include "../Game/Game.hpp"
 #include "../Farmer/Farmer.hpp"
 #include <algorithm>
+#include <random>
 #include "MayorException.hpp"
 #include "../Player/PlayerException.hpp"
 using namespace std;
@@ -177,22 +178,110 @@ void Mayor::addPlayer()
 
 void Mayor::buy(shared_ptr<Item> &item, int quantity)
 {
-    if (item->getPrice() * quantity > this->gulden)
-    {
-        throw NotEnoughGuldenException(); // uang  tidak cukup
-    }
+    cout << "Terdapat opsi dalam pembayaran: " << endl;
+    cout << "1. Bayar dengan harga normal" << endl;
+    cout << "2. Coin Flip (Jika benar maka barang gratis, Jika salah maka harga menjadi 2x)" << endl << endl;
+    bool ben = false;
+    int answer;
 
-    if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(item))
-    {
-        throw CannotBuyBuildingException(); // tidak bisa beli building
-    }
+    while (!ben){
+        cout << "Masukkan pilihan opsi pembayaran: ";
+        cin >> answer;
 
-    if (this->inventory.countEmpty() < quantity)
-    {
-        throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
-    }
+        if (cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+            continue;
+        }
 
-    this->gulden -= item->getPrice() * quantity;
+        if (answer == 1){
+            ben = true;
+            if (item->getPrice() * quantity > this->gulden)
+            {
+                throw NotEnoughGuldenException(); // uang  tidak cukup
+            }
+
+            if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(item))
+            {
+                throw CannotBuyBuildingException(); // tidak bisa beli building
+            }
+
+            if (this->inventory.countEmpty() < quantity)
+            {
+                throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
+            }
+
+            this->gulden -= item->getPrice() * quantity;
+
+        } else if (answer == 2){
+            ben = true;
+            cout << endl << "Silahkan pilih angka 1 atau 2" << endl;
+            int pilihan;
+            int lower_bound = 1; 
+            int upper_bound = 2;
+            bool ben2 = false;
+            
+            while(!ben2){
+                cout << "Masukkan angka pilihan: ";
+                cin >> pilihan;
+
+                if (cin.fail()){
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+                    continue;
+                }
+
+                if (pilihan > 2 || pilihan < 1){
+                    cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+                } else {
+                    ben2 = true;
+                // Inisialisasi generator angka acak dengan seed dari waktu saat ini
+                    random_device rd;
+                    mt19937 gen(rd());
+                    uniform_int_distribution<> dist(lower_bound, upper_bound);
+
+                    // Menghasilkan angka acak dan mencetaknya
+                    int random_number = dist(gen);
+                    cout << endl << "Koin dilempar" << endl;
+                    cout << "ting ting ting" << endl << "ting ting ting" << endl << "ting ting ting" << endl;
+                    if (random_number != pilihan){
+                        cout << endl << "Angka pilihan salah, harga menjadi 2x lipat" << endl;
+                        if (item->getPrice() * quantity * 2 > this->gulden)
+                        {
+                            throw NotEnoughGuldenException(); // uang  tidak cukup
+                        }
+
+                        if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(item))
+                        {
+                            throw CannotBuyBuildingException(); // tidak bisa beli building
+                        }
+
+                        if (this->inventory.countEmpty() < quantity)
+                        {
+                            throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
+                        }
+                        this->gulden -= item->getPrice() * quantity * 2;
+
+                    } else {
+                        cout << endl << "Angka pilihan benar, anda beruntung" << endl;
+                        if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(item))
+                        {
+                            throw CannotBuyBuildingException(); // tidak bisa beli building
+                        }
+
+                        if (!this->inventory.isInventoryEnough(quantity))
+                        {
+                            throw InventoryNotEnoughException(); // Penyimpanan tidak cukup
+                        }
+                    }
+                }
+            }
+        } else {
+            cout << "Masukan salah silahkah masukan kembali!!!" << endl;
+        }
+    }
 }
 
 pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
