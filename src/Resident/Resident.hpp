@@ -61,10 +61,11 @@ protected:
                      << " yang ingin dipanen (ketik -1 untuk keluar) : ";
                 cin >> answer1;
 
-                if (answer1 == -1)
+                if (cin.fail())
                 {
-                    cout << "Tidak jadi panen!!" << endl;
-                    return;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
                 }
 
                 if (answer1 == -1)
