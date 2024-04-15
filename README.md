@@ -50,7 +50,7 @@ project-root/
 │   ├── misc.txt
 │   ├── plant.txt
 │   ├── product.txt
-│   └── recipe.txt
+│   └── recipe.txt  
 │
 ├── src/                        # Source code files
 │   ├── Breeder/                
@@ -89,6 +89,10 @@ project-root/
 │   ├── Grid/
 │   │   ├── Grid.hpp
 │   │   └── GridException.hpp
+│   │
+│   ├── Harvester/
+│   │   ├── Harvester.hpp
+│   │   └── Harvester.cpp
 │   │
 │   ├── Inventory/
 │   │   ├── Inventory.cpp
@@ -144,6 +148,9 @@ project-root/
 │   │   ├── Store.cpp
 │   │   ├── Store.hpp
 │   │   └── StoreException.hpp
+│   │
+│   ├── SpecializedGrid/
+│   │   ├── SpecializedGrid.hpp
 │   │
 │   ├── Utils/
 │   │   ├── Utils.cpp

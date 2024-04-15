@@ -10,7 +10,6 @@ private:
     int animalId;
     int weight;
     int weighToHarvest;
-    // vector<Product> result;
     Harvester harvester;
     static map<string, vector<string>> harvestResult;
 

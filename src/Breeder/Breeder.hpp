@@ -19,8 +19,6 @@ class Breeder: public Resident{
         int getWealth();
         void cattle();
         void feedAnimal();
-        // vector<shared_ptr<Item>> sell(vector<string>&);
-        // void buy(shared_ptr<Item>&, int);
         void harvest();
         int calculateTax();
         Ranch& getRanch();

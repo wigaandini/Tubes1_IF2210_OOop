@@ -15,11 +15,8 @@ class Farmer: public Resident{
         Farmer(string username, int weight, int gulden);
         ~Farmer();
         int getWealth();
-
         Farm& getFarm();
         void plant();
-        // vector<shared_ptr<Item>> sell(vector<string>&);
-        // void buy(shared_ptr<Item>&, int);
         void harvest();
         int calculateTax();
         void saveFile(const string& filename); 
