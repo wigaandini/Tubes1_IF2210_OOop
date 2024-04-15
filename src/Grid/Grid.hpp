@@ -51,17 +51,7 @@ protected:
     };
 
 public:
-    // Grid(int r, int c, T defaultValue) : row(r), col(c), emptySlot(r * c), defaultValue(defaultValue)
-    // {
-    //     buffer.resize(row, vector<shared_ptr<T>>(col));
-    //     for (int i = 0; i < row; i++)
-    //     {
-    //         for (int j = 0; j < col; j++)
-    //         {
-    //             buffer[i][j] = nullptr;
-    //         }
-    //     }
-    // };
+
     Grid(int r, int c) : row(r), col(c), emptySlot(r * c)
     {
         buffer.resize(row, vector<shared_ptr<T>>(col));

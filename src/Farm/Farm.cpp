@@ -30,51 +30,6 @@ void Farm::displayStorage(bool printInfo)
     }
 }
 
-// bool Farm::checkPlantReadyToHarvest()
-// {
-//     for (int i = 0; i < this->row; i++)
-//     {
-//         for (int j = 0; j < this->col; j++)
-//         {
-//             if (this->buffer[i][j] != nullptr)
-//             {
-//                 if (this->buffer[i][j]->checkReadyToHarvest())
-//                 {
-//                     return true;
-//                 }
-//             }
-//         }
-//     }
-//     return false;
-// }
-
-// map<string, int> Farm::countPlant()
-// {
-//     map<string, int> plantCount;
-//     for (int i = 0; i < this->row; i++)
-//     {
-//         for (int j = 0; j < this->col; j++)
-//         {
-//             if (this->buffer[i][j] != nullptr)
-//             {
-//                 if (this->buffer[i][j]->checkReadyToHarvest())
-//                 {
-//                     string plantName = this->buffer[i][j]->getName();
-//                     if (plantCount.find(plantName) == plantCount.end())
-//                     {
-//                         plantCount[plantName] = 1;
-//                     }
-//                     else
-//                     {
-//                         plantCount[plantName]++;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     return plantCount;
-// }
-
 void Farm::addPlantAge()
 {
     for (int i = 0; i < this->row; i++)

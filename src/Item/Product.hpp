@@ -8,7 +8,7 @@ private:
     ProductType type;
     int productId;
     string origin;
-    float addedWeight;
+    int addedWeight;
 
 public:
     Product();
@@ -16,12 +16,12 @@ public:
     virtual ~Product();
     void setProductType(ProductType type);
     void setProductId(int productId);
-    void setOrigin(float origin);
-    void setAddedWeight(float addedWeight);
+    void setOrigin(string origin);
+    void setAddedWeight(int addedWeight);
     ProductType getProductType() const;
     int getProductId() const;
     string getOrigin() const;
-    float getAddedWeight() const;
+    int getAddedWeight() const;
 };
 
 #endif

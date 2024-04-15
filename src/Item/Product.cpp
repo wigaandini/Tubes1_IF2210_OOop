@@ -29,11 +29,11 @@ void Product::setProductId(int productId){
     this->productId = productId;
 }
 
-void Product::setOrigin(float origin){
+void Product::setOrigin(string origin){
     this->origin = origin;
 }
 
-void Product::setAddedWeight(float addedWeight){
+void Product::setAddedWeight(int addedWeight){
     this->addedWeight = addedWeight;
 }
 
@@ -49,7 +49,7 @@ string Product::getOrigin() const{
     return this->origin;    
 }
 
-float Product::getAddedWeight() const{
+int Product::getAddedWeight() const{
     return this->addedWeight;
 }
 

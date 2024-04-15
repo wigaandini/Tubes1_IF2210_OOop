@@ -26,48 +26,6 @@ void Farmer::plant()
         "Ladang");
 }
 
-// void Farmer::buy(shared_ptr<Item> &item, int quantity)
-// {
-//     if (item->getPrice() * quantity > this->gulden)
-//     {
-//         throw ""; // uang  tidak cukup
-//     }
-
-//     if (this->inventory.countEmpty() < quantity)
-//     {
-//         throw ""; // Penyimpanan tidak cukup
-//     }
-
-//     this->gulden -= item->getPrice() * quantity;
-// }
-
-// vector<shared_ptr<Item>> Farmer::sell(vector<string> &slots)
-// {
-//     vector<shared_ptr<Item>> items;
-//     for (string slot : slots)
-//     {
-
-//         if (this->inventory.isEmpty(slot))
-//         {
-//             throw ""; // empty slot
-//         }
-
-//         if (shared_ptr<Building> building = dynamic_pointer_cast<Building>(this->inventory.see(slot))){
-//             throw ""; //Tidak bisa jual bangunan
-//         }
-//     }
-
-//     for (string slot : slots)
-//     {
-
-//         const shared_ptr<Item> &item = this->inventory.take(slot);
-//         this->gulden += item->getPrice();
-//         items.push_back(item);
-//     }
-
-//     return items;
-// }
-
 void Farmer::harvest()
 {
 
