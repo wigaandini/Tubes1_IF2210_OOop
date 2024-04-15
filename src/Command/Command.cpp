@@ -10,7 +10,7 @@
 Command::Command()
 {
     this->playerCommand = {"CETAK_PENYIMPANAN", "MAKAN", "SIMPAN", "JUAL", "BELI", "PERMAINAN_SLOT"};
-    this->mayorCommand = {"TAMBAH_PEMAIN", "PUNGUT_PAJAK", "BANGUN_BANGUNAN", "TAMBAH_PEMAIN"};
+    this->mayorCommand = {"TAMBAH_PEMAIN", "PUNGUT_PAJAK", "BANGUN_BANGUNAN"};
     this->farmerCommand = {"TANAM", "CETAK_LADANG", "PANEN"};
     this->breederCommand = {"TERNAK", "CETAK_PETERNAKAN", "KASIH_MAKAN", "PANEN"};
 }
