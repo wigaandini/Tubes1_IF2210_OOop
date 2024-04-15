@@ -18,22 +18,24 @@ This program is a simple simulation designed to help Roro manage her kingdom. Bo
 
 ## Features
 Features (command) that used in this program are:
-1. CETAK_PENYIMPANAN    : player can display their storage
-2. MAKAN                : player can eat food from their storage
-3. SIMPAN               : player can save the current state of program
-4. JUAL                 : player can sell the items from their storage
-5. BELI                 : player can buy items from the store and then keep it in the storage
-6. PERMAINAN_SLOT       : player can play slot game
-7. TANAM                : player (only farmer) can plant the plant they own
-8. CETAK_LADANG         : player (only farmer) can display their farm
-9. TERNAK               : player (only breeder) can cattle their animal
-10. CETAK_PETERNAKAN    : player (only breeder) can display their ranch
-11. KASIH_MAKAN         : player (only breeder) can feed their livestock (animal)
-12. PANEN               : player (farmer and breeder) can harvest their plant product/animal product
-13. TAMBAH_PEMAIN       : player (only mayor) can add new player
-14. PUNGUT_PAJAK        : player (only mayor) can tax the residents (farmer and breeder)
-15. BANGUN_BANGUNAN     : player (only mayor) can build a building using materials from their storage
-16. NEXT                : switch the player turn
+| No. | Command              | Description                                                      |
+|-----|----------------------|------------------------------------------------------------------|
+| 1   | CETAK_PENYIMPANAN    | Player can display their storage                                |
+| 2   | MAKAN                | Player can eat food from their storage                          |
+| 3   | SIMPAN               | Player can save the current state of the program                |
+| 4   | JUAL                 | Player can sell the items from their storage                    |
+| 5   | BELI                 | Player can buy items from the store and then keep it in storage |
+| 6   | PERMAINAN_SLOT       | Player can play a slot game                                     |
+| 7   | TANAM                | Player (only farmer) can plant the plants they own              |
+| 8   | CETAK_LADANG         | Player (only farmer) can display their farm                     |
+| 9   | TERNAK               | Player (only breeder) can cattle their animals                  |
+| 10  | CETAK_PETERNAKAN     | Player (only breeder) can display their ranch                   |
+| 11  | KASIH_MAKAN          | Player (only breeder) can feed their livestock (animals)        |
+| 12  | PANEN                | Player (farmer and breeder) can harvest their products          |
+| 13  | TAMBAH_PEMAIN        | Player (only mayor) can add a new player                        |
+| 14  | PUNGUT_PAJAK         | Player (only mayor) can tax the residents (farmers and breeders)|
+| 15  | BANGUN_BANGUNAN      | Player (only mayor) can build a building using materials        |
+| 16  | NEXT                 | Switch the player's turn                                        |
 
 
 ## Requirements Program
