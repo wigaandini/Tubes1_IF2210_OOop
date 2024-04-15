@@ -1,6 +1,7 @@
 #include "Player.hpp"
 #include "../Game/Game.hpp"
 #include "../Item/Building.hpp"
+#include "../Slot/Slot.hpp"
 #include "PlayerException.hpp"
 #include <random>
 
@@ -195,4 +196,72 @@ void Player::setGulden(int gulden)
 Inventory &Player::getInventory()
 {
     return this->inventory;
+}
+
+void Player::playSlot(){
+    bool isAnswerValid = false;
+    while (!isAnswerValid)
+    {
+        string answerState = "";
+        cout << "=================================================\n";
+        cout << "           Selamat Datang di Mesin Slot!         \n";
+        cout << "=================================================\n";
+        cout << "           Mulai Permainan dengan 1 Gulden       \n";
+        cout << "   Berpeluang untuk Meraih Berbagai Keuntungan!  \n";
+        cout << "-------------------------------------------------\n";
+        cout << "Peraturan Permainan:\n";
+        cout << "- Jika Anda mendapatkan 3 huruf 'A' yang sama, Anda memenangkan 10 gulden.\n";
+        cout << "- Jika Anda mendapatkan 3 huruf 'B' yang sama, Anda memenangkan 20 gulden.\n";
+        cout << "- Jika Anda mendapatkan 3 huruf 'C' yang sama, Anda memenangkan 30 gulden.\n";
+        cout << "=================================================\n";
+        cout << "Permainan ini memakai 1 gulden\n";
+        cout << "Apakah Anda ingin bermain mesin slot? (Y/N) ";
+
+        cin >> answerState;
+        
+        Slot s;
+        if (answerState == "Y")
+        {
+            isAnswerValid = true;
+            this->gulden --;
+            vector<string> prize = {"A", "B", "C"};
+            vector<string> slot;
+
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_int_distribution<> dist(0, 2);
+
+            for (int i = 0; i < 3; i++){ 
+                int random = dist(gen);
+                slot.push_back(prize[random]);
+            }
+            s.displaySlot(slot);
+
+            map<std::string, int> symbolCounts;
+            for (const auto& symbol : slot) {
+                ++symbolCounts[symbol];
+            }
+            if (symbolCounts["A"] == 3) {
+                cout << "Selamat! Anda mendapatkan 3 simbol 'A' dan memenangkan 10 gulden!" << endl;
+                this->gulden += 10;
+            } else if (symbolCounts["B"] == 3) {
+                cout << "Selamat! Anda mendapatkan 3 simbol 'P' dan memenangkan 20 gulden!" << endl;
+                this->gulden += 20;
+            } else if (symbolCounts["C"] == 3) {
+                cout << "Selamat! Anda mendapatkan 3 simbol 'B' dan memenangkan 30 gulden!" << endl;
+                this->gulden += 30;
+            }else  {
+                cout << "Maaf, Anda belum beruntung kali ini. Coba lagi!" << endl;
+            }
+        }
+        else if (answerState == "N")
+        {
+            cout << endl << "Terima kasih telah mengunjungi!" << endl;
+            return;
+        }
+        else
+        {
+            cout << "Masukan salah silahkan ulangi kembali!!" << endl;
+        }
+    }
 }
