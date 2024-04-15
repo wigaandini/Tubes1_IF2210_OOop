@@ -31,5 +31,6 @@ public:
     void setGulden(int);
     bool operator==(const Player&);
     void eat();
+    void playSlot();
 };
 #endif

@@ -9,7 +9,7 @@
 
 Command::Command()
 {
-    this->playerCommand = {"CETAK_PENYIMPANAN", "MAKAN", "SIMPAN", "JUAL", "BELI"};
+    this->playerCommand = {"CETAK_PENYIMPANAN", "MAKAN", "SIMPAN", "JUAL", "BELI", "PERMAINAN_SLOT"};
     this->mayorCommand = {"TAMBAH_PEMAIN", "PUNGUT_PAJAK", "BANGUN_BANGUNAN", "TAMBAH_PEMAIN"};
     this->farmerCommand = {"TANAM", "CETAK_LADANG", "PANEN"};
     this->breederCommand = {"TERNAK", "CETAK_PETERNAKAN", "KASIH_MAKAN", "PANEN"};
@@ -81,6 +81,9 @@ void Command::handleCommand(const string &command)
     else if (command == "SIMPAN")
     {
         Game::handleSave();
+    }
+    else if (command == "PERMAINAN_SLOT"){
+        Game::getCurrentPlayer()->playSlot();
     }
     else if (shared_ptr<Mayor> mayor = dynamic_pointer_cast<Mayor>(Game::getCurrentPlayer()))
     {
