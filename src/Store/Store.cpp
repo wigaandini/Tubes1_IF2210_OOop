@@ -536,10 +536,9 @@ void Store::saveFile(const string &filepath)
     map<string, int> itemCounts;
     for (const auto &pair : items)
     {
-        if(pair.second.size() > 0){ 
+        if(pair.second.size() > 0){
             itemCounts[pair.first] = pair.second.size();
         }
-        
     }
 
     file << itemCounts.size() << endl;
