@@ -245,12 +245,14 @@ void Game::handleSave()
     cout << "Masukkan lokasi berkas state: ";
     cin >> filepath;
 
-    const char* folderpath = filepath.substr(0, filepath.find_last_of("/\\")).c_str();
-    DIR* dir = opendir(folderpath);
-    if (dir) {
+    const char *folderpath = filepath.substr(0, filepath.find_last_of("/\\")).c_str();
+    DIR *dir = opendir(folderpath);
+    if (dir)
+    {
         closedir(dir);
-    } 
-    else {
+    }
+    else
+    {
         cerr << "Error: Lokasi berkas tidak valid." << endl;
         return;
     }
@@ -333,13 +335,12 @@ void Game::handleLoadState()
         {
             cout << "Masukan nama file, harus full path (ketik q untuk keluar): ";
             cin >> filename;
-            this->loadHandler.loadStateConfig(filename);
-
             if (filename == "q")
             {
                 cout << "Keluar dari permainan!!" << endl;
                 return;
             }
+            this->loadHandler.loadStateConfig(filename);
 
             filenameValid = true;
         }
@@ -360,25 +361,25 @@ void Game::handleLoadState()
 }
 
 // cout << "Players in the game:" << endl;
-    // for (auto player : players)
-    // {
-    //     cout << player->getName() << endl;
+// for (auto player : players)
+// {
+//     cout << player->getName() << endl;
 
-    //     cout << player->getInventory() << endl;
+//     cout << player->getInventory() << endl;
 
-    //     shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
-    //     if (breeder != nullptr)
-    //     {
-    //         cout << breeder->getRanch() << endl;
-    //         continue;
-    //     }
+//     shared_ptr<Breeder> breeder = dynamic_pointer_cast<Breeder>(player);
+//     if (breeder != nullptr)
+//     {
+//         cout << breeder->getRanch() << endl;
+//         continue;
+//     }
 
-    //     shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
-    //     if (farmer != nullptr)
-    //     {
-    //         cout << farmer->getFarm() << endl;
-    //     }
-    // }
+//     shared_ptr<Farmer> farmer = dynamic_pointer_cast<Farmer>(player);
+//     if (farmer != nullptr)
+//     {
+//         cout << farmer->getFarm() << endl;
+//     }
+// }
 
-    // cout << "Items in the store:" << endl;
-    // cout << store << endl;
+// cout << "Items in the store:" << endl;
+// cout << store << endl;
