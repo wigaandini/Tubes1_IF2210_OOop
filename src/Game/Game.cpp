@@ -132,10 +132,6 @@ void Game::start()
             {
                 try
                 {
-                    string input;
-                    cout << endl
-                         << "> ";
-                    cin >> input;
                     auto winnner = checkWinner();
 
                     if (winnner != nullptr)
@@ -144,6 +140,10 @@ void Game::start()
                         isGameOver = true;
                         break;
                     }
+                    string input;
+                    cout << endl
+                         << "> ";
+                    cin >> input;
                     if (input == "NEXT")
                     {
                         if (*(Game::getCurrentPlayer()) == *(players[i]))
