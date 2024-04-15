@@ -251,7 +251,8 @@ void Game::handleSave()
         return;
     }
 
-    const char *folderpath = filepath.substr(0, filepath.find_last_of("/\\")).c_str();
+    string path = filepath.substr(0, filepath.find_last_of("/\\"));
+    const char *folderpath = path.c_str();
     DIR *dir = opendir(folderpath);
     if (dir)
     {
