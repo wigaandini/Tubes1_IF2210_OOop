@@ -71,6 +71,9 @@ This project has been completed and can be executed.
 │   ├── product.txt
 │   └── recipe.txt  
 │
+├── doc/                        # Document files
+│   ├── IF2110_TB1_SMH.pdf
+│
 ├── src/                        # Source code files
 │   ├── Breeder/                
 │   │   ├── Breeder.cpp
