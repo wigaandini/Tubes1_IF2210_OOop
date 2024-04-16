@@ -107,7 +107,9 @@ This project has been completed and can be executed.
 │   │
 │   ├── Grid/
 │   │   ├── Grid.hpp
+|   |   ├── Grid.tpp
 │   │   └── GridException.hpp
+|   |   
 │   │
 │   ├── Harvester/
 │   │   ├── Harvester.hpp
@@ -147,8 +149,8 @@ This project has been completed and can be executed.
 │   │   └── MayorException.hpp
 │   │
 │   ├── PColor/
-│   │   ├── pcolor.c
-│   │   └── pcolor.h
+│   │   ├── pcolor.cpp
+│   │   └── pcolor.hpp
 │   │
 │   ├── Player/
 │   │   ├── Player.cpp
@@ -161,6 +163,7 @@ This project has been completed and can be executed.
 │   │
 │   ├── Resident/
 │   │   ├── Resident.cpp
+|   |   ├── Resident.tpp
 │   │   └── Resident.hpp
 │   │
 │   ├── Slot/
@@ -174,6 +177,7 @@ This project has been completed and can be executed.
 │   │
 │   ├── SpecializedGrid/
 │   │   ├── SpecializedGrid.hpp
+|   |   └── SpecializedGrid.tpp
 │   │
 │   ├── Utils/
 │   │   ├── Utils.cpp
