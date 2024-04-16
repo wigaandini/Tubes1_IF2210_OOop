@@ -73,6 +73,14 @@ void Resident::harvest(T &source, map<string, U> &config, map<string, vector<str
                  << "Berapa petak yang ingin dipanen : ";
             cin >> answer2;
 
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Input harus berupa angka. Silahkan coba lagi." << endl;
+                continue;
+            }
+
             if (answer2 <= total[answer1 - 1])
             {
                 if (answer2 * sizeResult[answer1 - 1] > this->inventory.countEmpty())
