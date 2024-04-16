@@ -6,6 +6,7 @@
 #include "../Breeder/Breeder.hpp"
 #include "../Farmer/Farmer.hpp"
 #include "../Command/CommandException.hpp"
+#include <algorithm>
 
 map<string, AnimalConfig> Game::animalConfig;
 map<string, PlantConfig> Game::plantConfig;
@@ -321,6 +322,9 @@ void Game::initializeGame()
             players.push_back(petani1);
             players.push_back(peternak1);
             players.push_back(walikota);
+
+            sort(players.begin(), players.end(), [](const auto &a, const auto &b)
+                 { return a->getName() < b->getName(); });
 
             cout << "Finish Preparing The Game!!" << endl;
             isAnswerValid = true;

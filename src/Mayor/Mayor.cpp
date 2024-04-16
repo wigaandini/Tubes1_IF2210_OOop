@@ -6,6 +6,8 @@
 #include <random>
 #include "MayorException.hpp"
 #include "../Player/PlayerException.hpp"
+#include "../Utils/Utils.hpp"
+#include <limits>
 using namespace std;
 
 Mayor::Mayor() : Player()
@@ -19,7 +21,6 @@ Mayor::Mayor(string username, float weight, int gulden) : Player(username, weigh
 }
 
 Mayor::~Mayor() {}
-
 
 void Mayor::taxCollection()
 {
@@ -63,7 +64,8 @@ void Mayor::taxCollection()
 
 void Mayor::buildBuilding()
 {
-    cout << endl << Game::getRecipe() << endl;
+    cout << endl
+         << Game::getRecipe() << endl;
     string buildingName;
     bool isValid = false;
     while (!isValid)
@@ -133,12 +135,20 @@ void Mayor::addPlayer()
         string playerName;
         cout << "Masukkan jenis pemain: ";
         cin >> playerType;
-        if(playerType != "Peternak" && playerType != "Petani" && playerType != "petani" && playerType != "peternak"){
+        if (playerType != "Peternak" && playerType != "Petani" && playerType != "petani" && playerType != "peternak")
+        {
             cout << "Jenis permain tersebut tidak ditemukan!" << endl;
             return;
         }
-        cout << "Masukkan nama pemain: ";
-        cin >> playerName;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        playerName = Utils::readLine("Masukkan nama pemain: ");
+
+        if  (playerName.find(' ') != string::npos){
+            cout << "Nama pemain tidak boleh mengandung spasi!!" << endl << endl;
+            return;
+        }
+
         auto itr = find_if(Game::getPlayers().begin(), Game::getPlayers().end(), [&playerName](auto player)
                            { return player->getName() == playerName; });
         if (itr == Game::getPlayers().end())
@@ -211,24 +221,29 @@ pair<vector<shared_ptr<Item>>, int> Mayor::sell(vector<string> &slots)
     }
     catch (const SlotEmptyException &e)
     {
-        for (unsigned int  i = 0 ; i < items.first.size(); i++){
+        for (unsigned int i = 0; i < items.first.size(); i++)
+        {
             this->inventory.put(slots[i], items.first[i]);
         }
-        throw ;
+        throw;
     }
     this->gulden += items.second;
     return items;
 }
 
-void Mayor::saveFile(const string& filepath){
+void Mayor::saveFile(const string &filepath)
+{
     ofstream file(filepath, ios::app);
     file << username << " Walikota " << weight << " " << gulden << endl;
 
     Inventory &inventoryItems = Resident::Player::getInventory();
     file << inventoryItems.countInventoryItem() << endl;
-    for (int i = 0; i < inventoryItems.getRow(); i++) {
-        for (int j = 0; j < inventoryItems.getCol(); j++) {
-            if (inventoryItems.see(i, j) != nullptr) {
+    for (int i = 0; i < inventoryItems.getRow(); i++)
+    {
+        for (int j = 0; j < inventoryItems.getCol(); j++)
+        {
+            if (inventoryItems.see(i, j) != nullptr)
+            {
                 file << inventoryItems.see(i, j)->getName() << endl;
             }
         }

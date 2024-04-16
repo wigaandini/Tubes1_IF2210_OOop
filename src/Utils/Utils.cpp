@@ -29,7 +29,6 @@ string Utils::removeSpaces(const string &input)
 string Utils::readLine(const string &prompt)
 {
     string line;
-    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (!prompt.empty())
     {
