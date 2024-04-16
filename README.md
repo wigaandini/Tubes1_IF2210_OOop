@@ -42,7 +42,9 @@ Features (command) that used in this program are:
 |   NO   |  Required Program                    |                                         Reference Link                                         |
 | :----: | :----------------------------------: | :--------------------------------------------------------------------------------------------: |
 |   1    |  C++ Compiler                        | [On Windows](https://www.freecodecamp.org/news/how-to-install-c-and-cpp-compiler-on-windows/) <br> [On Linux](https://www.codespeedy.com/how-to-install-cpp-on-linux/) |
-|   2    |  Windows Subsystem for Linux (WSL)   | [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)                                  |
+|   2    |  UNIX based terminal, if use OS      | [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)                                  |
+|        |  Windows can use Windows Subsystem   |
+|        |  for Linux (WSL)                     |
 |   3    |  Ubuntu 22.04.3 LTS                  | [Ubuntu](https://ubuntu.com/download/desktop)                                                 |
 
 
