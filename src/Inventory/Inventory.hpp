@@ -40,7 +40,6 @@ public:
     int countItemStock(const Item &name);
     void useItem(const Item &, int);
     bool isInventoryEnough(const int &);
-    void putRandom(const shared_ptr<Item>);
 
     bool checkInventoryFruit();
     bool checkInventoryMeat();

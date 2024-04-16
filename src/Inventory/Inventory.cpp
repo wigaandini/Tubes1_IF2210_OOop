@@ -110,25 +110,7 @@ bool Inventory::checkInventoryPlant()
         Game::getPlantConfig());
 }
 
-void Inventory::putRandom(const shared_ptr<Item> item)
-{
-    if (emptySlot == 0)
-    {
-        throw GridFullException();
-    }
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            if (this->buffer[i][j] == nullptr)
-            {
-                this->buffer[i][j] = item;
-                Grid::emptySlot--;
-                return;
-            }
-        }
-    }
-}
+
 
 bool Inventory::checkInventoryFruit()
 {
