@@ -72,7 +72,7 @@ This project has been completed and can be executed.
 │   └── recipe.txt  
 │
 ├── doc/                        # Document files
-│   ├── IF2110_TB1_SMH.pdf
+│   └── IF2110_TB1_SMH.pdf
 │
 ├── src/                        # Source code files
 │   ├── Breeder/                
