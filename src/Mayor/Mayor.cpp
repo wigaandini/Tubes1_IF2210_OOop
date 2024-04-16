@@ -63,7 +63,7 @@ void Mayor::taxCollection()
 
 void Mayor::buildBuilding()
 {
-    cout << Game::getRecipe() << endl;
+    cout << endl << Game::getRecipe() << endl;
     string buildingName;
     bool isValid = false;
     while (!isValid)
