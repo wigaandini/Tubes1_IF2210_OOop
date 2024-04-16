@@ -16,21 +16,7 @@
 
 Store::Store()
 {
-    // this->unlimitedAnimalSell = {"COW", "SHEEP", "HORSE", "RABBIT", "SNAKE", "CHICKEN", "DUCK", "TEAK_TREE", "SANDALWOOD_TREE", "ALOE_TREE", "IRONWOOD_TREE", "APPLE_TREE", "ORANGE_TREE", "BANANA_TREE", "GUAVA_TREE"};
-    // transform(Game::getAnimalConfig().begin(), Game::getAnimalConfig().end(), back_inserter(this->unlimitedAnimalSell), [](auto &el)
-    //           { return el.second.name; });
 
-    // transform(Game::getPlantConfig().begin(), Game::getPlantConfig().end(), back_inserter(this->unlimitedPlantSell), [](auto &el)
-    //           { return el.second.name; });
-
-    // for (const auto& pair : Game::getAnimalConfig()) {
-    //     this->unlimitedAnimalSell.push_back(pair.first);
-    // }
-
-    // // Mengisi unlimitedPlantSell
-    // for (const auto& pair : Game::getPlantConfig()) {
-    //     this->unlimitedPlantSell.push_back(pair.first);
-    // }
 }
 
 void Store::setUnlimitedAnimalSell()
@@ -152,35 +138,7 @@ bool Store::checkIsLivingBeings(const string &name)
     }
 }
 
-// Item Store::seeItem(const string &name)
-// {
-//     if (!this->checkIsLivingBeings(name))
-//     {
 
-//         return this->items[name].front();
-
-//     }
-//     else
-//     {
-
-//         if (name == "COW" || name == "SHEEP" || name == "HORSE" || name == "RABBIT")
-//         {
-//             Herbivore animal(name);
-//             return animal;
-//         }
-//         else if (name == "SNAKE")
-//         {
-//             Carnivore animal(name);
-//             return animal;
-
-//         }
-//         else
-//         {
-//             Omnivore animal(name);
-//             return animal;
-//         }
-//     }
-// }
 
 bool Store::checkQuantity(const string &name, const int &quantity)
 {
@@ -274,10 +232,6 @@ void Store::handleCustomerBuy()
                 {
                     cout << "Stock tidak cukupp!!!" << endl;
                 }
-                // else if (!Game::getCurrentPlayer()->getInventory().isInventoryEnough(quantity))
-                // {
-                //     cout << "Penyimpanan tidak mencukupi!!!" << endl;
-                // }
                 else
                 {
                     quantityValid = true;
@@ -503,8 +457,7 @@ ostream &operator<<(ostream &os, const Store &store)
         os << num++ << ". " << element << " - " << store.items.at(element).at(0)->getPrice() << " (" << store.items.at(element).size() << ")" << endl;
         ;
     }
-    // cout << store.unlimitedAnimalSell.size() << endl;
-    // cout << Game::getAnimalConfig().begin()->second.name << endl;
+
     for (string element : store.unlimitedAnimalSell)
     {
         os << num++ << ". " << element << " - " << Game::getAnimalConfig().at(element).price << endl;

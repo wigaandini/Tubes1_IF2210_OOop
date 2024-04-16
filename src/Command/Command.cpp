@@ -40,25 +40,12 @@ pair<vector<string>, string> Command::allCommandFor(shared_ptr<Player> &player)
         commands.insert(commands.end(), breederCommand.begin(), breederCommand.end());
         data.second = "Peternak";
     }
-    // cout << "command" << playerCommand.size() << endl;
     data.first = commands;
 
     return data;
 }
 
-// bool Command::checkCommand(const string &command)
-// {
-//     vector<string> commands(allCommandFor(Game::getCurrentPlayer()).first);
 
-//     auto it = find(commands.begin(), commands.end(), command);
-
-//     if (it == commands.end())
-//     {
-//         return false;
-//     }
-
-//     return true;
-// }
 
 void Command::handleCommand(const string &command)
 {
@@ -155,7 +142,6 @@ void Command::handleCommand(const string &command)
 void Command::printCommand(shared_ptr<Player> &player)
 {
     pair<vector<string>, string> data = allCommandFor(player);
-    // cout << allCommandFor(player).first.size() << endl;
     vector<string> commands(data.first);
     commands.push_back("NEXT");
 

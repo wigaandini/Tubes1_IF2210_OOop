@@ -58,12 +58,6 @@ int Animal::getWeightToHarvest() const
 }
 
 vector<shared_ptr<Product>> Animal::collect(){
-    // vector<shared_ptr<Product>> tempP;
-    // for(unsigned int i = 0; i < harvestResult[this->name].size(); i++){
-    //     tempP.push_back(make_shared<Product>(harvestResult[this->name][i]));
-        
-    // }
-
     return this->harvester.collect(this->harvestResult, this->name);
 }
 
