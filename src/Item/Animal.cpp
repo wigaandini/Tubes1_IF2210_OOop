@@ -57,7 +57,8 @@ int Animal::getWeightToHarvest() const
     return this->weighToHarvest;
 }
 
-vector<shared_ptr<Product>> Animal::collect(){
+vector<shared_ptr<Product>> Animal::collect()
+{
     return this->harvester.collect(this->harvestResult, this->name);
 }
 

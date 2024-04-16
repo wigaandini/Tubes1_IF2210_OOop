@@ -113,15 +113,27 @@ void LoadHandler::loadProductConfig(string filename)
         string name, code, origin;
         string typeStr;
         ProductType type = ProductType::PRODUCT_ANIMAL;
+        map<string, vector<string>> harvestResultPlant;
+        map<string, vector<string>> harvestResultAnimal;
 
         if (iss >> id >> code >> name >> typeStr >> origin >> addedWeight >> price)
         {
             if (typeStr == "PRODUCT_MATERIAL_PLANT")
+            {
                 type = ProductType::PRODUCT_MATERIAL_PLANT;
+                harvestResultPlant[origin].push_back(name);
+            }
             else if (typeStr == "PRODUCT_FRUIT_PLANT")
+            {
                 type = ProductType::PRODUCT_FRUIT_PLANT;
+                harvestResultPlant[origin].push_back(name);
+            }
             else if (typeStr == "PRODUCT_ANIMAL")
+            {
                 type = ProductType::PRODUCT_ANIMAL;
+                harvestResultAnimal[origin].push_back(name);
+            }
+
             ProductConfig config(id, name, type, code, origin, addedWeight, price);
             configs[name] = config;
         }
