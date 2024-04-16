@@ -164,7 +164,7 @@ void Resident::placeTo(T &target, map<string, X> &config, function<bool()> check
     else if (!checkInventory())
     {
         cout << endl
-             << "Inventory anda tidak ada tanaman!!" << endl;
+             << "Inventory anda tidak ada " << (name == "Peternakan" ? "hewan" : "tanaman") << "!!" << endl;
     }
     else if (target.isFull())
     {
